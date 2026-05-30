@@ -8,7 +8,6 @@
     "jsdom": "^29.1.1"
   },
   "devDependencies": {
-    "@rolldown/binding-darwin-arm64": "^1.0.3",
     "vite": "^8.0.14"
   }
 }
