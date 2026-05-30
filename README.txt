@@ -5,3 +5,5 @@ Running the project locally :
 
 Deploy changes:
 Commit changes locally and then vercel will trigger a new build and deploy changes automatically 
+
+NOTE : any changes on index.html for deployment new index.html should be overridden in dist
