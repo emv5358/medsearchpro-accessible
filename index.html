@@ -77,8 +77,18 @@
     #searchInput:focus { outline:none; border-color:#2563eb; background:#fff; box-shadow:0 0 0 3px rgba(37,99,235,.1); }
     #searchInput::placeholder { color:#94a3b8; font-size:.88rem; }
     #searchHint { font-size:.7rem; color:#94a3b8; margin-top:4px; }
-    .filter-row { display:flex; gap:5px; flex-wrap:wrap; margin-top:16px; padding-top:14px; border-top:1px solid #f1f5f9; align-items:center; }
-    .filter-label { font-size:.58rem; font-weight:800; letter-spacing:2.5px; text-transform:uppercase; color:#94a3b8; margin-right:6px; }
+    .filter-row {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+  margin-left: 6px;
+  padding: 20px 0;
+  min-height: 70px;
+  border-top: 1px solid #f1f5f9;
+  align-items: center;
+}
+    .filter-label { font-size:.58rem; font-weight:800; letter-spacing:2.5px; text-transform:uppercase; color:#94a3b8; margin-right:6px; margin-left: 16px; }
     .filter-chip { padding:4px 12px; border:1.5px solid #e2e8f0; border-radius:20px; font-size:.72rem; font-weight:700; cursor:pointer; background:#fff; color:#475569; font-family:var(--font); transition:all .15s; }
     .filter-chip:hover { border-color:#0f2d5e; color:#0f2d5e; }
     .filter-chip.active { background:#0f2d5e; border-color:#0f2d5e; color:#fff; }
@@ -242,7 +252,7 @@
           <input type="text" id="searchInput" placeholder="Type a medication name, trade name, or condition…" aria-label="Search medications" aria-describedby="searchHint" autocomplete="off" spellcheck="false" />
         </div>
       </div>
-      <div id="searchHint">Results update as you type — name matches appear first</div>
+     
       <nav class="filter-row" aria-label="Filter by category">
         <span class="filter-label" id="filterLabel">Category</span>
         <button class="filter-chip active" data-category="all"               aria-pressed="true">All</button>
