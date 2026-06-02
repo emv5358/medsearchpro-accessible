@@ -378,7 +378,7 @@ let medicationsLoaded = false;
 async function loadMedications() {
   try {
     // Root-relative path works correctly on Vercel when medications.json is in the public/root folder.
-    const response = await fetch("/medications.json", { cache: "no-store" });
+    const response = await fetch("medications.json", { cache: "no-store" });
     if (!response.ok) {
       throw new Error(`Could not load /medications.json. Status: ${response.status}`);
     }
