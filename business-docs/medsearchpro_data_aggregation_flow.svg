@@ -1,203 +1,265 @@
-<svg viewBox="0 0 910 630" xmlns="http://www.w3.org/2000/svg" role="img" font-family="Segoe UI, system-ui, sans-serif" style="">
-  <title style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">MedSearchPro Data Aggregation Flow</title>
-  <desc style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">Sequential enrichment pipeline from seed drug name through OpenFDA and RxNorm APIs to final JSON output</desc>
+<svg viewBox="0 0 1060 730" xmlns="http://www.w3.org/2000/svg" role="img" font-family="Segoe UI, system-ui, sans-serif">
+  <title>MedSearchPro Data Aggregation Flow</title>
+  <desc>Sequential enrichment pipeline: drug name → RXNorm (rxcui + drugClasses) → FDA openFDA (fdaIndicationsUsage, fdaWarnings, fdaDosage) → MedlinePlus Connect (considerations, userGuidelines) → merged JSON output</desc>
 
   <!-- Background -->
-  <rect width="900" height="620" fill="#f8fafc" style="fill:rgb(248, 250, 252);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <rect width="1050" height="720" fill="#f8fafc"/>
 
   <!-- Title -->
-  <text x="450" y="38" text-anchor="middle" font-size="17" font-weight="700" fill="#0f172a" style="fill:rgb(15, 23, 42);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:17px;font-weight:700;text-anchor:middle;dominant-baseline:auto">MedSearchPro — Data Aggregation Flow</text>
-  <text x="450" y="56" text-anchor="middle" font-size="11" fill="#64748b" style="fill:rgb(100, 116, 139);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:11px;font-weight:400;text-anchor:middle;dominant-baseline:auto">Sequential enrichment pipeline · 3 API calls per medication</text>
+  <text x="525" y="36" text-anchor="middle" font-size="17" font-weight="700" fill="#0f172a">MedSearchPro — Data Aggregation Flow</text>
+  <text x="525" y="54" text-anchor="middle" font-size="11" fill="#64748b">enrich_medications.py · 3–4 API calls per drug · RXNorm → FDA openFDA → MedlinePlus Connect → merged JSON</text>
 
-  <!-- ── LANE BACKGROUNDS ── -->
-  <!-- Lane: Seed Input -->
-  <rect x="16" y="72" width="120" height="520" rx="8" fill="#f1f5f9" style="fill:rgb(241, 245, 249);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="76" y="90" text-anchor="middle" font-size="10" font-weight="700" fill="#64748b" letter-spacing="1" style="fill:rgb(100, 116, 139);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:10px;font-weight:700;text-anchor:middle;dominant-baseline:auto">INPUT</text>
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- LANE BACKGROUNDS                                          -->
+  <!-- ══════════════════════════════════════════════════════════ -->
 
-  <!-- Lane: OpenFDA -->
-  <rect x="148" y="72" width="200" height="520" rx="8" fill="#eff6ff" style="fill:rgb(239, 246, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="248" y="90" text-anchor="middle" font-size="10" font-weight="700" fill="#1d4ed8" letter-spacing="1" style="fill:rgb(29, 78, 216);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:10px;font-weight:700;text-anchor:middle;dominant-baseline:auto">OPENFDA API</text>
-  <text x="248" y="103" text-anchor="middle" font-size="9" fill="#3b82f6" style="fill:rgb(59, 130, 246);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:9px;font-weight:400;text-anchor:middle;dominant-baseline:auto">api.fda.gov</text>
+  <!-- Lane: Input -->
+  <rect x="16"  y="70" width="110" height="548" rx="8" fill="#f1f5f9"/>
+  <text x="71"  y="88" text-anchor="middle" font-size="10" font-weight="700" fill="#64748b" letter-spacing="1">INPUT</text>
 
-  <!-- Lane: RxNorm -->
-  <rect x="360" y="72" width="200" height="520" rx="8" fill="#f0fdf4" style="fill:rgb(240, 253, 244);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="460" y="90" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d" letter-spacing="1" style="fill:rgb(21, 128, 61);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:10px;font-weight:700;text-anchor:middle;dominant-baseline:auto">RXNORM API</text>
-  <text x="460" y="103" text-anchor="middle" font-size="9" fill="#22c55e" style="fill:rgb(34, 197, 94);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:9px;font-weight:400;text-anchor:middle;dominant-baseline:auto">rxnav.nlm.nih.gov</text>
+  <!-- Lane: RXNorm -->
+  <rect x="134" y="70" width="182" height="548" rx="8" fill="#f0fdf4"/>
+  <text x="225" y="88" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d" letter-spacing="1">RXNORM API</text>
+  <text x="225" y="101" text-anchor="middle" font-size="9" fill="#22c55e">rxnav.nlm.nih.gov</text>
 
-  <!-- Lane: Script Logic -->
-  <rect x="572" y="72" width="152" height="520" rx="8" fill="#fdf4ff" style="fill:rgb(253, 244, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="648" y="90" text-anchor="middle" font-size="10" font-weight="700" fill="#7e22ce" letter-spacing="1" style="fill:rgb(126, 34, 206);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:10px;font-weight:700;text-anchor:middle;dominant-baseline:auto">SCRIPT LOGIC</text>
-  <text x="648" y="103" text-anchor="middle" font-size="9" fill="#a855f7" style="fill:rgb(168, 85, 247);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:9px;font-weight:400;text-anchor:middle;dominant-baseline:auto">local classification</text>
+  <!-- Lane: FDA openFDA -->
+  <rect x="324" y="70" width="182" height="548" rx="8" fill="#eff6ff"/>
+  <text x="415" y="88" text-anchor="middle" font-size="10" font-weight="700" fill="#1d4ed8" letter-spacing="1">OPENFDA API</text>
+  <text x="415" y="101" text-anchor="middle" font-size="9" fill="#3b82f6">api.fda.gov</text>
+
+  <!-- Lane: MedlinePlus -->
+  <rect x="514" y="70" width="196" height="548" rx="8" fill="#ecfeff"/>
+  <text x="612" y="88" text-anchor="middle" font-size="10" font-weight="700" fill="#0e7490" letter-spacing="1">MEDLINEPLUS CONNECT</text>
+  <text x="612" y="101" text-anchor="middle" font-size="9" fill="#06b6d4">connect.medlineplus.gov</text>
 
   <!-- Lane: Output -->
-  <rect x="736" y="72" width="148" height="520" rx="8" fill="#fff7ed" style="fill:rgb(255, 247, 237);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="810" y="90" text-anchor="middle" font-size="10" font-weight="700" fill="#c2410c" letter-spacing="1" style="fill:rgb(194, 65, 12);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:10px;font-weight:700;text-anchor:middle;dominant-baseline:auto">OUTPUT</text>
-  <text x="810" y="103" text-anchor="middle" font-size="9" fill="#f97316" style="fill:rgb(249, 115, 22);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:9px;font-weight:400;text-anchor:middle;dominant-baseline:auto">medications.json</text>
+  <rect x="718" y="70" width="320" height="548" rx="8" fill="#fff7ed"/>
+  <text x="878" y="88" text-anchor="middle" font-size="10" font-weight="700" fill="#c2410c" letter-spacing="1">OUTPUT</text>
+  <text x="878" y="101" text-anchor="middle" font-size="9" fill="#f97316">medications_enriched.json</text>
 
-  <!-- ══════════════════════════════════════════════ -->
-  <!-- STEP 1: Seed drug name -->
-  <rect x="24" y="120" width="104" height="52" rx="7" fill="#334155" style="fill:rgb(51, 65, 85);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="76" y="141" text-anchor="middle" font-size="11" font-weight="700" fill="white" style="fill:rgb(255, 255, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:11px;font-weight:700;text-anchor:middle;dominant-baseline:auto">Drug Name</text>
-  <text x="76" y="156" text-anchor="middle" font-size="10" fill="#cbd5e1" style="fill:rgb(203, 213, 225);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:10px;font-weight:400;text-anchor:middle;dominant-baseline:auto">"acetaminophen"</text>
-  <text x="76" y="168" text-anchor="middle" font-size="9" fill="#94a3b8" style="fill:rgb(148, 163, 184);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:9px;font-weight:400;text-anchor:middle;dominant-baseline:auto">500+ seed names</text>
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- STEP 0: Drug Name (Input)                                 -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <rect x="24" y="116" width="94" height="58" rx="7" fill="#334155"/>
+  <text x="71" y="136" text-anchor="middle" font-size="11" font-weight="700" fill="white">Drug Name</text>
+  <text x="71" y="151" text-anchor="middle" font-size="9.5" fill="#cbd5e1">"acetaminophen"</text>
+  <text x="71" y="165" text-anchor="middle" font-size="8.5" fill="#94a3b8">540 seed names</text>
 
-  <!-- Arrow: Seed → OpenFDA -->
-  <line x1="128" y1="146" x2="154" y2="146" stroke="#334155" stroke-width="2" marker-end="url(#arr-dark)" style="fill:rgb(0, 0, 0);stroke:rgb(51, 65, 85);color:rgb(0, 0, 0);stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <!-- Arrow: Input → RXNorm Call 1 -->
+  <line x1="118" y1="145" x2="130" y2="145" stroke="#334155" stroke-width="2" marker-end="url(#arr-dark)"/>
 
-  <!-- ── OpenFDA Call 1 ── -->
-  <rect x="158" y="120" width="180" height="52" rx="7" fill="#2563eb" style="fill:rgb(37, 99, 235);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="248" y="139" text-anchor="middle" font-size="10" font-weight="700" fill="white" style="fill:rgb(255, 255, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:10px;font-weight:700;text-anchor:middle;dominant-baseline:auto">Call #1 — Label Search</text>
-  <text x="248" y="153" text-anchor="middle" font-size="9" fill="#bfdbfe" style="fill:rgb(191, 219, 254);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:9px;font-weight:400;text-anchor:middle;dominant-baseline:auto">/drug/label.json</text>
-  <text x="248" y="165" text-anchor="middle" font-size="9" fill="#bfdbfe" style="fill:rgb(191, 219, 254);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:9px;font-weight:400;text-anchor:middle;dominant-baseline:auto">search=generic_name:"..."</text>
+  <!-- Dashed line: Input → FDA (goes down then right) -->
+  <polyline points="71,174 71,210 320,210" fill="none" stroke="#334155" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr-dark)"/>
 
-  <!-- OpenFDA returns box -->
-  <rect x="158" y="188" width="180" height="130" rx="7" fill="white" stroke="#93c5fd" stroke-width="1.5" style="fill:rgb(255, 255, 255);stroke:rgb(147, 197, 253);color:rgb(0, 0, 0);stroke-width:1.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="248" y="205" text-anchor="middle" font-size="10" font-weight="700" fill="#1d4ed8" style="fill:rgb(29, 78, 216);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:10px;font-weight:700;text-anchor:middle;dominant-baseline:auto">Returns</text>
-  <rect x="168" y="212" width="160" height="18" rx="4" fill="#eff6ff" style="fill:rgb(239, 246, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="248" y="225" text-anchor="middle" font-size="9.5" fill="#1e40af" style="fill:rgb(30, 64, 175);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:9.5px;font-weight:400;text-anchor:middle;dominant-baseline:auto">name (generic_name)</text>
-  <rect x="168" y="234" width="160" height="18" rx="4" fill="#eff6ff" style="fill:rgb(239, 246, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="248" y="247" text-anchor="middle" font-size="9.5" fill="#1e40af" style="fill:rgb(30, 64, 175);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:9.5px;font-weight:400;text-anchor:middle;dominant-baseline:auto">description (indications)</text>
-  <rect x="168" y="256" width="160" height="18" rx="4" fill="#eff6ff" style="fill:rgb(239, 246, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="248" y="269" text-anchor="middle" font-size="9.5" fill="#1e40af" style="fill:rgb(30, 64, 175);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:9.5px;font-weight:400;text-anchor:middle;dominant-baseline:auto">sideEffects (adverse_reactions)</text>
-  <rect x="168" y="278" width="160" height="18" rx="4" fill="#eff6ff" style="fill:rgb(239, 246, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="248" y="291" text-anchor="middle" font-size="9.5" fill="#1e40af" style="fill:rgb(30, 64, 175);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:9.5px;font-weight:400;text-anchor:middle;dominant-baseline:auto">considerations (warnings)</text>
-  <rect x="168" y="300" width="160" height="12" rx="3" fill="#dbeafe" style="fill:rgb(219, 234, 254);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="248" y="310" text-anchor="middle" font-size="8.5" fill="#64748b" style="fill:rgb(100, 116, 139);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:8.5px;font-weight:400;text-anchor:middle;dominant-baseline:auto">brand_name (partial)</text>
+  <!-- Dashed line: Input → MedlinePlus (goes down further then right) -->
+  <polyline points="71,174 71,230 510,230" fill="none" stroke="#334155" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr-dark)"/>
 
-  <!-- ── RxNorm Call 2 ── -->
-  <!-- Arrow: Seed name → RxNorm -->
-  <line x1="76" y1="172" x2="76" y2="355" stroke="#334155" stroke-width="1.5" stroke-dasharray="4,3" style="fill:rgb(0, 0, 0);stroke:rgb(51, 65, 85);color:rgb(0, 0, 0);stroke-width:1.5px;stroke-dasharray:4px, 3px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <line x1="76" y1="355" x2="366" y2="355" stroke="#334155" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr-dark)" style="fill:rgb(0, 0, 0);stroke:rgb(51, 65, 85);color:rgb(0, 0, 0);stroke-width:1.5px;stroke-dasharray:4px, 3px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- RXNORM LANE                                               -->
+  <!-- ══════════════════════════════════════════════════════════ -->
 
-  <rect x="370" y="120" width="180" height="52" rx="7" fill="#16a34a" style="fill:rgb(22, 163, 74);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="460" y="139" text-anchor="middle" font-size="10" font-weight="700" fill="white" style="fill:rgb(255, 255, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:10px;font-weight:700;text-anchor:middle;dominant-baseline:auto">Call #2 — Get RxCUI</text>
-  <text x="460" y="153" text-anchor="middle" font-size="9" fill="#bbf7d0" style="fill:rgb(187, 247, 208);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:9px;font-weight:400;text-anchor:middle;dominant-baseline:auto">/REST/rxcui.json</text>
-  <text x="460" y="165" text-anchor="middle" font-size="9" fill="#bbf7d0" style="fill:rgb(187, 247, 208);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:9px;font-weight:400;text-anchor:middle;dominant-baseline:auto">name="acetaminophen"</text>
+  <!-- Call #1: approximateTerm -->
+  <rect x="142" y="116" width="166" height="60" rx="7" fill="#16a34a"/>
+  <text x="225" y="134" text-anchor="middle" font-size="10" font-weight="700" fill="white">Call #1 — Approximate Match</text>
+  <text x="225" y="148" text-anchor="middle" font-size="8.5" fill="#bbf7d0">/REST/approximateTerm.json</text>
+  <text x="225" y="161" text-anchor="middle" font-size="8.5" fill="#bbf7d0">?term=...&amp;maxEntries=1&amp;option=0</text>
 
-  <!-- RxCUI result -->
-  <rect x="370" y="188" width="180" height="44" rx="7" fill="white" stroke="#86efac" stroke-width="1.5" style="fill:rgb(255, 255, 255);stroke:rgb(134, 239, 172);color:rgb(0, 0, 0);stroke-width:1.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="460" y="205" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d" style="fill:rgb(21, 128, 61);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:10px;font-weight:700;text-anchor:middle;dominant-baseline:auto">Returns RxCUI</text>
-  <rect x="380" y="212" width="160" height="14" rx="3" fill="#f0fdf4" style="fill:rgb(240, 253, 244);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="460" y="223" text-anchor="middle" font-size="9.5" fill="#166534" style="fill:rgb(22, 101, 52);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:9.5px;font-weight:400;text-anchor:middle;dominant-baseline:auto">rxcui = "41493"</text>
+  <!-- Returns rxcui -->
+  <rect x="142" y="184" width="166" height="40" rx="6" fill="white" stroke="#86efac" stroke-width="1.5"/>
+  <text x="225" y="200" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">Returns</text>
+  <rect x="152" y="207" width="146" height="13" rx="3" fill="#f0fdf4"/>
+  <text x="225" y="218" text-anchor="middle" font-size="8.5" fill="#166534">rxcui = "161"</text>
 
-  <!-- Arrow: Call 2 → Call 3 -->
-  <line x1="460" y1="232" x2="460" y2="248" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arr-green)" style="fill:rgb(0, 0, 0);stroke:rgb(22, 163, 74);color:rgb(0, 0, 0);stroke-width:1.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <!-- Arrow: Call 1 result → Call 2 -->
+  <line x1="225" y1="224" x2="225" y2="242" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arr-green)"/>
 
-  <!-- RxNorm Call 3 -->
-  <rect x="370" y="250" width="180" height="52" rx="7" fill="#16a34a" style="fill:rgb(22, 163, 74);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="460" y="269" text-anchor="middle" font-size="10" font-weight="700" fill="white" style="fill:rgb(255, 255, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:10px;font-weight:700;text-anchor:middle;dominant-baseline:auto">Call #3 — Brand Names</text>
-  <text x="460" y="283" text-anchor="middle" font-size="9" fill="#bbf7d0" style="fill:rgb(187, 247, 208);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:9px;font-weight:400;text-anchor:middle;dominant-baseline:auto">/rxcui/41493/related</text>
-  <text x="460" y="295" text-anchor="middle" font-size="9" fill="#bbf7d0" style="fill:rgb(187, 247, 208);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:9px;font-weight:400;text-anchor:middle;dominant-baseline:auto">tty=BN</text>
+  <!-- Call #2: rxclass by rxcui -->
+  <rect x="142" y="244" width="166" height="60" rx="7" fill="#16a34a"/>
+  <text x="225" y="262" text-anchor="middle" font-size="10" font-weight="700" fill="white">Call #2 — Drug Class (ATC)</text>
+  <text x="225" y="276" text-anchor="middle" font-size="8.5" fill="#bbf7d0">/REST/rxclass/class/byRxcui.json</text>
+  <text x="225" y="289" text-anchor="middle" font-size="8.5" fill="#bbf7d0">?rxcui=...&amp;relaSource=ATC</text>
 
-  <!-- Brand names result -->
-  <rect x="370" y="318" width="180" height="58" rx="7" fill="white" stroke="#86efac" stroke-width="1.5" style="fill:rgb(255, 255, 255);stroke:rgb(134, 239, 172);color:rgb(0, 0, 0);stroke-width:1.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="460" y="335" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d" style="fill:rgb(21, 128, 61);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:10px;font-weight:700;text-anchor:middle;dominant-baseline:auto">Returns Trade Names</text>
-  <rect x="380" y="342" width="160" height="14" rx="3" fill="#f0fdf4" style="fill:rgb(240, 253, 244);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="460" y="353" text-anchor="middle" font-size="9.5" fill="#166534" style="fill:rgb(22, 101, 52);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:9.5px;font-weight:400;text-anchor:middle;dominant-baseline:auto">["Tylenol","Panadol","Excedrin"]</text>
-  <text x="460" y="369" text-anchor="middle" font-size="8.5" fill="#64748b" style="fill:rgb(100, 116, 139);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:8.5px;font-weight:400;text-anchor:middle;dominant-baseline:auto">deduped with OpenFDA brands</text>
+  <!-- Returns drugClasses -->
+  <rect x="142" y="312" width="166" height="64" rx="6" fill="white" stroke="#86efac" stroke-width="1.5"/>
+  <text x="225" y="328" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">Returns</text>
+  <rect x="152" y="334" width="146" height="13" rx="3" fill="#f0fdf4"/>
+  <text x="225" y="345" text-anchor="middle" font-size="8.5" fill="#166534">drugClasses (className, ATC)</text>
+  <rect x="152" y="351" width="146" height="13" rx="3" fill="#f0fdf4"/>
+  <text x="225" y="362" text-anchor="middle" font-size="8.5" fill="#166534">capped at 3 classes</text>
+  <text x="225" y="372" text-anchor="middle" font-size="8" fill="#86efac">⚠ skipped if rxcui is None</text>
 
-  <!-- ── Script Logic ── -->
-  <rect x="582" y="120" width="132" height="256" rx="7" fill="white" stroke="#d8b4fe" stroke-width="1.5" style="fill:rgb(255, 255, 255);stroke:rgb(216, 180, 254);color:rgb(0, 0, 0);stroke-width:1.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="648" y="139" text-anchor="middle" font-size="10" font-weight="700" fill="#7e22ce" style="fill:rgb(126, 34, 206);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:10px;font-weight:700;text-anchor:middle;dominant-baseline:auto">Script Adds</text>
-  <rect x="592" y="148" width="112" height="16" rx="3" fill="#fdf4ff" style="fill:rgb(253, 244, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="648" y="160" text-anchor="middle" font-size="9.5" fill="#6b21a8" style="fill:rgb(107, 33, 168);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:9.5px;font-weight:400;text-anchor:middle;dominant-baseline:auto">id = 1, 2, 3...</text>
-  <rect x="592" y="168" width="112" height="16" rx="3" fill="#fdf4ff" style="fill:rgb(253, 244, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="648" y="180" text-anchor="middle" font-size="9.5" fill="#6b21a8" style="fill:rgb(107, 33, 168);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:9.5px;font-weight:400;text-anchor:middle;dominant-baseline:auto">category (keywords)</text>
-  <rect x="592" y="188" width="112" height="16" rx="3" fill="#fdf4ff" style="fill:rgb(253, 244, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="648" y="200" text-anchor="middle" font-size="9.5" fill="#6b21a8" style="fill:rgb(107, 33, 168);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:9.5px;font-weight:400;text-anchor:middle;dominant-baseline:auto">icon 💊 ❤️ 🧠</text>
-  <rect x="592" y="208" width="112" height="16" rx="3" fill="#fdf4ff" style="fill:rgb(253, 244, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="648" y="220" text-anchor="middle" font-size="9.5" fill="#6b21a8" style="fill:rgb(107, 33, 168);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:9.5px;font-weight:400;text-anchor:middle;dominant-baseline:auto">img "img/name.jpg"</text>
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- FDA LANE                                                  -->
+  <!-- ══════════════════════════════════════════════════════════ -->
 
-  <line x1="648" y1="230" x2="648" y2="258" stroke="#a855f7" stroke-width="1.5" style="fill:rgb(0, 0, 0);stroke:rgb(168, 85, 247);color:rgb(0, 0, 0);stroke-width:1.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <rect x="592" y="258" width="112" height="40" rx="5" fill="#fdf4ff" stroke="#d8b4fe" stroke-width="1" style="fill:rgb(253, 244, 255);stroke:rgb(216, 180, 254);color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="648" y="275" text-anchor="middle" font-size="9" font-weight="700" fill="#7e22ce" style="fill:rgb(126, 34, 206);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:9px;font-weight:700;text-anchor:middle;dominant-baseline:auto">Dedup Trade Names</text>
-  <text x="648" y="289" text-anchor="middle" font-size="8.5" fill="#9333ea" style="fill:rgb(147, 51, 234);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:8.5px;font-weight:400;text-anchor:middle;dominant-baseline:auto">dict.fromkeys(a+b)</text>
+  <!-- Call #3: drug label -->
+  <rect x="332" y="116" width="166" height="72" rx="7" fill="#2563eb"/>
+  <text x="415" y="134" text-anchor="middle" font-size="10" font-weight="700" fill="white">Call #3 — Drug Label</text>
+  <text x="415" y="148" text-anchor="middle" font-size="8.5" fill="#bfdbfe">/drug/label.json</text>
+  <text x="415" y="161" text-anchor="middle" font-size="8.5" fill="#bfdbfe">search=openfda.generic_name:"..."</text>
+  <text x="415" y="174" text-anchor="middle" font-size="8.5" fill="#bfdbfe">limit=1</text>
 
-  <line x1="648" y1="298" x2="648" y2="328" stroke="#a855f7" stroke-width="1.5" style="fill:rgb(0, 0, 0);stroke:rgb(168, 85, 247);color:rgb(0, 0, 0);stroke-width:1.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <rect x="592" y="328" width="112" height="48" rx="5" fill="#fdf4ff" stroke="#d8b4fe" stroke-width="1" style="fill:rgb(253, 244, 255);stroke:rgb(216, 180, 254);color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="648" y="346" text-anchor="middle" font-size="9" font-weight="700" fill="#7e22ce" style="fill:rgb(126, 34, 206);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:9px;font-weight:700;text-anchor:middle;dominant-baseline:auto">Fallback Chain</text>
-  <text x="648" y="360" text-anchor="middle" font-size="8.5" fill="#9333ea" style="fill:rgb(147, 51, 234);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:8.5px;font-weight:400;text-anchor:middle;dominant-baseline:auto">try field A → B → C</text>
-  <text x="648" y="372" text-anchor="middle" font-size="8.5" fill="#9333ea" style="fill:rgb(147, 51, 234);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:8.5px;font-weight:400;text-anchor:middle;dominant-baseline:auto">first non-empty wins</text>
+  <!-- Returns FDA fields -->
+  <rect x="332" y="196" width="166" height="112" rx="6" fill="white" stroke="#93c5fd" stroke-width="1.5"/>
+  <text x="415" y="212" text-anchor="middle" font-size="10" font-weight="700" fill="#1d4ed8">Returns</text>
+  <rect x="342" y="218" width="146" height="14" rx="3" fill="#eff6ff"/>
+  <text x="415" y="229" text-anchor="middle" font-size="8.5" fill="#1e40af">fdaIndicationsUsage</text>
+  <text x="415" y="240" text-anchor="middle" font-size="7.5" fill="#93c5fd">(indications_and_usage)</text>
+  <rect x="342" y="244" width="146" height="14" rx="3" fill="#eff6ff"/>
+  <text x="415" y="255" text-anchor="middle" font-size="8.5" fill="#1e40af">fdaWarnings</text>
+  <text x="415" y="266" text-anchor="middle" font-size="7.5" fill="#93c5fd">(warnings / warnings_and_cautions)</text>
+  <rect x="342" y="270" width="146" height="14" rx="3" fill="#eff6ff"/>
+  <text x="415" y="281" text-anchor="middle" font-size="8.5" fill="#1e40af">fdaDosage</text>
+  <text x="415" y="292" text-anchor="middle" font-size="7.5" fill="#93c5fd">(dosage_and_administration)</text>
+  <text x="415" y="303" text-anchor="middle" font-size="7.5" fill="#64748b">first result · capped at 2000 chars</text>
 
-  <!-- ── MERGE ZONE ── -->
-  <rect x="158" y="395" width="556" height="64" rx="8" fill="#0f172a" style="fill:rgb(15, 23, 42);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="436" y="416" text-anchor="middle" font-size="11" font-weight="700" fill="white" style="fill:rgb(255, 255, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:11px;font-weight:700;text-anchor:middle;dominant-baseline:auto">MERGE — All fields combined into one flat object</text>
-  <text x="436" y="432" text-anchor="middle" font-size="9.5" fill="#94a3b8" style="fill:rgb(148, 163, 184);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:9.5px;font-weight:400;text-anchor:middle;dominant-baseline:auto">OpenFDA fields  +  RxNorm fields  +  Script fields  →  single entry per drug</text>
-  <text x="436" y="448" text-anchor="middle" font-size="9" fill="#64748b" style="fill:rgb(100, 116, 139);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:9px;font-weight:400;text-anchor:middle;dominant-baseline:auto">No field comes from two sources · No overwrite risk · No conflict</text>
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- MEDLINEPLUS LANE                                          -->
+  <!-- ══════════════════════════════════════════════════════════ -->
 
-  <!-- Arrows into merge -->
-  <line x1="248" y1="318" x2="248" y2="392" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-blue)" style="fill:rgb(0, 0, 0);stroke:rgb(37, 99, 235);color:rgb(0, 0, 0);stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <line x1="460" y1="376" x2="460" y2="392" stroke="#16a34a" stroke-width="2" marker-end="url(#arr-green)" style="fill:rgb(0, 0, 0);stroke:rgb(22, 163, 74);color:rgb(0, 0, 0);stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <line x1="648" y1="376" x2="648" y2="392" stroke="#a855f7" stroke-width="2" marker-end="url(#arr-purple)" style="fill:rgb(0, 0, 0);stroke:rgb(168, 85, 247);color:rgb(0, 0, 0);stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <!-- Call #4: MedlinePlus Connect -->
+  <rect x="522" y="116" width="180" height="82" rx="7" fill="#0891b2"/>
+  <text x="612" y="134" text-anchor="middle" font-size="10" font-weight="700" fill="white">Call #4 — Patient Info</text>
+  <text x="612" y="148" text-anchor="middle" font-size="8.5" fill="#a5f3fc">connect.medlineplus.gov/service</text>
+  <text x="612" y="161" text-anchor="middle" font-size="8.5" fill="#a5f3fc">mainSearchCriteria.v.cs (RxNorm OID)</text>
+  <text x="612" y="174" text-anchor="middle" font-size="8.5" fill="#a5f3fc">uses rxcui if found, else drug name</text>
+  <rect x="532" y="180" width="160" height="14" rx="3" fill="#155e75"/>
+  <text x="612" y="191" text-anchor="middle" font-size="8" font-weight="700" fill="#67e8f9">★ PRIMARY source for considerations</text>
 
-  <!-- ── OUTPUT ── -->
-  <rect x="746" y="120" width="128" height="320" rx="7" fill="white" stroke="#fdba74" stroke-width="1.5" style="fill:rgb(255, 255, 255);stroke:rgb(253, 186, 116);color:rgb(0, 0, 0);stroke-width:1.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="810" y="140" text-anchor="middle" font-size="10" font-weight="700" fill="#c2410c" style="fill:rgb(194, 65, 12);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:10px;font-weight:700;text-anchor:middle;dominant-baseline:auto">Final Object</text>
-  <rect x="756" y="148" width="108" height="14" rx="3" fill="#fff7ed" style="fill:rgb(255, 247, 237);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="810" y="159" text-anchor="middle" font-size="8.5" fill="#9a3412" style="fill:rgb(154, 52, 18);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:8.5px;font-weight:400;text-anchor:middle;dominant-baseline:auto">id: 1</text>
-  <rect x="756" y="166" width="108" height="14" rx="3" fill="#fff7ed" style="fill:rgb(255, 247, 237);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="810" y="177" text-anchor="middle" font-size="8.5" fill="#9a3412" style="fill:rgb(154, 52, 18);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:8.5px;font-weight:400;text-anchor:middle;dominant-baseline:auto">name: "Acetaminophen"</text>
-  <rect x="756" y="184" width="108" height="14" rx="3" fill="#dbeafe" style="fill:rgb(219, 234, 254);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="810" y="195" text-anchor="middle" font-size="8.5" fill="#1e40af" style="fill:rgb(30, 64, 175);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:8.5px;font-weight:400;text-anchor:middle;dominant-baseline:auto">description: "..."</text>
-  <rect x="756" y="202" width="108" height="14" rx="3" fill="#dbeafe" style="fill:rgb(219, 234, 254);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="810" y="213" text-anchor="middle" font-size="8.5" fill="#1e40af" style="fill:rgb(30, 64, 175);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:8.5px;font-weight:400;text-anchor:middle;dominant-baseline:auto">sideEffects: [...]</text>
-  <rect x="756" y="220" width="108" height="14" rx="3" fill="#dbeafe" style="fill:rgb(219, 234, 254);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="810" y="231" text-anchor="middle" font-size="8.5" fill="#1e40af" style="fill:rgb(30, 64, 175);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:8.5px;font-weight:400;text-anchor:middle;dominant-baseline:auto">considerations: [...]</text>
-  <rect x="756" y="238" width="108" height="14" rx="3" fill="#f0fdf4" style="fill:rgb(240, 253, 244);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="810" y="249" text-anchor="middle" font-size="8.5" fill="#166534" style="fill:rgb(22, 101, 52);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:8.5px;font-weight:400;text-anchor:middle;dominant-baseline:auto">tradeNames: [...]</text>
-  <rect x="756" y="256" width="108" height="14" rx="3" fill="#fdf4ff" style="fill:rgb(253, 244, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="810" y="267" text-anchor="middle" font-size="8.5" fill="#6b21a8" style="fill:rgb(107, 33, 168);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:8.5px;font-weight:400;text-anchor:middle;dominant-baseline:auto">category: "Analgesic"</text>
-  <rect x="756" y="274" width="108" height="14" rx="3" fill="#fdf4ff" style="fill:rgb(253, 244, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="810" y="285" text-anchor="middle" font-size="8.5" fill="#6b21a8" style="fill:rgb(107, 33, 168);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:8.5px;font-weight:400;text-anchor:middle;dominant-baseline:auto">icon: "💊"</text>
-  <rect x="756" y="292" width="108" height="14" rx="3" fill="#fdf4ff" style="fill:rgb(253, 244, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="810" y="303" text-anchor="middle" font-size="8.5" fill="#6b21a8" style="fill:rgb(107, 33, 168);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:8.5px;font-weight:400;text-anchor:middle;dominant-baseline:auto">img: "img/..."</text>
+  <!-- Returns MedlinePlus fields -->
+  <rect x="522" y="206" width="180" height="168" rx="6" fill="white" stroke="#67e8f9" stroke-width="1.5"/>
+  <text x="612" y="222" text-anchor="middle" font-size="10" font-weight="700" fill="#0e7490">Returns</text>
+  <rect x="532" y="228" width="160" height="14" rx="3" fill="#ecfeff"/>
+  <text x="612" y="239" text-anchor="middle" font-size="8.5" font-weight="700" fill="#155e75">considerations ← PRIMARY ★</text>
+  <text x="612" y="251" text-anchor="middle" font-size="7.5" fill="#06b6d4">(parsed from summary HTML, up to 10)</text>
+  <rect x="532" y="255" width="160" height="13" rx="3" fill="#ecfeff"/>
+  <text x="612" y="265" text-anchor="middle" font-size="8.5" fill="#155e75">userGuidelines.storage</text>
+  <rect x="532" y="271" width="160" height="13" rx="3" fill="#ecfeff"/>
+  <text x="612" y="281" text-anchor="middle" font-size="8.5" fill="#155e75">userGuidelines.pregnancy</text>
+  <rect x="532" y="287" width="160" height="13" rx="3" fill="#ecfeff"/>
+  <text x="612" y="297" text-anchor="middle" font-size="8.5" fill="#155e75">userGuidelines.interactions</text>
+  <rect x="532" y="303" width="160" height="13" rx="3" fill="#ecfeff"/>
+  <text x="612" y="313" text-anchor="middle" font-size="8.5" fill="#155e75">userGuidelines.importantNotes</text>
+  <rect x="532" y="319" width="160" height="13" rx="3" fill="#ecfeff"/>
+  <text x="612" y="329" text-anchor="middle" font-size="8.5" fill="#155e75">medlineplusUrl</text>
+  <rect x="532" y="335" width="160" height="13" rx="3" fill="#ecfeff"/>
+  <text x="612" y="345" text-anchor="middle" font-size="8.5" fill="#155e75">medlineplusTitle</text>
+  <text x="612" y="365" text-anchor="middle" font-size="7.5" fill="#64748b">fallback: original considerations if empty</text>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- OUTPUT LANE                                               -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+
+  <rect x="726" y="116" width="302" height="340" rx="7" fill="white" stroke="#fdba74" stroke-width="1.5"/>
+  <text x="877" y="136" text-anchor="middle" font-size="10" font-weight="700" fill="#c2410c">Final Object (per drug)</text>
+
+  <!-- Original fields (preserved via **med) -->
+  <text x="736" y="152" font-size="8" font-weight="700" fill="#64748b">ORIGINAL (preserved)</text>
+  <rect x="736" y="156" width="282" height="13" rx="3" fill="#f1f5f9"/>
+  <text x="877" y="167" text-anchor="middle" font-size="8.5" fill="#475569">id · name · tradeNames · category · description · sideEffects</text>
+
+  <!-- RXNorm fields -->
+  <text x="736" y="182" font-size="8" font-weight="700" fill="#15803d">RXNORM</text>
+  <rect x="736" y="186" width="282" height="13" rx="3" fill="#f0fdf4"/>
+  <text x="877" y="197" text-anchor="middle" font-size="8.5" fill="#166534">rxcui</text>
+  <rect x="736" y="202" width="282" height="13" rx="3" fill="#f0fdf4"/>
+  <text x="877" y="213" text-anchor="middle" font-size="8.5" fill="#166534">drugClasses</text>
+
+  <!-- FDA fields -->
+  <text x="736" y="228" font-size="8" font-weight="700" fill="#1d4ed8">FDA OPENFDA</text>
+  <rect x="736" y="232" width="282" height="13" rx="3" fill="#eff6ff"/>
+  <text x="877" y="243" text-anchor="middle" font-size="8.5" fill="#1e40af">fdaIndicationsUsage  (fallback: original description)</text>
+  <rect x="736" y="248" width="282" height="13" rx="3" fill="#eff6ff"/>
+  <text x="877" y="259" text-anchor="middle" font-size="8.5" fill="#1e40af">fdaWarnings</text>
+  <rect x="736" y="264" width="282" height="13" rx="3" fill="#eff6ff"/>
+  <text x="877" y="275" text-anchor="middle" font-size="8.5" fill="#1e40af">fdaDosage</text>
+
+  <!-- MedlinePlus fields -->
+  <text x="736" y="290" font-size="8" font-weight="700" fill="#0e7490">MEDLINEPLUS CONNECT ★</text>
+  <rect x="736" y="294" width="282" height="13" rx="3" fill="#ecfeff"/>
+  <text x="877" y="305" text-anchor="middle" font-size="8.5" font-weight="700" fill="#155e75">considerations  ← PRIMARY from MedlinePlus</text>
+  <rect x="736" y="310" width="282" height="13" rx="3" fill="#ecfeff"/>
+  <text x="877" y="321" text-anchor="middle" font-size="8.5" fill="#155e75">userGuidelines  {storage, pregnancy, interactions, importantNotes}</text>
+  <rect x="736" y="326" width="282" height="13" rx="3" fill="#ecfeff"/>
+  <text x="877" y="337" text-anchor="middle" font-size="8.5" fill="#155e75">medlineplusUrl · medlineplusTitle</text>
+
+  <!-- apiSources -->
+  <text x="736" y="352" font-size="8" font-weight="700" fill="#64748b">API SOURCES (tracking)</text>
+  <rect x="736" y="356" width="282" height="13" rx="3" fill="#fdf4ff"/>
+  <text x="877" y="367" text-anchor="middle" font-size="8.5" fill="#6b21a8">apiSources  {rxnorm, fda, medlineplus}</text>
 
   <!-- Repeat indicator -->
-  <rect x="756" y="316" width="108" height="24" rx="5" fill="#fef9c3" stroke="#fde047" stroke-width="1" style="fill:rgb(254, 249, 195);stroke:rgb(253, 224, 71);color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="810" y="330" text-anchor="middle" font-size="9" font-weight="700" fill="#854d0e" style="fill:rgb(133, 77, 14);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:9px;font-weight:700;text-anchor:middle;dominant-baseline:auto">× 500 drugs</text>
-  <text x="810" y="341" text-anchor="middle" font-size="8" fill="#a16207" style="fill:rgb(161, 98, 7);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:8px;font-weight:400;text-anchor:middle;dominant-baseline:auto">repeated per drug</text>
+  <rect x="736" y="390" width="282" height="24" rx="5" fill="#fef9c3" stroke="#fde047" stroke-width="1"/>
+  <text x="877" y="403" text-anchor="middle" font-size="9" font-weight="700" fill="#854d0e">× 540 drugs</text>
+  <text x="877" y="414" text-anchor="middle" font-size="8" fill="#a16207">loop repeated per drug</text>
 
-  <!-- Arrow: merge → output -->
-  <line x1="714" y1="427" x2="742" y2="427" stroke="#0f172a" stroke-width="2" marker-end="url(#arr-dark)" style="fill:rgb(0, 0, 0);stroke:rgb(15, 23, 42);color:rgb(0, 0, 0);stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <line x1="810" y1="440" x2="810" y2="395" stroke="#0f172a" stroke-width="2" style="fill:rgb(0, 0, 0);stroke:rgb(15, 23, 42);color:rgb(0, 0, 0);stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- MERGE ZONE                                                -->
+  <!-- ══════════════════════════════════════════════════════════ -->
 
-  <!-- ── Final JSON array ── -->
-  <rect x="158" y="475" width="556" height="50" rx="8" fill="#f97316" style="fill:rgb(249, 115, 22);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="436" y="497" text-anchor="middle" font-size="11" font-weight="700" fill="white" style="fill:rgb(255, 255, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:11px;font-weight:700;text-anchor:middle;dominant-baseline:auto">medications.json  —  Array of 500+ complete objects</text>
-  <text x="436" y="513" text-anchor="middle" font-size="9.5" fill="#ffedd5" style="fill:rgb(255, 237, 213);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:9.5px;font-weight:400;text-anchor:middle;dominant-baseline:auto">Checkpoint saved every 50 entries  ·  ~1,500 total API calls  ·  5–10 min runtime</text>
+  <rect x="134" y="420" width="576" height="62" rx="8" fill="#0f172a"/>
+  <text x="422" y="440" text-anchor="middle" font-size="11" font-weight="700" fill="white">MERGE — { ...med, RXNorm fields, FDA fields, MedlinePlus fields }</text>
+  <text x="422" y="456" text-anchor="middle" font-size="9" fill="#94a3b8">Original fields preserved · RXNorm · FDA openFDA · MedlinePlus Connect → single flat object per drug</text>
+  <text x="422" y="470" text-anchor="middle" font-size="8.5" fill="#64748b">considerations from MedlinePlus takes precedence · fdaIndicationsUsage falls back to original description if FDA returns null</text>
 
-  <!-- Arrow: merge → json -->
-  <line x1="436" y1="459" x2="436" y2="472" stroke="#f97316" stroke-width="2" marker-end="url(#arr-orange)" style="fill:rgb(0, 0, 0);stroke:rgb(249, 115, 22);color:rgb(0, 0, 0);stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <!-- Arrows from each lane into merge -->
+  <line x1="225" y1="376" x2="225" y2="418" stroke="#16a34a" stroke-width="2" marker-end="url(#arr-green)"/>
+  <line x1="415" y1="308" x2="415" y2="418" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <line x1="612" y1="374" x2="612" y2="418" stroke="#0891b2" stroke-width="2" marker-end="url(#arr-teal)"/>
 
-  <!-- Final to output lane -->
-  <line x1="714" y1="500" x2="742" y2="500" stroke="#f97316" stroke-width="1.5" stroke-dasharray="4,3" style="fill:rgb(0, 0, 0);stroke:rgb(249, 115, 22);color:rgb(0, 0, 0);stroke-width:1.5px;stroke-dasharray:4px, 3px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <!-- Arrow from merge → output -->
+  <line x1="710" y1="451" x2="722" y2="451" stroke="#0f172a" stroke-width="2" marker-end="url(#arr-dark)"/>
+  <line x1="877" y1="456" x2="877" y2="418" stroke="#0f172a" stroke-width="2"/>
 
-  <!-- ── LEGEND ── -->
-  <rect x="24" y="536" width="380" height="60" rx="6" fill="white" stroke="#e2e8f0" stroke-width="1" style="fill:rgb(255, 255, 255);stroke:rgb(226, 232, 240);color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="34" y="553" font-size="9.5" font-weight="700" fill="#374151" style="fill:rgb(55, 65, 81);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:9.5px;font-weight:700;text-anchor:start;dominant-baseline:auto">LEGEND</text>
-  <rect x="34" y="560" width="10" height="10" rx="2" fill="#dbeafe" style="fill:rgb(219, 234, 254);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="50" y="570" font-size="9" fill="#334155" style="fill:rgb(51, 65, 85);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:9px;font-weight:400;text-anchor:start;dominant-baseline:auto">OpenFDA data</text>
-  <rect x="110" y="560" width="10" height="10" rx="2" fill="#f0fdf4" style="fill:rgb(240, 253, 244);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="126" y="570" font-size="9" fill="#334155" style="fill:rgb(51, 65, 85);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:9px;font-weight:400;text-anchor:start;dominant-baseline:auto">RxNorm data</text>
-  <rect x="200" y="560" width="10" height="10" rx="2" fill="#fdf4ff" style="fill:rgb(253, 244, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="216" y="570" font-size="9" fill="#334155" style="fill:rgb(51, 65, 85);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:9px;font-weight:400;text-anchor:start;dominant-baseline:auto">Script generated</text>
-  <rect x="300" y="560" width="10" height="10" rx="2" fill="#fff7ed" style="fill:rgb(255, 247, 237);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
-  <text x="316" y="570" font-size="9" fill="#334155" style="fill:rgb(51, 65, 85);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:9px;font-weight:400;text-anchor:start;dominant-baseline:auto">Final output field</text>
-  <text x="34" y="587" font-size="8.5" fill="#64748b" style="fill:rgb(100, 116, 139);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, system-ui, sans-serif;font-size:8.5px;font-weight:400;text-anchor:start;dominant-baseline:auto">Each color = exclusive owner · No field written by two sources</text>
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- FINAL JSON OUTPUT                                         -->
+  <!-- ══════════════════════════════════════════════════════════ -->
 
-  <!-- ── ARROWHEAD DEFS ── -->
+  <rect x="134" y="496" width="880" height="50" rx="8" fill="#f97316"/>
+  <text x="574" y="517" text-anchor="middle" font-size="11" font-weight="700" fill="white">medications_enriched.json — Array of 540 complete objects</text>
+  <text x="574" y="533" text-anchor="middle" font-size="9" fill="#ffedd5">0.4s delay between calls · 3 calls per drug (4 if rxcui found) · ~15–20 min total runtime · --resume flag to continue interrupted runs</text>
+
+  <!-- Arrow merge → final JSON -->
+  <line x1="422" y1="482" x2="422" y2="494" stroke="#f97316" stroke-width="2" marker-end="url(#arr-orange)"/>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- LEGEND                                                    -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+
+  <rect x="16" y="562" width="680" height="56" rx="6" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="26" y="578" font-size="9.5" font-weight="700" fill="#374151">LEGEND</text>
+
+  <rect x="26"  y="585" width="10" height="10" rx="2" fill="#f0fdf4" stroke="#86efac" stroke-width="1"/>
+  <text x="42"  y="595" font-size="9" fill="#334155">RXNorm data</text>
+
+  <rect x="116" y="585" width="10" height="10" rx="2" fill="#eff6ff" stroke="#93c5fd" stroke-width="1"/>
+  <text x="132" y="595" font-size="9" fill="#334155">FDA openFDA data</text>
+
+  <rect x="236" y="585" width="10" height="10" rx="2" fill="#ecfeff" stroke="#67e8f9" stroke-width="1"/>
+  <text x="252" y="595" font-size="9" fill="#334155">MedlinePlus Connect data  ★ = primary source for considerations</text>
+
+  <rect x="516" y="585" width="10" height="10" rx="2" fill="#f1f5f9"/>
+  <text x="532" y="595" font-size="9" fill="#334155">Original field (preserved)</text>
+
+  <rect x="26" y="600" width="10" height="10" rx="2" fill="#fff7ed" stroke="#fdba74" stroke-width="1"/>
+  <text x="42" y="610" font-size="9" fill="#334155">Final output</text>
+  <text x="132" y="610" font-size="8.5" fill="#64748b">Each color = exclusive data owner · No field is written by two sources · MedlinePlus is authoritative for patient-facing considerations</text>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- ARROWHEAD DEFS                                            -->
+  <!-- ══════════════════════════════════════════════════════════ -->
   <defs>
-    <marker id="arr-dark" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+    <marker id="arr-dark"   markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
       <path d="M0,0 L0,6 L8,3 z" fill="#334155"/>
     </marker>
-    <marker id="arr-blue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-      <path d="M0,0 L0,6 L8,3 z" fill="#2563eb"/>
-    </marker>
-    <marker id="arr-green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+    <marker id="arr-green"  markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
       <path d="M0,0 L0,6 L8,3 z" fill="#16a34a"/>
     </marker>
-    <marker id="arr-purple" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-      <path d="M0,0 L0,6 L8,3 z" fill="#a855f7"/>
+    <marker id="arr-blue"   markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#2563eb"/>
+    </marker>
+    <marker id="arr-teal"   markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#0891b2"/>
     </marker>
     <marker id="arr-orange" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
       <path d="M0,0 L0,6 L8,3 z" fill="#f97316"/>

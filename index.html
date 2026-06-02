@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MedSearchPro — Medication Reference</title>
-  <meta name="description" content="Professional medication reference and search tool. Find reliable information on 30+ common medications." />
+  <meta name="description" content="Professional medication reference and search tool. Find reliable information on an expanding medication database." />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg width='38' height='32' viewBox='0 0 38 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M19 28 C14 22,2 18,4 8 C8 4,14 6,19 28Z' fill='%232d8a3e'/%3E%3Cpath d='M19 28 C24 22,36 18,34 8 C30 4,24 6,19 28Z' fill='%234caf50'/%3E%3C/svg%3E" />
   <style>
@@ -239,8 +239,8 @@
     <div class="glossary-banner-inner">
       <div><h1>Medication List</h1></div>
       <div class="glossary-banner-stats">
-        <div class="banner-stat"><div class="banner-stat-num" id="bannerCount">30</div><div class="banner-stat-label">Medications</div></div>
-        <div class="banner-stat"><div class="banner-stat-num">9</div><div class="banner-stat-label">Categories</div></div>
+        <div class="banner-stat"><div class="banner-stat-num" id="bannerCount">Loading</div><div class="banner-stat-label">Medications</div></div>
+        <div class="banner-stat"><div class="banner-stat-num" id="categoryCount">Loading</div><div class="banner-stat-label">Categories</div></div>
       </div>
     </div>
   </div>
@@ -271,7 +271,7 @@
       <div class="az-bar" id="azBar" aria-label="Filter by first letter"><span class="az-label">A–Z</span></div>
     </div>
     <div class="results-meta">
-      <div class="results-count" id="resultsHeading" aria-live="polite" role="status">Showing all 30 medications</div>
+      <div class="results-count" id="resultsHeading" aria-live="polite" role="status">Loading medications...</div>
       <label for="sortSelect" style="font-size:.7rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#64748b">Sort&nbsp;
         <select id="sortSelect" class="sort-select"><option value="name">A–Z Name</option><option value="category">Category</option></select>
       </label>
@@ -295,7 +295,7 @@
     <h3>Meet Parshan</h3>
     <p>As a student majoring in physiology, the inspiration for this website occurred when I witnessed my own family members struggling to comprehend their medication instructions. Watching them navigate through confusion and uncertainty motivated me to simplify medication instructions, promoting self-management of prescribed medications.</p>
     <h3>Our Mission</h3>
-    <p>At Med Search Pro, our aim is to ensure that medication information is comprehensible for patients of all backgrounds. Our simple medication search website provides patients with the tool to manage their own health by improving knowledge of medications and promoting health literacy. We designed a user-friendly medication search website featuring 30+ common medications to provide accessible and essential health information, bridging this gap.</p>
+    <p>At Med Search Pro, our aim is to ensure that medication information is comprehensible for patients of all backgrounds. Our simple medication search website provides patients with the tool to manage their own health by improving knowledge of medications and promoting health literacy. We designed a user-friendly medication search website featuring an expanding medication database to provide accessible and essential health information, bridging this gap.</p>
     <h3>Disclaimer</h3>
     <p>The content provided on this website is intended for general informational purposes only. It is not a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified healthcare provider with any questions you may have regarding a medical condition or the use of prescribed medications.</p>
   </div>
@@ -372,248 +372,50 @@ function heroSearch(q) {
 // ============================================================
 // MEDICATION DATABASE
 // ============================================================
-const MEDICATIONS = [
-  { id:1,  name:"Acetaminophen",     
-    imageUrl:"img/acetaminophen.jpg",
-    tradeNames:["Abenol","Acephen","Acet","Fortolin","Pediaphen","Pediatrix","Taminol","Tylenol"],
-    category:"Analgesic", icon:"💊",
-    description:"Relieves pain and reduces fever.",
-    sideEffects:["Nausea","Upset stomach","Skin rash (allergic reactions or sensitivity)","Renal failure (high doses)"],
-    considerations:["Follow recommended dosage. Avoid high doses or long-term use to prevent liver, renal, or cardiac damage.","Do not exceed maximum daily dosage or combine with alcohol or other acetaminophen-containing medications.","Consult healthcare professionals if liver problems or specific medical conditions are present."]
-  },
-  { id:2,  name:"Albuterol (Ventolin)",    
-    imageUrl:"img/albuterol.jpg",
-    tradeNames:["Accuneb","Airomir","Salbutamol","Ventolin"],
-    category:"Respiratory", icon:"🫁",
-    description:"Helps with breathing difficulties by relaxing airway muscles. The best choice for asthma or other breathing difficulty conditions.",
-    sideEffects:["Jitteriness","Increased or irregular heart rate","Chest pain","Headache","Hyperglycemia"],
-    considerations:["Consult with a healthcare professional before using during pregnancy or while breastfeeding.","Rinse mouth with water after each inhalation to minimize dry mouth.","Albuterol may cause temporary shakiness or nervousness.","Inform healthcare providers about any heart conditions or high blood pressure before taking.","Avoid using more frequently than prescribed. Do not double dose.","Inform your healthcare provider about all medications you are taking as Albuterol can interact with certain medications."]
-  },
-  { id:3,  name:"Amlodipine",
-    imageUrl:"img/amlodipine.jpg",
-    tradeNames:["Katerzia","Norliqva","Norvasc"],
-    category:"Cardiovascular", icon:"❤️",
-    description:"Treats high blood pressure and chest pain (angina) by relaxing blood vessels.",
-    sideEffects:["Swelling in ankles or feet","Dizziness","Drowsiness","Headache"],
-    considerations:["Take as prescribed by the healthcare provider.","Avoid sudden discontinuation. Take missed doses as soon as possible if within 12 hours; if more than 12 hours have passed, skip the dose.","Inform healthcare providers about any liver or heart problems.","Avoid grapefruit or grapefruit juice interactions.","Monitor blood pressure regularly and report any severe side effects promptly.","If pregnancy is suspected or expected, inform healthcare professional.","Maintain good dental hygiene to avoid bleeding and gum enlargement."]
-  },
-  { id:4,  name:"Amoxicillin", 
-    imageUrl:"img/amoxicillin.jpg",
-    tradeNames:["Amoxil","Trimox","Novamoxin"],
-    category:"Antibiotic", icon:"🧬",
-    description:"Treats bacterial infections like respiratory or urinary tract infections.",
-    sideEffects:["Nausea","Diarrhea","Rash","May lead to seizures"],
-    considerations:["Take as prescribed.","Complete the full course to ensure effectiveness.","Inform healthcare providers about allergies or previous reactions.","May interact with certain medications — inform the healthcare provider of all current medications.","If severe diarrhea or allergic reaction occurs, seek medical attention.","Report signs of superinfections (furry overgrowth on tongue, vaginal itching and discharge)."]
-  },
-  { id:5,  name:"Aspirin", 
-    imageUrl:"img/aspirin.jpg",
-    tradeNames:["Acuprin","Asaphen","Aspergum","Aspirtab","Entrophen","Lowprin","Novasen","Rivasa"],
-    category:"Analgesic", icon:"💊",
-    description:"Relieves pain, reduces inflammation, and lowers fever.",
-    sideEffects:["Upset stomach","Heartburn","Potential risk of GI bleeding","Allergic reaction"],
-    considerations:["Follow recommended dosage.","Take with food or milk to minimize stomach irritation.","Avoid alcohol and consult healthcare providers if taking other blood-thinning medications.","Not suitable for children or teenagers with viral infections.","Discontinue use before surgery.","Notify healthcare professionals if there is a suspected pregnancy.","Seek medical help if signs of allergic reactions or severe side effects occur."]
-  },
-  { id:6,  name:"Atorvastatin (Lipitor)", 
-    imageUrl:"img/atorvastatin.jpg",
-    tradeNames:[],
-    category:"Cardiovascular", icon:"❤️",
-    description:"Lowers cholesterol levels in the blood.",
-    sideEffects:["Muscle aches","Digestive issues (nausea or diarrhea)","Rash","Abdominal cramps","Heartburn","Allergic reactions"],
-    considerations:["Take as prescribed, preferably at the same time each day. Take the missed dose as soon as possible. If more than 12 hrs have passed, omit the dose.","Notify healthcare providers about any liver problems or muscle pain.","Grapefruit and its juice should be avoided as it can interfere with Atorvastatin.","Maintain a healthy lifestyle with diet restrictions (fat, cholesterol, alcohol), exercise, and cessation of smoking."]
-  },
-  { id:7,  name:"Entresto", 
-    imageUrl:"img/entresto.jpg",
-    tradeNames:[],
-    category:"Cardiovascular", icon:"❤️",
-    description:"Helps manage heart failure symptoms and improve survival.",
-    sideEffects:["Dizziness","Low blood pressure","Cough","High potassium levels in the blood"],
-    considerations:["Follow prescribed dosage. Do not skip doses and do not double dose.","Inform healthcare providers about medical history and current medications.","Restrict foods with high potassium levels unless directed by healthcare professional.","Report swelling of face, eyes, lips, or tongue to healthcare professionals.","Avoid using Entresto during pregnancy or breastfeeding.","Monitor blood pressure regularly.","Report any unusual symptoms or side effects promptly."]
-  },
-  { id:8,  name:"Gabapentin", 
-    imageUrl:"img/gabapentin.jpg",
-    tradeNames:["Gralise","Horizant","Neurontin"],
-    category:"Neurological", icon:"🧠",
-    description:"Used to treat certain types of seizures and nerve pain.",
-    sideEffects:["Dizziness","Drowsiness","Difficulty coordinating movements","Depression","Confusion"],
-    considerations:["Take missed doses as soon as possible. Do not double dose.","There is potential for dependence or withdrawal symptoms with long-term use.","Pregnant or breastfeeding women should consult with their healthcare provider before using gabapentin.","Gabapentin may cause respiratory depression; if this occurs seek medical attention immediately.","Due to possible drowsiness and dizziness, exercise caution when driving or operating machinery."]
-  },
-  { id:9,  name:"Ibuprofen (Advil)", 
-    imageUrl:"img/ibuprofen.jpg",
-    tradeNames:["Advil","Motrin"],
-    category:"Analgesic", icon:"💊",
-    description:"Used to relieve pain, reduce inflammation, and lower fever.",
-    sideEffects:["Upset stomach","Heartburn","Nausea","Vomiting","Headaches","Drowsiness"],
-    considerations:["Do not skip doses and do not double dose.","People with a history of stomach ulcers, kidney or liver problems, or cardiovascular conditions should use with caution.","Long-term or excessive use may increase the risk of heart attacks, strokes, and gastrointestinal bleeding.","Do not take for more than 10 days for pain or more than 3 days for fever.","Pregnant women should consult their doctor before taking ibuprofen, especially during the third trimester.","Individuals with asthma or allergies may be at higher risk of adverse reactions.","Avoid concurrent use of alcohol and aspirin without medical consultation."]
-  },
-  { id:10, name:"Jardiance",
-    imageUrl:"img/jardiance.jpg",
-    tradeNames:[],
-    category:"Antidiabetic", icon:"🩺",
-    description:"Used to treat type 2 diabetes by lowering blood sugar levels through increased glucose excretion in urine.",
-    sideEffects:["Urinary tract infections","Yeast infections","Increased urination","Kidney damage"],
-    considerations:["Take missed doses as soon as remembered and do not double dose.","May cause a decrease in blood pressure — be cautious if you have low blood pressure.","Stay adequately hydrated while taking Jardiance to prevent dehydration.","If pregnant or planning to become pregnant, consult with your doctor.","Discuss all other medications or supplements with your healthcare professional."]
-  },
-  { id:11, name:"Levothyroxine (Synthroid)",
-    imageUrl:"img/levothyroxine.jpg",
-    tradeNames:["Levoxyl","Synthroid","Levo-T","Eltroxin"],
-    category:"Other", icon:"💊",
-    description:"Used to treat an underactive thyroid gland by restoring normal levels of thyroid hormones in the body.",
-    sideEffects:["Headache","Nausea","Weight changes","Hair loss","Abdominal cramps","Heat intolerance"],
-    considerations:["Take consistently as prescribed and do not stop or change the dose without consulting a healthcare professional.","Levothyroxine may interact with certain medications — inform the doctor about all current medications.","Seek immediate medical attention if allergic reactions, chest pain, or rapid heartbeat occur.","Take on an empty stomach, at least 30 minutes to 1 hour before breakfast.","Should not be used for weight loss purposes.","Store in a cool, dry place away from direct sunlight."]
-  },
-  { id:12, name:"Lisinopril", 
-    imageUrl:"img/lisinopril.jpg",
-    tradeNames:["Prinvil","Qbrelis","Zestril"],
-    category:"Cardiovascular", icon:"❤️",
-    description:"Used to treat high blood pressure and heart failure.",
-    sideEffects:["Hyperkalemia","Dizziness","Cough","Headache","Fatigue","Abdominal pain"],
-    considerations:["Avoid salt substitutes containing potassium or foods with high levels of potassium.","Take missed doses as soon as possible. Do not double dose.","May cause allergic reactions such as swelling of the face, lips, or tongue — report immediately.","Regular kidney function tests may be needed.","Stay well-hydrated and avoid excessive sweating.","If diabetic, monitor blood glucose closely.","Inform the healthcare provider about lisinopril use before surgery or dental procedures."]
-  },
-  { id:13, name:"Loratadine",             
-    imageUrl:"img/loratadine.jpg",
-    tradeNames:[],
-    category:"Other", icon:"💊",
-    description:"An over-the-counter antihistamine used to relieve allergy symptoms like sneezing, runny nose, and itching.",
-    sideEffects:["Drowsiness","Dry mouth","Headache","Stomach upset"],
-    considerations:["Avoid alcohol.","Consult a doctor if pregnant or breastfeeding.","Be cautious while operating machinery due to potential drowsiness.","Individuals with liver or kidney disease may need to adjust the dosage."]
-  },
-  { id:14, name:"Losartan",       
-    imageUrl:"img/losartan.jpg",
-    tradeNames:["Alavert","Claritin","Loradamed"],
-    category:"Cardiovascular", icon:"❤️",
-    description:"Used to treat high blood pressure and certain heart conditions.",
-    sideEffects:["Dizziness","Headache","Fatigue","Dry mouth","GI upset","Blurry vision"],
-    considerations:["Avoid alcohol and other CNS depressants concurrent with this drug.","Pregnant women should not take Losartan as it can harm the unborn baby.","People with kidney or liver problems should consult their doctor.","Maintain good oral hygiene to minimize dry mouth.","Losartan may interact with certain medications — disclose all current medications.","If experiencing severe side effects or allergic reactions, seek immediate medical attention.","May cause dizziness or drowsiness — take caution when driving."]
-  },
-  { id:15, name:"Metformin",   
-    imageUrl:"img/metformin.jpg",
-    tradeNames:["Glucophage","Glycon","Riomet","Glumetza"],
-    category:"Antidiabetic", icon:"🩺",
-    description:"Used to treat type 2 diabetes by reducing glucose produced by the liver and improving insulin sensitivity.",
-    sideEffects:["Gastrointestinal issues","Nausea","Diarrhea","Stomach upset","Decrease in vitamin B12 levels"],
-    considerations:["Take at the same time each day. Do not double dose.","Inform your healthcare provider about any existing medical conditions such as kidney or liver problems.","Temporarily discontinuing Metformin might be required during medical procedures.","Alcohol consumption while on Metformin can increase the risk of lactic acidosis.","Avoid grapefruits as they can prevent the liver from breaking down the medication.","Follow a healthy lifestyle alongside the medication."]
-  },
-  { id:16, name:"Metoprolol (Lopressor)", 
-    imageUrl:"img/metoprolol.jpg",
-    tradeNames:["Lopresor SR","Toprol XL","Kapspargo Sprinkle"],
-    category:"Cardiovascular", icon:"❤️",
-    description:"Used to treat high blood pressure and heart-related conditions.",
-    sideEffects:["Tiredness","Dizziness","Fatigue","Slow heart rate","Cold hands or feet","Erectile dysfunction"],
-    considerations:["Do not stop or change the medication without medical guidance. Do not double dose.","If you have diabetes, monitor your blood sugar levels regularly.","Avoid consuming alcohol while taking Metoprolol.","If you experience difficulty breathing, swelling of the face or throat, or a rash, seek immediate medical attention."]
-  },
-  { id:17, name:"Naproxen",    
-    imageUrl:"img/naproxen.jpg",
-    tradeNames:["Aleve","Anaprox","Maxidol","Naprelan"],
-    category:"Analgesic", icon:"💊",
-    description:"Used to relieve pain, reduce inflammation, and lower fever.",
-    sideEffects:["Stomach discomfort","Nausea","Headache","Dizziness","Constipation","Drowsiness"],
-    considerations:["Take missed doses as soon as possible. Do not double dose.","Take with food or milk to minimize stomach issues.","Avoid alcohol, aspirin, and acetaminophen unless advised by healthcare professionals.","Pregnant women should avoid Naproxen, especially during the third trimester."]
-  },
-  { id:18, name:"Omeprazole", 
-    imageUrl:"img/omeprazole.jpg",
-    tradeNames:["Losec","PriLOSEC"],
-    category:"Gastrointestinal", icon:"🏥",
-    description:"Used to treat stomach and esophageal problems by reducing the amount of acid produced in the stomach.",
-    sideEffects:["Headache","Nausea","Diarrhea","Stomach pain"],
-    considerations:["Take medication for the full course of therapy. Do not double dose.","Avoid alcohol, aspirin, and food that may increase GI irritation.","Prolonged use may increase the risk of bone fractures and vitamin B12 deficiency.","May affect the absorption of certain nutrients like calcium, magnesium, and iron.","Generally not recommended during pregnancy or breastfeeding unless specifically prescribed."]
-  },
-  { id:19, name:"Ozempic",             
-    imageUrl:"img/ozempic.jpg",
-    tradeNames:["Wegovy","Rybelsus"],
-    category:"Antidiabetic", icon:"🩺",
-    description:"Used to treat type 2 diabetes by stimulating insulin production and reducing appetite.",
-    sideEffects:["Nausea","Vomiting","Constipation","Diarrhea","Fatigue","Headache","Dizziness"],
-    considerations:["If dose is missed, omit the dose and take the next dose the following day.","Regular monitoring of blood sugar levels and medical advice are crucial.","People with a history of pancreatitis or family history of medullary thyroid carcinoma should exercise caution.","Pregnant or breastfeeding women should consult their healthcare provider before using Ozempic."]
-  },
-  { id:20, name:"Pantoprazole",            
-    imageUrl:"img/pantoprazole.jpg",
-    tradeNames:["Pantoloc","Tecta","Protonix"],
-    category:"Gastrointestinal", icon:"🏥",
-    description:"Used to reduce stomach acid production.",
-    sideEffects:["Headache","Nausea","Stomach pain","Hyperglycemia","Vitamin B12 deficiency"],
-    considerations:["Take medication for the complete course of therapy.","Avoid alcohol, aspirin, and food that may cause GI irritation.","Long-term use may increase the risk of fractures or nutrient deficiencies.","Patients with liver or kidney problems should use with caution."]
-  },
-  { id:21, name:"Plan B",                 
-    imageUrl:"img/planb.jpg",
-    tradeNames:["Solia","Isibloom","Desogen-28","Enskyce"],
-    category:"Other", icon:"💊",
-    description:"An emergency contraceptive pill that prevents ovulation. Can prevent pregnancy if taken within 72 hours after unprotected sex or birth control failure.",
-    sideEffects:["Nausea","Vomiting","Fatigue","Changes in menstrual cycle","Depression","Headache","Hyperglycemia","Rash"],
-    considerations:["If a single dose is missed take as soon as remembered.","Sudden discontinuation may cause withdrawal bleeding.","Does not protect against sexually transmitted infections.","Not intended for regular birth control use.","May be less effective for people with higher body weight.","Does not harm an existing pregnancy."]
-  },
-  { id:22, name:"Prednisone",
-    imageUrl:"img/prednisone.jpg",
-    tradeNames:["Rayos","Sterapred","Winipred"],
-    category:"Other", icon:"💊",
-    description:"Used to treat inflammation and suppress the immune system.",
-    sideEffects:["Weight gain","Weight loss","Mood changes","Acne","High blood pressure","Decreased wound healing","Increased appetite","Muscle wasting","Osteoporosis"],
-    considerations:["Take missed doses as soon as you remember. Do not double dose.","Take the medication with food.","Individuals are more susceptible to infections while on Prednisone.","Long-term use may lead to bone loss and muscle weakness.","Do not abruptly stop Prednisone after prolonged use — it should be tapered off under medical supervision."]
-  },
-  { id:23, name:"Ramipril",            
-    imageUrl:"img/ramipril.jpg",
-    tradeNames:["Altace"],
-    category:"Cardiovascular", icon:"❤️",
-    description:"Used to treat high blood pressure and heart failure by relaxing blood vessels.",
-    sideEffects:["Dizziness","Cough","Hyperkalemia","Low blood pressure"],
-    considerations:["Take missed doses as soon as remembered. Do not double dose.","Avoid excessive alcohol consumption while on Ramipril.","If you experience swelling of the face, lips, tongue, or throat, seek immediate medical attention.","Do not abruptly stop taking Ramipril without consulting your doctor.","Generally not recommended during pregnancy or while breastfeeding.","Try to avoid salt substitutes containing potassium or food with high potassium."]
-  },
-  { id:24, name:"Rosuvastatin",  
-    imageUrl:"img/rosuvastatin.jpg",
-    tradeNames:["Crestor","Ezallor Sprinkle"],
-    category:"Cardiovascular", icon:"❤️",
-    description:"Lowers cholesterol and reduces the risk of heart-related problems.",
-    sideEffects:["Muscle pain","Headache","Abdominal pain","Nausea","Constipation"],
-    considerations:["Take as prescribed. Do not double dose and do not skip doses.","Notify healthcare providers of any liver disease or other medical conditions.","Avoid grapefruit or grapefruit juice.","Avoid excessive alcohol consumption.","Monitor for muscle pain or weakness.","Report any signs of liver injury (fatigue, anorexia, jaundice, dark urine).","Follow a diet with restrictions and an exercise routine.","Avoid breastfeeding during therapy."]
-  },
-  { id:25, name:"Simvastatin",     
-    imageUrl:"img/simvastatin.jpg",
-    tradeNames:["FloLipid","Zocor"],
-    category:"Cardiovascular", icon:"❤️",
-    description:"Lowers cholesterol and reduces the risk of heart-related problems.",
-    sideEffects:["Muscle pain","Headache","Abdominal pain","Constipation","Heartburn","Rash"],
-    considerations:["Take as prescribed. Do not skip doses and do not double dose.","Avoid drinking more than 1 quart of grapefruit juice per day.","Notify healthcare providers of any liver disease or other medical conditions.","Avoid excessive alcohol consumption.","Monitor for muscle pain or weakness.","Follow a diet with restrictions and an exercise routine.","Avoid breastfeeding during therapy."]
-  },
-  { id:26, name:"Spironolactone",  
-    imageUrl:"img/spironolactone.jpg",
-    tradeNames:["Aldactone","Carospir"],
-    category:"Cardiovascular", icon:"❤️",
-    description:"Used to treat conditions like high blood pressure and fluid retention.",
-    sideEffects:["Dizziness","Nausea","Hyperkalemia","Sexual dysfunction","GI irritation","Increased urination"],
-    considerations:["Take missed doses as soon as remembered. Do not double dose.","May cause hormonal changes such as breast tenderness or menstrual irregularities.","Can increase the risk of high potassium levels.","Pregnant women should avoid using spironolactone.","May interact with ACE inhibitors, potassium supplements, or NSAIDs.","Should be used with caution in individuals with liver disease."]
-  },
-  { id:27, name:"Tamsulosin",    
-    imageUrl:"img/tamsulosin.jpg",
-    tradeNames:["Flomax"],
-    category:"Other", icon:"💊",
-    description:"Used to treat symptoms of an enlarged prostate gland in men by relaxing muscles in the prostate and bladder neck.",
-    sideEffects:["Dizziness","Headache","Runny nose","Abnormal ejaculation"],
-    considerations:["Take doses at the same time each day. Do not double dose.","May cause a drop in blood pressure, leading to dizziness or fainting.","Before any surgery including dental procedures, inform the healthcare provider about Tamsulosin use.","Tamsulosin is specifically for men and should not be used by women or children."]
-  },
-  { id:28, name:"Viagra",    
-    imageUrl:"img/viagra.jpg",
-    tradeNames:["Revatio"],
-    category:"Other", icon:"💊",
-    description:"Used to treat erectile dysfunction in men by increasing blood flow to the penis.",
-    sideEffects:["Headaches","Flushing","Upset stomach","Vision loss","Stuffy or runny nose"],
-    considerations:["Take 1 hour before sexual activity and not more than once per day.","Should not be taken by individuals with heart problems or low blood pressure.","Grapefruit and grapefruit juice should be avoided.","Alcohol consumption should be moderate or avoided.","If experiencing sudden vision loss or hearing problems, seek medical attention immediately.","Seek immediate medical help if an erection lasts longer than four hours."]
-  },
-  { id:29, name:"Warfarin",      
-    imageUrl:"img/warfarin.jpg",
-    tradeNames:[],
-    category:"Cardiovascular", icon:"❤️",
-    description:"A medication that helps prevent blood clotting.",
-    sideEffects:["Bruising","Bleeding","Stomach upset"],
-    considerations:["Warfarin can interact with many medications, including over-the-counter drugs and herbal supplements — inform all healthcare providers.","Consistent intake is crucial, as missing or altering doses can affect its effectiveness.","Avoid activities that carry a high risk of injury or bleeding.","Pregnant women should consult with their doctor as Warfarin can pose risks to the developing fetus."]
-  },
-  { id:30, name:"Wellbutrin",    
-    imageUrl:"img/wellbutrin.jpg",
-    tradeNames:["Aplenzin","Zyban","Forfivo XL"],
-    category:"Psychiatric", icon:"🧠",
-    description:"An antidepressant medication used to treat depression and help quit smoking.",
-    sideEffects:["Headache","Nausea","Vomiting","Tremor","Agitation","Dry mouth","Insomnia","Dizziness","Depression","Suicidal thoughts or behaviour"],
-    considerations:["Missed doses should be omitted — do not double dose.","Should not be abruptly stopped, as it may lead to withdrawal symptoms.","Individuals with a history of seizures or eating disorders should exercise caution.","It may take several weeks for the full effects to be noticeable.","May interact with other medications including MAOIs.","Some individuals may experience mood changes or an increase in suicidal thoughts when starting. Close monitoring is essential."]
+let MEDICATIONS = [];
+let medicationsLoaded = false;
+
+async function loadMedications() {
+  try {
+    // Root-relative path works correctly on Vercel when medications.json is in the public/root folder.
+    const response = await fetch("/medications.json", { cache: "no-store" });
+    if (!response.ok) {
+      throw new Error(`Could not load /medications.json. Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    if (!Array.isArray(data)) {
+      throw new Error("medications.json must be an array of medication objects.");
+    }
+
+    MEDICATIONS = data;
+    medicationsLoaded = true;
+    initGlossary();
+  } catch (err) {
+    console.error("Failed to load medications.json:", err);
+
+    const heading = document.getElementById("resultsHeading");
+    const banner = document.getElementById("bannerCount");
+    const categoryStat = document.getElementById("categoryCount");
+    const grid = document.getElementById("resultsGrid");
+    const empty = document.getElementById("emptyState");
+
+    if (heading) heading.textContent = "Medication data could not be loaded";
+    if (banner) banner.textContent = "0";
+    if (categoryStat) categoryStat.textContent = "0";
+    if (grid) grid.innerHTML = "";
+    if (empty) {
+      empty.style.display = "block";
+      empty.innerHTML = `
+        <div class="empty-icon" aria-hidden="true">⚠️</div>
+        <h3>Medication data could not be loaded</h3>
+        <p>Please confirm that <strong>medications.json</strong> is deployed in the same public/root folder as this page.</p>
+      `;
+    }
   }
-];
+}
+
+loadMedications();
 
 // ============================================================
 // CATEGORY STYLE MAP
@@ -640,13 +442,36 @@ const speechSynth=window.speechSynthesis;
 // ============================================================
 // INIT
 // ============================================================
-function initGlossary(){renderCards(MEDICATIONS);setupSearch();setupFilters();setupSort();setupModal();buildAZBar();}
+function initGlossary(){
+  if (!medicationsLoaded) return;
+  updateStaticCounts();
+  setupSearch();
+  setupFilters();
+  setupSort();
+  setupModal();
+  buildAZBar();
+  filterAndRender();
+}
+
+function updateStaticCounts(){
+  const total = MEDICATIONS.length;
+  const categoryCount = new Set(MEDICATIONS.map(m => m.category || "Other")).size;
+  const bannerCount = document.getElementById("bannerCount");
+  const categoryStat = document.getElementById("categoryCount");
+  const heading = document.getElementById("resultsHeading");
+
+  if (bannerCount) bannerCount.textContent = total;
+  if (categoryStat) categoryStat.textContent = categoryCount;
+  if (heading) heading.textContent = `Showing all ${total} medications`;
+}
 
 // ============================================================
 // SEARCH — prefix-first ranking
 // ============================================================
 function setupSearch(){
   const si=document.getElementById("searchInput");
+  if (!si || si.dataset.bound === "true") return;
+  si.dataset.bound = "true";
   si.addEventListener("input",()=>{currentQuery=si.value.trim().toLowerCase();filterAndRender();});
 }
 
@@ -661,18 +486,18 @@ function filterAndRender(){
     const byName=currentSort==="name";
     results=pool.sort((a,b)=>byName?a.name.localeCompare(b.name):a.category.localeCompare(b.category)||a.name.localeCompare(b.name));
   } else {
-    const t1=pool.filter(d=>d.name.toLowerCase().startsWith(q));
+    const t1=pool.filter(d=>(d.name || "").toLowerCase().startsWith(q));
     if(t1.length>0){
       results=t1.sort((a,b)=>a.name.localeCompare(b.name));
     } else {
       const scored=pool.map(d=>{
-        const n=d.name.toLowerCase(), tr=d.tradeNames.map(t=>t.toLowerCase());
+        const n=(d.name || "").toLowerCase(), tr=(d.tradeNames || []).map(t=>String(t).toLowerCase());
         if(tr.some(t=>t.startsWith(q)))                                          return{d,s:3};
         if(n.includes(q))                                                         return{d,s:2};
         if(tr.some(t=>t.includes(q)))                                             return{d,s:1};
-        if(d.category.toLowerCase().includes(q)||d.description.toLowerCase().includes(q)||
-           d.sideEffects.some(s=>s.toLowerCase().includes(q))||
-           d.considerations.some(c=>c.toLowerCase().includes(q)))                 return{d,s:0};
+        if((d.category || "").toLowerCase().includes(q)||(d.description || "").toLowerCase().includes(q)||
+           (d.sideEffects || []).some(s=>String(s).toLowerCase().includes(q))||
+           (d.considerations || []).some(c=>String(c).toLowerCase().includes(q)))                 return{d,s:0};
         return{d,s:-1};
       }).filter(x=>x.s>=0);
       const byName=currentSort==="name";
@@ -701,9 +526,11 @@ function renderCards(drugs){
   if(empty)empty.style.display="none";
   grid.innerHTML=drugs.map(d=>{
     const cs=catStyle(d.category);
-    const tradeLine=d.tradeNames.length?d.tradeNames.join("  ·  "):'<em style="color:#94a3b8">No trade names listed</em>';
-    const seTags=d.sideEffects.slice(0,4).map(s=>`<span class="card-se-tag">${s}</span>`).join("")+
-      (d.sideEffects.length>4?`<span class="card-se-tag" style="background:#f1f5f9;color:#64748b;border-color:#e2e8f0">+${d.sideEffects.length-4} more</span>`:"");
+    const tradeNames = d.tradeNames || [];
+    const sideEffects = d.sideEffects || [];
+    const tradeLine=tradeNames.length?tradeNames.join("  ·  "):'<em style="color:#94a3b8">No trade names listed</em>';
+    const seTags=sideEffects.slice(0,4).map(s=>`<span class="card-se-tag">${s}</span>`).join("")+
+      (sideEffects.length>4?`<span class="card-se-tag" style="background:#f1f5f9;color:#64748b;border-color:#e2e8f0">+${sideEffects.length-4} more</span>`:"");
     return`<article class="drug-card" role="listitem" tabindex="0" aria-label="${d.name}, ${d.category}" data-id="${d.id}" style="border-left-color:${cs.border}">
       <div class="card-header">
         <div class="card-name-group"><div class="card-name">${d.name}</div><div class="card-trade">${tradeLine}</div></div>
@@ -732,7 +559,8 @@ function renderCards(drugs){
 // ============================================================
 function buildAZBar(){
   const bar=document.getElementById("azBar"); if(!bar)return;
-  const available=new Set(MEDICATIONS.map(d=>d.name[0].toUpperCase()));
+  bar.innerHTML = '<span class="az-label">A–Z</span>';
+  const available=new Set(MEDICATIONS.map(d=>(d.name || "?")[0].toUpperCase()));
   "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").forEach(l=>{
     const btn=document.createElement("button");
     btn.className="az-btn"; btn.textContent=l;
@@ -752,6 +580,8 @@ function buildAZBar(){
 // ============================================================
 function setupFilters(){
   document.querySelectorAll(".filter-chip").forEach(chip=>{
+    if (chip.dataset.bound === "true") return;
+    chip.dataset.bound = "true";
     chip.addEventListener("click",()=>{
       document.querySelectorAll(".filter-chip").forEach(c=>{c.classList.remove("active");c.setAttribute("aria-pressed","false");});
       chip.classList.add("active");chip.setAttribute("aria-pressed","true");
@@ -760,7 +590,12 @@ function setupFilters(){
     chip.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();chip.click();}});
   });
 }
-function setupSort(){document.getElementById("sortSelect").addEventListener("change",e=>{currentSort=e.target.value;filterAndRender();});}
+function setupSort(){
+  const sort = document.getElementById("sortSelect");
+  if (!sort || sort.dataset.bound === "true") return;
+  sort.dataset.bound = "true";
+  sort.addEventListener("change",e=>{currentSort=e.target.value;filterAndRender();});
+}
 
 // (image URLs are embedded directly in each medication object)
 
@@ -768,9 +603,20 @@ function setupSort(){document.getElementById("sortSelect").addEventListener("cha
 // MODAL
 // ============================================================
 function setupModal(){
-  document.getElementById("modalClose").addEventListener("click",closeModal);
-  document.getElementById("modalOverlay").addEventListener("click",e=>{if(e.target===document.getElementById("modalOverlay"))closeModal();});
-  document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();});
+  const closeBtn = document.getElementById("modalClose");
+  const overlay = document.getElementById("modalOverlay");
+  if (closeBtn && closeBtn.dataset.bound !== "true") {
+    closeBtn.dataset.bound = "true";
+    closeBtn.addEventListener("click",closeModal);
+  }
+  if (overlay && overlay.dataset.bound !== "true") {
+    overlay.dataset.bound = "true";
+    overlay.addEventListener("click",e=>{if(e.target===overlay)closeModal();});
+  }
+  if (!window._modalEscapeBound) {
+    window._modalEscapeBound = true;
+    document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();});
+  }
 }
 
 function openModal(id){
@@ -802,17 +648,20 @@ function openModal(id){
     noneEl.style.display = "block";
   }
 
-  const considHTML=d.considerations.map((c,i)=>`
+  const tradeNames = d.tradeNames || [];
+  const sideEffects = d.sideEffects || [];
+  const considerations = d.considerations || [];
+  const considHTML=considerations.map((c,i)=>`
     <div class="consideration-item">
       <span class="consideration-num">${String(i+1).padStart(2,"0")}</span>
       <p>${c}</p>
     </div>`).join("");
-  const tradeHTML=d.tradeNames.length?`<div class="modal-section"><div class="modal-section-label">Trade Names</div><div class="tag-list">${d.tradeNames.map(t=>`<span class="tag trade">${t}</span>`).join("")}</div></div>`:"";
+  const tradeHTML=tradeNames.length?`<div class="modal-section"><div class="modal-section-label">Trade Names</div><div class="tag-list">${tradeNames.map(t=>`<span class="tag trade">${t}</span>`).join("")}</div></div>`:"";
 
   document.getElementById("modalBody").innerHTML=`
     <div class="modal-section"><div class="modal-section-label">Description</div><p>${d.description}</p></div>
     ${tradeHTML}
-    <div class="modal-section"><div class="modal-section-label">Adverse Effects</div><div class="tag-list">${d.sideEffects.map(s=>`<span class="tag warning">${s}</span>`).join("")}</div></div>
+    <div class="modal-section"><div class="modal-section-label">Adverse Effects</div><div class="tag-list">${sideEffects.map(s=>`<span class="tag warning">${s}</span>`).join("")}</div></div>
     <div class="modal-section"><div class="modal-section-label">Clinical Considerations</div><div class="consideration-list">${considHTML}</div></div>
     <div class="modal-section" style="border-top:1px solid #f1f5f9;padding-top:20px">
       <button class="read-aloud-btn" id="readAloudBtn" aria-label="Read this medication information aloud">🔊&nbsp; Read Aloud</button>
@@ -844,10 +693,13 @@ function closeModal(){
 // ============================================================
 function readAloud(d){
   if(!speechSynth)return;speechSynth.cancel();
-  const trades=d.tradeNames.length?`Also known as: ${d.tradeNames.join(", ")}.`:"";
+  const tradeNames = d.tradeNames || [];
+  const sideEffects = d.sideEffects || [];
+  const considerations = d.considerations || [];
+  const trades=tradeNames.length?`Also known as: ${tradeNames.join(", ")}.`:"";
   const text=[`${d.name}. ${trades}`,`Category: ${d.category}.`,d.description,
-    `Common side effects: ${d.sideEffects.join(", ")}.`,
-    `Considerations: ${d.considerations.join(" ")}`,
+    `Common side effects: ${sideEffects.join(", ")}.`,
+    `Considerations: ${considerations.join(" ")}`,
     "Always consult your healthcare provider before taking any medication."].join(" ");
   const utt=new SpeechSynthesisUtterance(text);
   utt.rate=0.88;utt.pitch=1;utt.lang="en-US";

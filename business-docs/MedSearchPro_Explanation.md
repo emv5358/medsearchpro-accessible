@@ -9,10 +9,10 @@
 - Every medication page shows:
   - What the medication is used for
   - Common side effects
-  - Important things to be careful about
+  - Important things to be careful about — written in plain patient-friendly language
 - The website works on **any device** — phone, tablet, or computer
 - No login, no subscription, completely free to use
-- Information comes from **official government sources** (FDA)
+- Information comes from **official government sources** — the FDA, the National Library of Medicine (RXNorm), and MedlinePlus (NIH)
 - Designed so that patients leaving the hospital can look up their medications easily
 - Built by two students — Hasti (nursing) and Parshan (physiology) — who saw firsthand how confusing medication instructions can be
 
@@ -22,13 +22,14 @@
 ### For Academic / Professors
 
 - Built a **single-page web application** using HTML, CSS, and JavaScript — no frameworks required
-- **Data source:** 30 common medications manually curated from the official FDA dataset, with plans to expand to 500+ using automated API queries
+- **Data source:** 540 medications enriched from three official government APIs: FDA openFDA, RXNorm (NLM), and MedlinePlus Connect (NIH)
 - **Search system:** Real-time prefix-first search — results update as the user types, with name matches ranked highest
 - **Filtering:** Users can filter by 9 drug categories (Analgesic, Cardiovascular, Antidiabetic, etc.) and browse alphabetically using an A–Z index
 - **Detail view:** Each medication opens a modal showing full clinical information — description, trade names, adverse effects, and numbered clinical considerations
 - **Medication images:** Sourced from Wikimedia Commons using the public Wikipedia API, displayed in each detail view
 - **Accessibility:** Includes screen reader support (ARIA live regions), keyboard navigation, and a Read Aloud feature powered by the browser's Web Speech API
-- **Data pipeline:** A Python script queries the OpenFDA Drug Label API and RxNorm API to automatically generate a structured JSON dataset of 500+ medications
+- **Data pipeline:** A Python script (`enrich_medications.py`) queries RXNorm, FDA openFDA, and MedlinePlus Connect in sequence to automatically enrich a structured JSON dataset of 540 medications
+- **Considerations field:** Patient-friendly considerations and user guidelines are sourced exclusively from **MedlinePlus Connect** — the NIH's patient-facing drug information service
 - **No backend required:** Entire application runs client-side — can be deployed as a static website or opened directly as an HTML file
 
 ---
@@ -58,11 +59,33 @@
   "name": "Acetaminophen",
   "tradeNames": ["Tylenol", "Panadol"],
   "category": "Analgesic",
-  "icon": "💊",
-  "img": "img/acetaminophen.jpg",
   "description": "Relieves pain and reduces fever.",
   "sideEffects": ["Nausea", "Liver damage in high doses"],
-  "considerations": ["Follow recommended dosage.", "Avoid alcohol."]
+
+  "rxcui": "161",
+  "drugClasses": ["Anilides", "Antipyretics"],
+
+  "fdaIndicationsUsage": "Temporarily relieves minor aches and pains...",
+  "fdaWarnings": "Liver warning: This product contains acetaminophen...",
+  "fdaDosage": "Adults and children 12 years and over: take 2 caplets...",
+
+  "considerations": [
+    "Take acetaminophen exactly as directed on the label.",
+    "Do not take more acetaminophen than recommended."
+  ],
+  "userGuidelines": {
+    "storage": "Store at room temperature between 68–77°F...",
+    "pregnancy": "Tell your doctor if you are pregnant...",
+    "interactions": "Avoid alcohol while taking acetaminophen...",
+    "importantNotes": "In case of overdose, contact Poison Control immediately."
+  },
+  "medlineplusUrl": "https://medlineplus.gov/druginfo/meds/a681004.html",
+  "medlineplusTitle": "Acetaminophen",
+  "apiSources": {
+    "rxnorm": "https://rxnav.nlm.nih.gov/REST/approximateTerm.json?term=Acetaminophen",
+    "fda": "https://api.fda.gov/drug/label.json?search=openfda.generic_name:Acetaminophen",
+    "medlineplus": "https://medlineplus.gov/druginfo/meds/a681004.html"
+  }
 }
 ```
 
@@ -71,21 +94,23 @@
 - Wikimedia Commons fallback via `Special:FilePath` redirect URL
 - `onerror` handler on `<img>` shows "No image available" gracefully
 
-#### Data Pipeline (Python)
-- **Input:** 500+ seed drug names (hand-curated list)
-- **Step 1:** Query OpenFDA `/drug/label.json` → extracts `indications_and_usage`, `adverse_reactions`, `warnings_and_cautions`, `precautions`
-- **Step 2:** Query RxNorm `/rxcui` + `/related?tty=BN` → resolves brand names
-- **Step 3:** Auto-classify category using keyword matching rules against drug name + description
-- **Step 4:** Clean text (strip HTML tags, truncate, split into bullet arrays)
-- **Output:** `medications.json` — array of structured medication objects
-- Checkpoint save every 50 entries; rate-limited to 0.25s per request
+#### Data Pipeline (Python — `enrich_medications.py`)
+- **Input:** `medications.json` — 540 seed drug records
+- **Step 1 — RXNorm Approximate Match:** Query `/REST/approximateTerm.json?term=...&maxEntries=1&option=0` → resolves canonical `rxcui`
+- **Step 2 — RXNorm Drug Class:** Query `/REST/rxclass/class/byRxcui.json?rxcui=...&relaSource=ATC` → extracts `drugClasses` (ATC classification, capped at 3); skipped if Step 1 returns no rxcui
+- **Step 3 — FDA openFDA Drug Label:** Query `/drug/label.json?search=openfda.generic_name:"..."&limit=1` → extracts `fdaIndicationsUsage` (indications_and_usage), `fdaWarnings` (warnings / warnings_and_cautions), `fdaDosage` (dosage_and_administration); each field capped at 2,000 characters
+- **Step 4 — MedlinePlus Connect ★ PRIMARY:** Query `connect.medlineplus.gov/service` using rxcui (RxNorm OID) when available, otherwise drug name → parses summary HTML to extract `considerations` (up to 10 patient-friendly sentences), `userGuidelines` (storage, pregnancy, interactions, importantNotes), `medlineplusUrl`, `medlineplusTitle`
+- **Merge:** All API results merged into a single flat object per drug via `{ **original, rxnorm_fields, fda_fields, medlineplus_fields }`; `considerations` from MedlinePlus takes precedence over original; `fdaIndicationsUsage` falls back to original `description` if FDA returns null
+- **Output:** `medications_enriched.json` — array of 540 complete objects
+- Rate-limited to **0.4s delay between API calls**; supports `--limit N` for testing and `--resume` to skip already-enriched entries
 
 #### APIs Used
 | API | Endpoint | Purpose |
 |-----|----------|---------|
-| OpenFDA | `api.fda.gov/drug/label.json` | Drug label data |
-| RxNorm | `rxnav.nlm.nih.gov/REST/rxcui` | Drug normalization |
-| RxNorm | `rxnav.nlm.nih.gov/REST/rxcui/{id}/related` | Brand names |
+| RXNorm | `rxnav.nlm.nih.gov/REST/approximateTerm.json` | Resolve canonical rxcui from drug name |
+| RXNorm | `rxnav.nlm.nih.gov/REST/rxclass/class/byRxcui.json` | ATC drug classification |
+| FDA openFDA | `api.fda.gov/drug/label.json` | Indications, warnings, dosage |
+| MedlinePlus Connect | `connect.medlineplus.gov/service` | Patient-friendly considerations and user guidelines ★ |
 | Wikimedia | `commons.wikimedia.org/wiki/Special:FilePath/` | Medication images |
 
 #### Accessibility Features

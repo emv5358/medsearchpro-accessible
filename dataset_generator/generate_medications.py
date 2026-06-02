@@ -1,419 +1,348 @@
 """
-MedSearchPro — Medication Dataset Generator
-============================================
-Queries free public APIs to build a 500+ medication JSON dataset.
+enrich_medications.py
+=====================
+Enriches medications.json with data from three APIs:
 
-APIs used:
-  • RxNorm  (rxnav.nlm.nih.gov)  — drug names, RxCUI, brand↔generic mapping
-  • OpenFDA (api.fda.gov)         — indications, warnings, side effects, interactions
-  • DailyMed (dailymed.nlm.nih.gov) — official FDA package inserts
+  1. RXNorm  – canonical drug identifier (rxcui) and drug class
+  2. FDA openFDA  – structured label data (warnings, dosage, indications)
+  3. MedlinePlus Connect  – patient-friendly considerations / user guidelines
+                           (this is the PRIMARY source for `considerations`)
 
-Run:
-    pip install requests
-    python generate_medications.py
+Usage
+-----
+  python enrich_medications.py                  # enriches all 540 drugs
+  python enrich_medications.py --limit 10       # quick test on first 10 drugs
+  python enrich_medications.py --resume         # skip already-enriched entries
 
-Output:
-    medications.json  (same folder)
+Output
+------
+  medications_enriched.json   (same folder as this script)
+
+API references
+--------------
+  RXNorm:       https://lhncbc.nlm.nih.gov/RxNav/APIs/api-RxNorm.getApproximateMatch.html
+  openFDA:      https://open.fda.gov/apis/drug/label/
+  MedlinePlus:  https://medlineplus.gov/medlineplus-connect/web-service/
 """
 
-import requests
 import json
 import time
-import re
-import os
+import argparse
+import urllib.request
+import urllib.parse
+import urllib.error
+from pathlib import Path
 
-OUTPUT_FILE = "medications.json"
+# ── paths ──────────────────────────────────────────────────────────────────
+HERE = Path(__file__).parent
+INPUT_FILE  = HERE / "medications.json"
+OUTPUT_FILE = HERE / "medications_enriched.json"
 
-# ── Broad list of common generic drug names to seed the query ────────────────
-# RxNorm will be used to resolve these into full records.
-SEED_DRUGS = [
-    "acetaminophen","ibuprofen","aspirin","naproxen","diclofenac","celecoxib","meloxicam",
-    "indomethacin","ketoprofen","piroxicam","ketorolac",
-    "amoxicillin","ampicillin","azithromycin","clarithromycin","doxycycline","tetracycline",
-    "ciprofloxacin","levofloxacin","moxifloxacin","metronidazole","clindamycin","trimethoprim",
-    "sulfamethoxazole","nitrofurantoin","cephalexin","cefuroxime","ceftriaxone","cefdinir",
-    "penicillin","vancomycin","linezolid","rifampin","isoniazid","ethambutol","pyrazinamide",
-    "fluconazole","itraconazole","voriconazole","clotrimazole","miconazole","terbinafine",
-    "acyclovir","valacyclovir","oseltamivir","remdesivir",
-    "lisinopril","enalapril","ramipril","captopril","perindopril","trandolapril",
-    "amlodipine","nifedipine","diltiazem","verapamil","felodipine",
-    "metoprolol","atenolol","carvedilol","bisoprolol","propranolol","labetalol","nebivolol",
-    "losartan","valsartan","olmesartan","irbesartan","candesartan","telmisartan","azilsartan",
-    "furosemide","hydrochlorothiazide","chlorthalidone","spironolactone","eplerenone",
-    "atorvastatin","rosuvastatin","simvastatin","pravastatin","lovastatin","fluvastatin","pitavastatin",
-    "warfarin","apixaban","rivaroxaban","dabigatran","edoxaban","clopidogrel","ticagrelor","prasugrel",
-    "digoxin","amiodarone","sotalol","flecainide","dronedarone","ivabradine",
-    "nitroglycerin","isosorbide","hydralazine","clonidine","methyldopa","doxazosin","terazosin",
-    "metformin","glipizide","glyburide","glimepiride","pioglitazone","sitagliptin","saxagliptin",
-    "linagliptin","empagliflozin","dapagliflozin","canagliflozin","semaglutide","liraglutide",
-    "exenatide","insulin glargine","insulin aspart","insulin lispro","insulin detemir",
-    "levothyroxine","methimazole","propylthiouracil","liothyronine",
-    "prednisone","prednisolone","dexamethasone","methylprednisolone","hydrocortisone","budesonide",
-    "fluticasone","beclomethasone","mometasone","triamcinolone",
-    "albuterol","salmeterol","formoterol","tiotropium","ipratropium","theophylline","montelukast",
-    "zafirlukast","cromolyn","omalizumab",
-    "omeprazole","esomeprazole","lansoprazole","pantoprazole","rabeprazole","dexlansoprazole",
-    "ranitidine","famotidine","cimetidine","metoclopramide","ondansetron","prochlorperazine",
-    "loperamide","bismuth","mesalamine","sulfasalazine","infliximab","adalimumab",
-    "sertraline","fluoxetine","paroxetine","escitalopram","citalopram","fluvoxamine",
-    "venlafaxine","duloxetine","desvenlafaxine","bupropion","mirtazapine","trazodone",
-    "amitriptyline","nortriptyline","imipramine","clomipramine","desipramine",
-    "haloperidol","risperidone","olanzapine","quetiapine","aripiprazole","ziprasidone",
-    "clozapine","lurasidone","paliperidone","asenapine","iloperidone",
-    "lithium","valproate","carbamazepine","lamotrigine","topiramate","gabapentin","pregabalin",
-    "levetiracetam","phenytoin","phenobarbital","clonazepam","oxcarbazepine","zonisamide",
-    "lorazepam","diazepam","alprazolam","clonazepam","midazolam","temazepam","triazolam",
-    "zolpidem","zaleplon","eszopiclone","buspirone","hydroxyzine",
-    "donepezil","rivastigmine","galantamine","memantine",
-    "levodopa","carbidopa","pramipexole","ropinirole","rotigotine","selegiline","rasagiline",
-    "baclofen","cyclobenzaprine","methocarbamol","tizanidine","carisoprodol",
-    "morphine","oxycodone","hydrocodone","codeine","tramadol","fentanyl","buprenorphine",
-    "methadone","naloxone","naltrexone","hydromorphone","oxymorphone","tapentadol",
-    "sumatriptan","rizatriptan","zolmitriptan","eletriptan","naratriptan","almotriptan",
-    "topiramate","propranolol","amitriptyline","valproate",
-    "cetirizine","loratadine","fexofenadine","diphenhydramine","chlorpheniramine","desloratadine",
-    "levocetirizine","azelastine","olopatadine",
-    "tamsulosin","alfuzosin","silodosin","finasteride","dutasteride","tadalafil","sildenafil",
-    "vardenafil","avanafil",
-    "allopurinol","febuxostat","colchicine","probenecid","benzbromarone",
-    "methotrexate","hydroxychloroquine","sulfasalazine","leflunomide","etanercept",
-    "abatacept","tocilizumab","tofacitinib","baricitinib","upadacitinib",
-    "alendronate","risedronate","ibandronate","zoledronic acid","denosumab","raloxifene",
-    "teriparatide","abaloparatide","romosozumab",
-    "tamoxifen","letrozole","anastrozole","exemestane","fulvestrant","megestrol",
-    "cyclophosphamide","methotrexate","fluorouracil","capecitabine","gemcitabine",
-    "paclitaxel","docetaxel","carboplatin","cisplatin","oxaliplatin",
-    "imatinib","erlotinib","gefitinib","sunitinib","sorafenib","vemurafenib",
-    "rituximab","trastuzumab","bevacizumab","pembrolizumab","nivolumab",
-    "epoetin","filgrastim","pegfilgrastim","thrombopoietin",
-    "ferrous sulfate","ferric carboxymaltose","cyanocobalamin","folic acid",
-    "cholecalciferol","ergocalciferol","calcitriol","calcium carbonate","calcium citrate",
-    "magnesium oxide","zinc sulfate","potassium chloride","sodium bicarbonate",
-    "isotretinoin","tretinoin","adapalene","benzoyl peroxide","clindamycin","doxycycline",
-    "tacrolimus","pimecrolimus","clobetasol","betamethasone","hydrocortisone",
-    "latanoprost","timolol","brimonidine","dorzolamide","bimatoprost","travoprost",
-    "ranibizumab","bevacizumab","aflibercept",
-    "methylphenidate","amphetamine","lisdexamfetamine","atomoxetine","guanfacine","clonidine",
-    "varenicline","bupropion","nicotine","disulfiram","acamprosate","naltrexone",
-    "levonorgestrel","ethinyl estradiol","norethindrone","desogestrel","drospirenone",
-    "medroxyprogesterone","estradiol","conjugated estrogens","progesterone",
-    "oxytocin","misoprostol","dinoprostone","mifepristone",
-    "heparin","enoxaparin","dalteparin","fondaparinux","bivalirudin","argatroban",
-    "alteplase","reteplase","streptokinase","urokinase",
-    "cyclosporine","tacrolimus","mycophenolate","azathioprine","sirolimus","everolimus",
-    "interferon","peginterferon","ribavirin","sofosbuvir","ledipasvir","daclatasvir",
-    "efavirenz","tenofovir","emtricitabine","lamivudine","zidovudine","abacavir",
-    "atazanavir","lopinavir","ritonavir","darunavir","raltegravir","dolutegravir",
-    "chloroquine","hydroxychloroquine","artemether","lumefantrine","mefloquine","atovaquone",
-    "proguanil","primaquine","quinine",
-    "gentamicin","tobramycin","amikacin","streptomycin","neomycin",
-    "colistin","polymyxin","daptomycin","tigecycline","tedizolid",
-    "acetazolamide","mannitol","glycerol","urea",
-    "adenosine","atropine","epinephrine","norepinephrine","dopamine","dobutamine",
-    "vasopressin","phenylephrine","milrinone","levosimendan",
-    "succinylcholine","rocuronium","vecuronium","pancuronium","cisatracurium",
-    "propofol","ketamine","etomidate","thiopental","sevoflurane","isoflurane","desflurane",
-    "lidocaine","bupivacaine","ropivacaine","mepivacaine","procaine","benzocaine",
-    "dextromethorphan","guaifenesin","pseudoephedrine","phenylephrine","benzonatate",
-    "ipratropium","budesonide","fluticasone","salmeterol","formoterol",
-    "ursodiol","cholestyramine","colestipol","colesevelam","ezetimibe","niacin","fenofibrate",
-    "gemfibrozil","omega-3 fatty acids","evolocumab","alirocumab","inclisiran",
-    "sacubitril","valsartan","ivabradine","hydralazine","isosorbide dinitrate",
-    "tolvaptan","vaptans","nesiritide","levosimendan",
-    "dexamethasone","ondansetron","granisetron","palonosetron","aprepitant","fosaprepitant",
-    "metolazone","torsemide","indapamide","amiloride","triamterene",
-    "sildenafil","tadalafil","bosentan","ambrisentan","macitentan","riociguat",
-    "iloprost","epoprostenol","treprostinil","selexipag",
-    "colchicine","febuxostat","rasburicase","pegloticase",
-    "eculizumab","ravulizumab","avacopan",
-    "dupilumab","tralokinumab","lebrikizumab","nemolizumab",
-    "mepolizumab","benralizumab","reslizumab","tezepelumab","dupilumab",
-    "canakinumab","anakinra","rilonacept","secukinumab","ixekizumab","brodalumab",
-    "guselkumab","risankizumab","tildrakizumab","mirikizumab",
-    "ustekinumab","vedolizumab","ozanimod","siponimod","fingolimod","natalizumab",
-    "dimethyl fumarate","teriflunomide","interferon beta","glatiramer acetate","ofatumumab",
-    "ocrelizumab","alemtuzumab","cladribine","mitoxantrone",
-    "nusinersen","risdiplam","onasemnogene","eteplirsen",
-    "patisiran","givosiran","lumasiran","inclisiran","vutrisiran",
-]
+# ── rate-limit helpers ──────────────────────────────────────────────────────
+DELAY = 0.4   # seconds between API calls (be polite to free public APIs)
 
-# Remove duplicates
-SEED_DRUGS = list(dict.fromkeys(SEED_DRUGS))
 
-# ── Category mapping based on drug class keywords ────────────────────────────
-CATEGORY_RULES = [
-    (["antibiotic","antibacterial","antimicrobial","penicillin","cephalosporin",
-      "macrolide","fluoroquinolone","tetracycline","sulfonamide","linezolid",
-      "vancomycin","clindamycin","metronidazole","nitrofurantoin"], "Antibiotic"),
-    (["antifungal","fluconazole","itraconazole","voriconazole","clotrimazole",
-      "terbinafine","amphotericin"], "Antifungal"),
-    (["antiviral","acyclovir","valacyclovir","oseltamivir","remdesivir",
-      "sofosbuvir","efavirenz","tenofovir","lamivudine","ritonavir"], "Antiviral"),
-    (["statin","atorvastatin","rosuvastatin","simvastatin","pravastatin",
-      "lovastatin","cholesterol","lipid","ezetimibe","fibrate","niacin",
-      "evolocumab","alirocumab"], "Cardiovascular"),
-    (["antihypertensive","lisinopril","enalapril","ramipril","captopril",
-      "amlodipine","metoprolol","atenolol","carvedilol","losartan","valsartan",
-      "furosemide","hydrochlorothiazide","spironolactone","digoxin","amiodarone",
-      "warfarin","apixaban","rivaroxaban","clopidogrel","nitroglycerin",
-      "heart","cardiac","blood pressure","antiarrhythmic","anticoagulant",
-      "antithrombotic","diuretic"], "Cardiovascular"),
-    (["antidiabetic","metformin","glipizide","glyburide","sitagliptin",
-      "empagliflozin","semaglutide","liraglutide","insulin","diabetes",
-      "blood sugar","glucose","hypoglycemic"], "Antidiabetic"),
-    (["antidepressant","sertraline","fluoxetine","paroxetine","escitalopram",
-      "venlafaxine","duloxetine","bupropion","mirtazapine","amitriptyline",
-      "nortriptyline","antipsychotic","haloperidol","risperidone","olanzapine",
-      "quetiapine","aripiprazole","clozapine","lithium","mood","psychiatric",
-      "anxiolytic","benzodiazepine","lorazepam","diazepam","alprazolam",
-      "zolpidem","buspirone","adhd","methylphenidate","amphetamine"], "Psychiatric"),
-    (["anticonvulsant","antiepileptic","gabapentin","pregabalin","levetiracetam",
-      "phenytoin","valproate","carbamazepine","lamotrigine","topiramate",
-      "parkinson","levodopa","donepezil","memantine","neurological","seizure",
-      "epilepsy","nerve","neuropathy","migraine","sumatriptan"], "Neurological"),
-    (["analgesic","pain","ibuprofen","aspirin","naproxen","diclofenac",
-      "celecoxib","acetaminophen","paracetamol","morphine","oxycodone",
-      "hydrocodone","tramadol","fentanyl","buprenorphine","opioid","nsaid",
-      "ketorolac","meloxicam","indomethacin"], "Analgesic"),
-    (["bronchodilator","albuterol","salmeterol","tiotropium","ipratropium",
-      "montelukast","theophylline","respiratory","asthma","copd","inhaler",
-      "fluticasone","budesonide","beclomethasone"], "Respiratory"),
-    (["antacid","proton pump","omeprazole","esomeprazole","lansoprazole",
-      "pantoprazole","ranitidine","famotidine","metoclopramide","ondansetron",
-      "loperamide","mesalamine","gastrointestinal","stomach","bowel",
-      "ulcer","acid reflux","gerd"], "Gastrointestinal"),
-    (["antihistamine","cetirizine","loratadine","fexofenadine","diphenhydramine",
-      "allergy","allergic"], "Other"),
-    (["corticosteroid","prednisone","dexamethasone","methylprednisolone",
-      "hydrocortisone","prednisolone"], "Other"),
-    (["antineoplastic","chemotherapy","cancer","oncology","tamoxifen",
-      "letrozole","paclitaxel","carboplatin","imatinib","rituximab",
-      "pembrolizumab","nivolumab","bevacizumab","trastuzumab"], "Other"),
-    (["immunosuppressant","cyclosporine","tacrolimus","mycophenolate",
-      "azathioprine","sirolimus","transplant","autoimmune","biologic",
-      "adalimumab","infliximab","etanercept","methotrexate",
-      "hydroxychloroquine"], "Other"),
-    (["thyroid","levothyroxine","methimazole","liothyronine","hormone"], "Other"),
-    (["contraceptive","levonorgestrel","estradiol","progesterone",
-      "ethinyl estradiol","birth control","oral contraceptive"], "Other"),
-    (["osteoporosis","alendronate","risedronate","denosumab","teriparatide",
-      "bone"], "Other"),
-    (["ophthalmic","glaucoma","latanoprost","timolol","brimonidine",
-      "eye drop"], "Other"),
-    (["dermatology","isotretinoin","tretinoin","acne","skin","topical",
-      "tacrolimus","clobetasol"], "Other"),
-    (["urological","tamsulosin","finasteride","sildenafil","tadalafil",
-      "prostate","erectile"], "Other"),
-    (["antiparasitic","antiprotozoal","antimalarial","chloroquine",
-      "hydroxychloroquine","albendazole","mebendazole","ivermectin"], "Other"),
-    (["anesthetic","lidocaine","bupivacaine","propofol","ketamine",
-      "sevoflurane","muscle relaxant","neuromuscular"], "Other"),
-    (["supplement","vitamin","mineral","iron","calcium","magnesium",
-      "folate","folic acid","cyanocobalamin","cholecalciferol"], "Other"),
-]
-
-def classify_category(name, description=""):
-    text = (name + " " + description).lower()
-    for keywords, category in CATEGORY_RULES:
-        if any(kw in text for kw in keywords):
-            return category
-    return "Other"
-
-# ── OpenFDA API: fetch drug label info ───────────────────────────────────────
-def fetch_openfda(drug_name):
-    """Fetch drug label from OpenFDA. Returns dict or None."""
+def _get(url: str, timeout: int = 10) -> dict | None:
+    """GET a JSON URL; return parsed dict or None on failure."""
     try:
-        url = "https://api.fda.gov/drug/label.json"
-        params = {
-            "search": f'openfda.generic_name:"{drug_name}"',
-            "limit": 1
-        }
-        r = requests.get(url, params=params, timeout=10)
-        if r.status_code == 200:
-            results = r.json().get("results", [])
-            if results:
-                return results[0]
-        # Fallback: search by brand name
-        params["search"] = f'openfda.brand_name:"{drug_name}"'
-        r = requests.get(url, params=params, timeout=10)
-        if r.status_code == 200:
-            results = r.json().get("results", [])
-            if results:
-                return results[0]
+        req = urllib.request.Request(url, headers={"User-Agent": "MedSearchPro/1.0"})
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            return json.loads(resp.read().decode())
     except Exception:
+        return None
+
+
+# ══════════════════════════════════════════════════════════════════════════
+# 1. RXNorm
+# ══════════════════════════════════════════════════════════════════════════
+
+def get_rxcui(drug_name: str) -> str | None:
+    """Return the best-match RxCUI for a drug name."""
+    encoded = urllib.parse.quote(drug_name)
+    url = (
+        f"https://rxnav.nlm.nih.gov/REST/approximateTerm.json"
+        f"?term={encoded}&maxEntries=1&option=0"
+    )
+    data = _get(url)
+    try:
+        candidates = data["approximateGroup"]["candidate"]
+        if candidates:
+            return candidates[0]["rxcui"]
+    except (TypeError, KeyError, IndexError):
         pass
     return None
 
-def extract_text(label, *keys):
-    """Extract first non-empty text from FDA label sections."""
-    for key in keys:
-        val = label.get(key)
-        if val and isinstance(val, list) and val[0].strip():
-            text = val[0].strip()
-            # Clean HTML tags
-            text = re.sub(r'<[^>]+>', ' ', text)
-            text = re.sub(r'\s+', ' ', text).strip()
-            # Truncate to reasonable length
-            if len(text) > 500:
-                text = text[:497] + "..."
-            return text
-    return ""
 
-def split_into_list(text, max_items=6):
-    """Split a block of text into a list of bullet points."""
-    if not text:
-        return []
-    # Try splitting on common delimiters
-    items = []
-    for sep in ['\n', ';', '.']:
-        parts = [p.strip() for p in text.split(sep) if p.strip() and len(p.strip()) > 15]
-        if len(parts) >= 2:
-            items = parts[:max_items]
-            break
-    if not items:
-        items = [text[:300]]
-    return [i.rstrip('.') + '.' if not i.endswith('.') else i for i in items]
-
-# ── RxNorm API: get trade names ───────────────────────────────────────────────
-def fetch_trade_names(drug_name):
-    """Get brand names from RxNorm."""
+def get_rxnorm_drug_class(rxcui: str) -> list[str]:
+    """Return ATC/EPC drug class names for a given RxCUI."""
+    url = f"https://rxnav.nlm.nih.gov/REST/rxclass/class/byRxcui.json?rxcui={rxcui}&relaSource=ATC"
+    data = _get(url)
+    classes = []
     try:
-        url = f"https://rxnav.nlm.nih.gov/REST/rxcui.json?name={requests.utils.quote(drug_name)}&search=1"
-        r = requests.get(url, timeout=8)
-        if r.status_code != 200:
-            return []
-        rxcui_data = r.json().get("idGroup", {}).get("rxnormId", [])
-        if not rxcui_data:
-            return []
-        rxcui = rxcui_data[0]
-        # Get related brand names
-        url2 = f"https://rxnav.nlm.nih.gov/REST/rxcui/{rxcui}/related.json?tty=BN"
-        r2 = requests.get(url2, timeout=8)
-        if r2.status_code != 200:
-            return []
-        groups = r2.json().get("relatedGroup", {}).get("conceptGroup", [])
-        brands = []
+        groups = data["rxclassDrugInfoList"]["rxclassDrugInfo"]
         for g in groups:
-            for c in g.get("conceptProperties", []):
-                name = c.get("name", "").strip()
-                if name and name.lower() != drug_name.lower():
-                    brands.append(name)
-        return list(dict.fromkeys(brands))[:5]  # deduplicate, max 5
-    except Exception:
-        return []
+            name = g["rxclassMinConceptItem"]["className"]
+            if name and name not in classes:
+                classes.append(name)
+    except (TypeError, KeyError):
+        pass
+    return classes[:3]  # cap at 3
 
-# ── Main build loop ───────────────────────────────────────────────────────────
-def build_dataset(drugs):
-    dataset = []
-    seen = set()
-    errors = 0
 
-    for i, drug in enumerate(drugs, 1):
-        key = drug.lower().strip()
-        if key in seen:
+# ══════════════════════════════════════════════════════════════════════════
+# 2. FDA openFDA drug label
+# ══════════════════════════════════════════════════════════════════════════
+
+def get_fda_label(drug_name: str) -> dict:
+    """
+    Fetch structured FDA label sections for a drug.
+    Returns a dict with keys: fdaDescription, fdaWarnings, fdaDosage, fdaIndicationsUsage
+    """
+    result = {
+        "fdaDescription": None,
+        "fdaWarnings": None,
+        "fdaDosage": None,
+        "fdaIndicationsUsage": None,
+    }
+    encoded = urllib.parse.quote(f'"{drug_name}"')
+    url = (
+        f"https://api.fda.gov/drug/label.json"
+        f"?search=openfda.generic_name:{encoded}&limit=1"
+    )
+    data = _get(url)
+    try:
+        label = data["results"][0]
+        result["fdaDescription"]       = _first(label.get("description"))
+        result["fdaWarnings"]          = _first(label.get("warnings") or label.get("warnings_and_cautions"))
+        result["fdaDosage"]            = _first(label.get("dosage_and_administration"))
+        result["fdaIndicationsUsage"]  = _first(label.get("indications_and_usage"))
+    except (TypeError, KeyError, IndexError):
+        pass
+    return result
+
+
+def _first(value) -> str | None:
+    """Pull first element from a list or return the string as-is."""
+    if isinstance(value, list) and value:
+        return value[0][:2000]   # cap length
+    if isinstance(value, str):
+        return value[:2000]
+    return None
+
+
+# ══════════════════════════════════════════════════════════════════════════
+# 3. MedlinePlus Connect  ← PRIMARY source for `considerations`
+# ══════════════════════════════════════════════════════════════════════════
+
+def get_medlineplus(drug_name: str, rxcui: str | None = None) -> dict:
+    """
+    Query MedlinePlus Connect web service.
+    Returns a dict with keys:
+      medlineplusUrl        – canonical MedlinePlus page URL
+      medlineplusTitle      – article title
+      considerations        – list of patient-friendly guideline sentences
+      userGuidelines        – structured object {storage, pregnancy, interactions, notes}
+    """
+    result = {
+        "medlineplusUrl": None,
+        "medlineplusTitle": None,
+        "considerations": [],
+        "userGuidelines": {
+            "storage": None,
+            "pregnancy": None,
+            "interactions": None,
+            "importantNotes": None,
+        },
+    }
+
+    # Build query – prefer rxcui for precision, fall back to name
+    if rxcui:
+        params = urllib.parse.urlencode({
+            "mainSearchCriteria.v.cs": "2.16.840.1.113883.6.88",  # RxNorm OID
+            "mainSearchCriteria.v.c": rxcui,
+            "mainSearchCriteria.v.dn": drug_name,
+            "informationRecipient": "PROV",
+            "knowledgeResponseType": "application/json",
+        })
+    else:
+        params = urllib.parse.urlencode({
+            "mainSearchCriteria.v.dn": drug_name,
+            "informationRecipient": "PROV",
+            "knowledgeResponseType": "application/json",
+        })
+
+    url = f"https://connect.medlineplus.gov/service?{params}"
+    data = _get(url)
+
+    try:
+        feed = data["feed"]
+        entry = feed.get("entry", [{}])[0]
+
+        result["medlineplusTitle"] = entry.get("title", {}).get("_value")
+        result["medlineplusUrl"]   = _extract_link(entry)
+
+        # Full summary text → parse into considerations + guidelines
+        summary_html = entry.get("summary", {}).get("_value", "")
+        if summary_html:
+            considerations, guidelines = _parse_medlineplus_summary(summary_html)
+            result["considerations"]          = considerations
+            result["userGuidelines"].update(guidelines)
+
+    except (TypeError, KeyError, IndexError):
+        pass
+
+    return result
+
+
+def _extract_link(entry: dict) -> str | None:
+    links = entry.get("link", [])
+    if isinstance(links, list):
+        for lnk in links:
+            href = lnk.get("href") or lnk.get("url")
+            if href:
+                return href
+    elif isinstance(links, dict):
+        return links.get("href") or links.get("url")
+    return None
+
+
+def _parse_medlineplus_summary(html: str) -> tuple[list[str], dict]:
+    """
+    Strip HTML tags and split the MedlinePlus summary into:
+      - considerations: general use/safety sentences (patient guidelines)
+      - guidelines dict: storage, pregnancy, interactions, importantNotes
+    """
+    import re
+
+    # Strip HTML
+    text = re.sub(r"<[^>]+>", " ", html)
+    text = re.sub(r"&[a-z]+;", " ", text)
+    text = re.sub(r"\s+", " ", text).strip()
+
+    # Split into sentences
+    sentences = [s.strip() for s in re.split(r"(?<=[.!?])\s+", text) if len(s.strip()) > 20]
+
+    # Keywords for each guideline category
+    keyword_map = {
+        "storage":        ["store", "storage", "temperature", "refrigerat", "keep in"],
+        "pregnancy":      ["pregnan", "breastfeed", "nursing", "fetal", "birth"],
+        "interactions":   ["interact", "drug interaction", "alcohol", "other medication"],
+        "importantNotes": ["important", "do not", "avoid", "consult your doctor",
+                           "contact your", "emergency", "overdose"],
+    }
+
+    guidelines = {k: [] for k in keyword_map}
+    considerations = []
+
+    for sent in sentences:
+        lower = sent.lower()
+        matched = False
+        for category, kws in keyword_map.items():
+            if any(kw in lower for kw in kws):
+                guidelines[category].append(sent)
+                matched = True
+                break
+        if not matched:
+            considerations.append(sent)
+
+    # Flatten lists to single strings (or None)
+    flat_guidelines = {
+        k: " ".join(v) if v else None
+        for k, v in guidelines.items()
+    }
+
+    return considerations[:10], flat_guidelines  # cap considerations at 10
+
+
+# ══════════════════════════════════════════════════════════════════════════
+# Main enrichment loop
+# ══════════════════════════════════════════════════════════════════════════
+
+def enrich(medications: list[dict], limit: int | None = None, resume: bool = False) -> list[dict]:
+    total = len(medications) if not limit else min(limit, len(medications))
+    enriched = []
+
+    for i, med in enumerate(medications[:total]):
+        name = med["name"]
+
+        # resume mode: skip if already has medlineplusUrl
+        if resume and med.get("medlineplusUrl"):
+            enriched.append(med)
             continue
-        seen.add(key)
 
-        print(f"[{i}/{len(drugs)}] Processing: {drug}")
+        print(f"[{i+1}/{total}] {name}")
 
-        label = fetch_openfda(drug)
-        time.sleep(0.25)  # Respect rate limits
+        # ── Step 1: RXNorm ──────────────────────────────────────────────
+        rxcui = get_rxcui(name)
+        time.sleep(DELAY)
 
-        if label is None:
-            errors += 1
-            # Still add with minimal data
-            entry = {
-                "id": i,
-                "name": drug.title(),
-                "tradeNames": [],
-                "category": classify_category(drug),
-                "description": f"{drug.title()} is a medication used in medical treatment.",
-                "sideEffects": ["Consult your healthcare provider for side effect information."],
-                "considerations": ["Always follow your healthcare provider's instructions.",
-                                   "Do not stop taking this medication without consulting your doctor."]
-            }
-        else:
-            openfda = label.get("openfda", {})
+        drug_classes = []
+        if rxcui:
+            drug_classes = get_rxnorm_drug_class(rxcui)
+            time.sleep(DELAY)
 
-            # Name
-            generic_names = openfda.get("generic_name", [drug.title()])
-            name = generic_names[0].title() if generic_names else drug.title()
+        # ── Step 2: FDA label ───────────────────────────────────────────
+        fda = get_fda_label(name)
+        time.sleep(DELAY)
 
-            # Trade names from FDA label
-            brand_names = openfda.get("brand_name", [])
-            # Also try RxNorm
-            rx_brands = fetch_trade_names(drug)
-            time.sleep(0.1)
-            all_brands = list(dict.fromkeys(brand_names + rx_brands))[:6]
+        # ── Step 3: MedlinePlus (considerations come from here) ─────────
+        mlp = get_medlineplus(name, rxcui)
+        time.sleep(DELAY)
 
-            # Description from indications_and_usage or purpose
-            desc_raw = extract_text(label,
-                "indications_and_usage", "purpose", "description",
-                "clinical_pharmacology")
-            # Keep first 2 sentences max
-            sentences = re.split(r'(?<=[.!?])\s+', desc_raw)
-            description = " ".join(sentences[:2]).strip() if sentences else \
-                f"{name} is used in medical treatment."
+        # ── Merge into record ───────────────────────────────────────────
+        enriched_med = {
+            **med,
 
-            # Side effects
-            se_raw = extract_text(label,
-                "adverse_reactions", "warnings_and_cautions", "warnings",
-                "boxed_warning")
-            side_effects = split_into_list(se_raw, 6)
-            if not side_effects:
-                side_effects = ["Consult your healthcare provider for side effect information."]
+            # RXNorm
+            "rxcui":       rxcui,
+            "drugClasses": drug_classes if drug_classes else med.get("drugClasses", []),
 
-            # Considerations
-            cons_raw = extract_text(label,
-                "warnings_and_cautions", "precautions", "drug_interactions",
-                "use_in_specific_populations", "dosage_and_administration")
-            considerations = split_into_list(cons_raw, 6)
-            if not considerations:
-                considerations = [
-                    "Take as prescribed by your healthcare provider.",
-                    "Do not stop taking this medication without medical guidance.",
-                    "Inform your doctor of all other medications you are taking."
-                ]
+            # FDA openFDA
+            "fdaIndicationsUsage": fda["fdaIndicationsUsage"] or med.get("description"),
+            "fdaWarnings":         fda["fdaWarnings"],
+            "fdaDosage":           fda["fdaDosage"],
 
-            category = classify_category(name, desc_raw)
+            # MedlinePlus  ← replaces the raw `considerations` with patient-friendly text
+            "considerations":    mlp["considerations"] if mlp["considerations"] else med["considerations"],
+            "userGuidelines":    mlp["userGuidelines"],
+            "medlineplusUrl":    mlp["medlineplusUrl"],
+            "medlineplusTitle":  mlp["medlineplusTitle"],
 
-            entry = {
-                "id": i,
-                "name": name,
-                "tradeNames": all_brands,
-                "category": category,
-                "description": description,
-                "sideEffects": side_effects[:6],
-                "considerations": considerations[:6]
-            }
+            # API source tracking
+            "apiSources": {
+                "rxnorm":       f"https://rxnav.nlm.nih.gov/REST/approximateTerm.json?term={urllib.parse.quote(name)}",
+                "fda":          f"https://api.fda.gov/drug/label.json?search=openfda.generic_name:{urllib.parse.quote(name)}",
+                "medlineplus":  mlp["medlineplusUrl"] or f"https://medlineplus.gov/druginfo/meds/{name.lower().replace(' ', '_')}.html",
+            },
+        }
 
-        dataset.append(entry)
+        enriched.append(enriched_med)
 
-        # Progress save every 50
-        if i % 50 == 0:
-            with open(OUTPUT_FILE, "w") as f:
-                json.dump(dataset, f, indent=2)
-            print(f"  → Saved checkpoint: {len(dataset)} medications")
+    # Append any remaining records (if limit set)
+    if limit and limit < len(medications):
+        enriched.extend(medications[limit:])
 
-    return dataset
+    return enriched
 
-# ── Run ───────────────────────────────────────────────────────────────────────
+
+# ══════════════════════════════════════════════════════════════════════════
+# Entry point
+# ══════════════════════════════════════════════════════════════════════════
+
 if __name__ == "__main__":
-    print(f"Starting medication dataset generation...")
-    print(f"Target: {len(SEED_DRUGS)} medications\n")
+    parser = argparse.ArgumentParser(description="Enrich medications.json with FDA/RXNorm/MedlinePlus data")
+    parser.add_argument("--limit",  type=int, default=None, help="Only process first N drugs (for testing)")
+    parser.add_argument("--resume", action="store_true",    help="Skip already-enriched entries")
+    args = parser.parse_args()
 
-    dataset = build_dataset(SEED_DRUGS)
+    print(f"Loading {INPUT_FILE} …")
+    with open(INPUT_FILE) as f:
+        medications = json.load(f)
 
-    # Final save
+    print(f"Enriching {args.limit or len(medications)} medications …\n")
+    enriched = enrich(medications, limit=args.limit, resume=args.resume)
+
     with open(OUTPUT_FILE, "w") as f:
-        json.dump(dataset, f, indent=2, ensure_ascii=False)
+        json.dump(enriched, f, indent=2, ensure_ascii=False)
 
-    print(f"\n✅ Done! {len(dataset)} medications saved to {OUTPUT_FILE}")
-    print(f"   File size: {os.path.getsize(OUTPUT_FILE) / 1024:.1f} KB")
-
-    # Summary by category
-    from collections import Counter
-    cats = Counter(d["category"] for d in dataset)
-    print("\nCategory breakdown:")
-    for cat, count in sorted(cats.items(), key=lambda x: -x[1]):
-        print(f"  {cat}: {count}")
+    print(f"\n✓ Saved {len(enriched)} records → {OUTPUT_FILE}")
