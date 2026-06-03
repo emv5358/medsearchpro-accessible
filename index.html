@@ -431,7 +431,14 @@ function initGlossary(){
 // ============================================================
 function setupSearch(){
   const si=document.getElementById("searchInput");
-  si.addEventListener("input",()=>{currentQuery=si.value.trim().toLowerCase();filterAndRender();});
+  si.addEventListener("input",()=>{
+    currentQuery=si.value.trim().toLowerCase();
+    if(currentQuery){
+      currentLetter="";
+      document.querySelectorAll(".az-btn").forEach(b=>b.classList.remove("active"));
+    }
+    filterAndRender();
+  });
 }
 
 function filterAndRender(){
@@ -454,9 +461,9 @@ function filterAndRender(){
         if(tr.some(t=>t.startsWith(q)))                                          return{d,s:3};
         if(n.includes(q))                                                         return{d,s:2};
         if(tr.some(t=>t.includes(q)))                                             return{d,s:1};
-        if(d.category.toLowerCase().includes(q)||d.description.toLowerCase().includes(q)||
+        if(q.length>1&&(d.category.toLowerCase().includes(q)||d.description.toLowerCase().includes(q)||
            d.sideEffects.some(s=>s.toLowerCase().includes(q))||
-           d.considerations.some(c=>c.toLowerCase().includes(q)))                 return{d,s:0};
+           d.considerations.some(c=>c.toLowerCase().includes(q))))                return{d,s:0};
         return{d,s:-1};
       }).filter(x=>x.s>=0);
       const byName=currentSort==="name";
@@ -516,6 +523,7 @@ function renderCards(drugs){
 // ============================================================
 function buildAZBar(){
   const bar=document.getElementById("azBar"); if(!bar)return;
+  bar.innerHTML="";
   const available=new Set(MEDICATIONS.map(d=>d.name[0].toUpperCase()));
   "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").forEach(l=>{
     const btn=document.createElement("button");
@@ -596,7 +604,8 @@ function openModal(id){
   const drugClassHTML=d.drugClasses&&d.drugClasses.length?`<div class="modal-section"><div class="modal-section-label">Drug Class (ATC · RXNorm)</div><div class="drug-class-tags">${d.drugClasses.map(c=>`<span class="drug-class-tag">${c}</span>`).join("")}</div>${d.rxcui?`<div style="font-size:.72rem;color:#94a3b8;margin-top:6px">RxCUI: ${d.rxcui}</div>`:""}</div>`:"";
   const boxedHTML=(d.fdaBoxedWarning||d.dailymedBoxedWarning)?`<div class="modal-section"><div class="boxed-warning"><div class="bw-label">⚠ Black Box Warning</div><p>${s(d.fdaBoxedWarning||d.dailymedBoxedWarning)}</p></div></div>`:"";
   const dosageHTML=d.fdaDosage?`<div class="modal-section"><div class="modal-section-label">Dosage &amp; Administration (FDA)</div><div class="fda-dosage"><p>${s(d.fdaDosage)}</p></div></div>`:"";
-  const warningsHTML=d.fdaWarnings?`<div class="modal-section"><div class="modal-section-label">Warnings (FDA)</div><p style="font-size:.84rem;color:#334155;line-height:1.65">${s(d.fdaWarnings)}</p></div>`:"";
+  const warningBullets=(d.fdaWarnings||"").split(/[.;]\s+/).map(w=>w.trim()).filter(w=>w.length>0);
+  const warningsHTML=warningBullets.length?`<div class="modal-section"><div class="modal-section-label">Warnings (FDA)</div><ul style="padding-left:20px;margin:0">${warningBullets.map(w=>`<li style="margin-bottom:8px;font-size:.84rem;color:#334155;line-height:1.65">${w}</li>`).join("")}</ul></div>`:"";
   const teachingHTML=d.patientTeaching?`<div class="modal-section"><div class="modal-section-label">Patient &amp; Family Teaching (DailyMed)</div><div class="patient-teaching"><p>${s(d.patientTeaching)}</p></div></div>`:"";
   const ug=d.userGuidelines||{};
   const ugItems=[
