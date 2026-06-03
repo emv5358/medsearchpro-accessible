@@ -1,268 +1,272 @@
-<svg viewBox="0 0 1060 730" xmlns="http://www.w3.org/2000/svg" role="img" font-family="Segoe UI, system-ui, sans-serif">
+<svg viewBox="0 0 1280 760" xmlns="http://www.w3.org/2000/svg" role="img" font-family="Segoe UI, system-ui, sans-serif">
   <title>MedSearchPro Data Aggregation Flow</title>
-  <desc>Sequential enrichment pipeline: drug name → RXNorm (rxcui + drugClasses) → FDA openFDA (fdaIndicationsUsage, fdaWarnings, fdaDosage) → MedlinePlus Connect (considerations, userGuidelines) → merged JSON output</desc>
+  <desc>Sequential enrichment pipeline: drug name → RXNorm → FDA openFDA → MedlinePlus Connect → DailyMed → merged JSON output</desc>
 
   <!-- Background -->
-  <rect width="1050" height="720" fill="#f8fafc"/>
+  <rect width="1270" height="750" fill="#f8fafc"/>
 
   <!-- Title -->
-  <text x="525" y="36" text-anchor="middle" font-size="17" font-weight="700" fill="#0f172a">MedSearchPro — Data Aggregation Flow</text>
-  <text x="525" y="54" text-anchor="middle" font-size="11" fill="#64748b">enrich_medications.py · 3–4 API calls per drug · RXNorm → FDA openFDA → MedlinePlus Connect → merged JSON</text>
+  <text x="635" y="34" text-anchor="middle" font-size="17" font-weight="700" fill="#0f172a">MedSearchPro — Data Aggregation Flow</text>
+  <text x="635" y="52" text-anchor="middle" font-size="11" fill="#64748b">enrich_medications.py · 4 APIs · RXNorm → FDA openFDA → MedlinePlus Connect → DailyMed → medications_enriched.json</text>
 
-  <!-- ══════════════════════════════════════════════════════════ -->
-  <!-- LANE BACKGROUNDS                                          -->
-  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- ══════════════════════════════════════ LANE BACKGROUNDS ══ -->
 
-  <!-- Lane: Input -->
-  <rect x="16"  y="70" width="110" height="548" rx="8" fill="#f1f5f9"/>
-  <text x="71"  y="88" text-anchor="middle" font-size="10" font-weight="700" fill="#64748b" letter-spacing="1">INPUT</text>
+  <!-- INPUT -->
+  <rect x="16"  y="66" width="96"  height="560" rx="8" fill="#f1f5f9"/>
+  <text x="64"  y="83" text-anchor="middle" font-size="10" font-weight="700" fill="#64748b" letter-spacing="1">INPUT</text>
 
-  <!-- Lane: RXNorm -->
-  <rect x="134" y="70" width="182" height="548" rx="8" fill="#f0fdf4"/>
-  <text x="225" y="88" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d" letter-spacing="1">RXNORM API</text>
-  <text x="225" y="101" text-anchor="middle" font-size="9" fill="#22c55e">rxnav.nlm.nih.gov</text>
+  <!-- RXNORM -->
+  <rect x="120" y="66" width="182" height="560" rx="8" fill="#f0fdf4"/>
+  <text x="211" y="83" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d" letter-spacing="1">RXNORM API</text>
+  <text x="211" y="96" text-anchor="middle" font-size="9" fill="#22c55e">rxnav.nlm.nih.gov</text>
 
-  <!-- Lane: FDA openFDA -->
-  <rect x="324" y="70" width="182" height="548" rx="8" fill="#eff6ff"/>
-  <text x="415" y="88" text-anchor="middle" font-size="10" font-weight="700" fill="#1d4ed8" letter-spacing="1">OPENFDA API</text>
-  <text x="415" y="101" text-anchor="middle" font-size="9" fill="#3b82f6">api.fda.gov</text>
+  <!-- FDA -->
+  <rect x="310" y="66" width="182" height="560" rx="8" fill="#eff6ff"/>
+  <text x="401" y="83" text-anchor="middle" font-size="10" font-weight="700" fill="#1d4ed8" letter-spacing="1">OPENFDA API</text>
+  <text x="401" y="96" text-anchor="middle" font-size="9" fill="#3b82f6">api.fda.gov</text>
 
-  <!-- Lane: MedlinePlus -->
-  <rect x="514" y="70" width="196" height="548" rx="8" fill="#ecfeff"/>
-  <text x="612" y="88" text-anchor="middle" font-size="10" font-weight="700" fill="#0e7490" letter-spacing="1">MEDLINEPLUS CONNECT</text>
-  <text x="612" y="101" text-anchor="middle" font-size="9" fill="#06b6d4">connect.medlineplus.gov</text>
+  <!-- MEDLINEPLUS -->
+  <rect x="500" y="66" width="190" height="560" rx="8" fill="#ecfeff"/>
+  <text x="595" y="83" text-anchor="middle" font-size="10" font-weight="700" fill="#0e7490" letter-spacing="1">MEDLINEPLUS CONNECT</text>
+  <text x="595" y="96" text-anchor="middle" font-size="9" fill="#06b6d4">connect.medlineplus.gov</text>
 
-  <!-- Lane: Output -->
-  <rect x="718" y="70" width="320" height="548" rx="8" fill="#fff7ed"/>
-  <text x="878" y="88" text-anchor="middle" font-size="10" font-weight="700" fill="#c2410c" letter-spacing="1">OUTPUT</text>
-  <text x="878" y="101" text-anchor="middle" font-size="9" fill="#f97316">medications_enriched.json</text>
+  <!-- DAILYMED -->
+  <rect x="698" y="66" width="192" height="560" rx="8" fill="#fdf4ff"/>
+  <text x="794" y="83" text-anchor="middle" font-size="10" font-weight="700" fill="#7e22ce" letter-spacing="1">DAILYMED API</text>
+  <text x="794" y="96" text-anchor="middle" font-size="9" fill="#a855f7">dailymed.nlm.nih.gov</text>
 
-  <!-- ══════════════════════════════════════════════════════════ -->
-  <!-- STEP 0: Drug Name (Input)                                 -->
-  <!-- ══════════════════════════════════════════════════════════ -->
-  <rect x="24" y="116" width="94" height="58" rx="7" fill="#334155"/>
-  <text x="71" y="136" text-anchor="middle" font-size="11" font-weight="700" fill="white">Drug Name</text>
-  <text x="71" y="151" text-anchor="middle" font-size="9.5" fill="#cbd5e1">"acetaminophen"</text>
-  <text x="71" y="165" text-anchor="middle" font-size="8.5" fill="#94a3b8">540 seed names</text>
+  <!-- OUTPUT -->
+  <rect x="898" y="66" width="358" height="560" rx="8" fill="#fff7ed"/>
+  <text x="1077" y="83" text-anchor="middle" font-size="10" font-weight="700" fill="#c2410c" letter-spacing="1">OUTPUT  —  medications_enriched.json</text>
+  <text x="1077" y="96" text-anchor="middle" font-size="9" fill="#f97316">one object per drug · all fields flat-merged</text>
 
-  <!-- Arrow: Input → RXNorm Call 1 -->
-  <line x1="118" y1="145" x2="130" y2="145" stroke="#334155" stroke-width="2" marker-end="url(#arr-dark)"/>
+  <!-- ══════════════════════════════════════ INPUT SEED ══ -->
+  <rect x="24" y="112" width="80" height="56" rx="7" fill="#334155"/>
+  <text x="64" y="131" text-anchor="middle" font-size="11" font-weight="700" fill="white">Drug Name</text>
+  <text x="64" y="146" text-anchor="middle" font-size="9" fill="#cbd5e1">"acetaminophen"</text>
+  <text x="64" y="159" text-anchor="middle" font-size="8.5" fill="#94a3b8">540 seed names</text>
 
-  <!-- Dashed line: Input → FDA (goes down then right) -->
-  <polyline points="71,174 71,210 320,210" fill="none" stroke="#334155" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr-dark)"/>
+  <!-- Arrows: seed → each API -->
+  <line x1="104" y1="140" x2="116" y2="140" stroke="#334155" stroke-width="2" marker-end="url(#arr-dark)"/>
+  <polyline points="64,168 64,198 306,198" fill="none" stroke="#334155" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr-dark)"/>
+  <polyline points="64,168 64,218 496,218" fill="none" stroke="#334155" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr-dark)"/>
+  <polyline points="64,168 64,238 694,238" fill="none" stroke="#334155" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr-dark)"/>
 
-  <!-- Dashed line: Input → MedlinePlus (goes down further then right) -->
-  <polyline points="71,174 71,230 510,230" fill="none" stroke="#334155" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr-dark)"/>
+  <!-- ══════════════════════════════════════ RXNORM ══ -->
 
-  <!-- ══════════════════════════════════════════════════════════ -->
-  <!-- RXNORM LANE                                               -->
-  <!-- ══════════════════════════════════════════════════════════ -->
-
-  <!-- Call #1: approximateTerm -->
-  <rect x="142" y="116" width="166" height="60" rx="7" fill="#16a34a"/>
-  <text x="225" y="134" text-anchor="middle" font-size="10" font-weight="700" fill="white">Call #1 — Approximate Match</text>
-  <text x="225" y="148" text-anchor="middle" font-size="8.5" fill="#bbf7d0">/REST/approximateTerm.json</text>
-  <text x="225" y="161" text-anchor="middle" font-size="8.5" fill="#bbf7d0">?term=...&amp;maxEntries=1&amp;option=0</text>
+  <!-- Call 1 -->
+  <rect x="128" y="112" width="166" height="58" rx="7" fill="#16a34a"/>
+  <text x="211" y="130" text-anchor="middle" font-size="10" font-weight="700" fill="white">Call #1 — Approximate Match</text>
+  <text x="211" y="143" text-anchor="middle" font-size="8.5" fill="#bbf7d0">/REST/approximateTerm.json</text>
+  <text x="211" y="156" text-anchor="middle" font-size="8.5" fill="#bbf7d0">?term=...&amp;maxEntries=1&amp;option=0</text>
 
   <!-- Returns rxcui -->
-  <rect x="142" y="184" width="166" height="40" rx="6" fill="white" stroke="#86efac" stroke-width="1.5"/>
-  <text x="225" y="200" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">Returns</text>
-  <rect x="152" y="207" width="146" height="13" rx="3" fill="#f0fdf4"/>
-  <text x="225" y="218" text-anchor="middle" font-size="8.5" fill="#166534">rxcui = "161"</text>
+  <rect x="128" y="178" width="166" height="36" rx="6" fill="white" stroke="#86efac" stroke-width="1.5"/>
+  <text x="211" y="193" text-anchor="middle" font-size="9.5" font-weight="700" fill="#15803d">Returns</text>
+  <rect x="138" y="200" width="146" height="13" rx="3" fill="#f0fdf4"/>
+  <text x="211" y="210" text-anchor="middle" font-size="8.5" fill="#166534">rxcui = "161"</text>
 
-  <!-- Arrow: Call 1 result → Call 2 -->
-  <line x1="225" y1="224" x2="225" y2="242" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arr-green)"/>
+  <line x1="211" y1="214" x2="211" y2="230" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arr-green)"/>
 
-  <!-- Call #2: rxclass by rxcui -->
-  <rect x="142" y="244" width="166" height="60" rx="7" fill="#16a34a"/>
-  <text x="225" y="262" text-anchor="middle" font-size="10" font-weight="700" fill="white">Call #2 — Drug Class (ATC)</text>
-  <text x="225" y="276" text-anchor="middle" font-size="8.5" fill="#bbf7d0">/REST/rxclass/class/byRxcui.json</text>
-  <text x="225" y="289" text-anchor="middle" font-size="8.5" fill="#bbf7d0">?rxcui=...&amp;relaSource=ATC</text>
+  <!-- Call 2 -->
+  <rect x="128" y="232" width="166" height="58" rx="7" fill="#16a34a"/>
+  <text x="211" y="250" text-anchor="middle" font-size="10" font-weight="700" fill="white">Call #2 — Drug Class (ATC)</text>
+  <text x="211" y="263" text-anchor="middle" font-size="8.5" fill="#bbf7d0">/REST/rxclass/class/byRxcui.json</text>
+  <text x="211" y="276" text-anchor="middle" font-size="8.5" fill="#bbf7d0">?rxcui=...&amp;relaSource=ATC</text>
 
   <!-- Returns drugClasses -->
-  <rect x="142" y="312" width="166" height="64" rx="6" fill="white" stroke="#86efac" stroke-width="1.5"/>
-  <text x="225" y="328" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">Returns</text>
-  <rect x="152" y="334" width="146" height="13" rx="3" fill="#f0fdf4"/>
-  <text x="225" y="345" text-anchor="middle" font-size="8.5" fill="#166534">drugClasses (className, ATC)</text>
-  <rect x="152" y="351" width="146" height="13" rx="3" fill="#f0fdf4"/>
-  <text x="225" y="362" text-anchor="middle" font-size="8.5" fill="#166534">capped at 3 classes</text>
-  <text x="225" y="372" text-anchor="middle" font-size="8" fill="#86efac">⚠ skipped if rxcui is None</text>
+  <rect x="128" y="298" width="166" height="52" rx="6" fill="white" stroke="#86efac" stroke-width="1.5"/>
+  <text x="211" y="313" text-anchor="middle" font-size="9.5" font-weight="700" fill="#15803d">Returns</text>
+  <rect x="138" y="318" width="146" height="13" rx="3" fill="#f0fdf4"/>
+  <text x="211" y="328" text-anchor="middle" font-size="8.5" fill="#166534">drugClasses (ATC · capped at 3)</text>
+  <text x="211" y="344" text-anchor="middle" font-size="7.5" fill="#86efac">⚠ skipped if rxcui is None</text>
 
-  <!-- ══════════════════════════════════════════════════════════ -->
-  <!-- FDA LANE                                                  -->
-  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- ══════════════════════════════════════ FDA ══ -->
 
-  <!-- Call #3: drug label -->
-  <rect x="332" y="116" width="166" height="72" rx="7" fill="#2563eb"/>
-  <text x="415" y="134" text-anchor="middle" font-size="10" font-weight="700" fill="white">Call #3 — Drug Label</text>
-  <text x="415" y="148" text-anchor="middle" font-size="8.5" fill="#bfdbfe">/drug/label.json</text>
-  <text x="415" y="161" text-anchor="middle" font-size="8.5" fill="#bfdbfe">search=openfda.generic_name:"..."</text>
-  <text x="415" y="174" text-anchor="middle" font-size="8.5" fill="#bfdbfe">limit=1</text>
+  <!-- Call 3 -->
+  <rect x="318" y="112" width="166" height="70" rx="7" fill="#2563eb"/>
+  <text x="401" y="130" text-anchor="middle" font-size="10" font-weight="700" fill="white">Call #3 — Drug Label</text>
+  <text x="401" y="143" text-anchor="middle" font-size="8.5" fill="#bfdbfe">/drug/label.json</text>
+  <text x="401" y="156" text-anchor="middle" font-size="8.5" fill="#bfdbfe">search=openfda.generic_name:"..."</text>
+  <text x="401" y="169" text-anchor="middle" font-size="8.5" fill="#bfdbfe">limit=1</text>
 
   <!-- Returns FDA fields -->
-  <rect x="332" y="196" width="166" height="112" rx="6" fill="white" stroke="#93c5fd" stroke-width="1.5"/>
-  <text x="415" y="212" text-anchor="middle" font-size="10" font-weight="700" fill="#1d4ed8">Returns</text>
-  <rect x="342" y="218" width="146" height="14" rx="3" fill="#eff6ff"/>
-  <text x="415" y="229" text-anchor="middle" font-size="8.5" fill="#1e40af">fdaIndicationsUsage</text>
-  <text x="415" y="240" text-anchor="middle" font-size="7.5" fill="#93c5fd">(indications_and_usage)</text>
-  <rect x="342" y="244" width="146" height="14" rx="3" fill="#eff6ff"/>
-  <text x="415" y="255" text-anchor="middle" font-size="8.5" fill="#1e40af">fdaWarnings</text>
-  <text x="415" y="266" text-anchor="middle" font-size="7.5" fill="#93c5fd">(warnings / warnings_and_cautions)</text>
-  <rect x="342" y="270" width="146" height="14" rx="3" fill="#eff6ff"/>
-  <text x="415" y="281" text-anchor="middle" font-size="8.5" fill="#1e40af">fdaDosage</text>
-  <text x="415" y="292" text-anchor="middle" font-size="7.5" fill="#93c5fd">(dosage_and_administration)</text>
-  <text x="415" y="303" text-anchor="middle" font-size="7.5" fill="#64748b">first result · capped at 2000 chars</text>
+  <rect x="318" y="190" width="166" height="140" rx="6" fill="white" stroke="#93c5fd" stroke-width="1.5"/>
+  <text x="401" y="206" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1d4ed8">Returns</text>
+  <rect x="328" y="211" width="146" height="13" rx="3" fill="#eff6ff"/>
+  <text x="401" y="221" text-anchor="middle" font-size="8.5" fill="#1e40af">fdaIndicationsUsage</text>
+  <text x="401" y="231" text-anchor="middle" font-size="7.5" fill="#93c5fd">(indications_and_usage)</text>
+  <rect x="328" y="234" width="146" height="13" rx="3" fill="#eff6ff"/>
+  <text x="401" y="244" text-anchor="middle" font-size="8.5" fill="#1e40af">fdaWarnings</text>
+  <text x="401" y="254" text-anchor="middle" font-size="7.5" fill="#93c5fd">(warnings / warnings_and_cautions)</text>
+  <rect x="328" y="257" width="146" height="13" rx="3" fill="#eff6ff"/>
+  <text x="401" y="267" text-anchor="middle" font-size="8.5" fill="#1e40af">fdaDosage</text>
+  <text x="401" y="277" text-anchor="middle" font-size="7.5" fill="#93c5fd">(dosage_and_administration)</text>
+  <rect x="328" y="280" width="146" height="13" rx="3" fill="#eff6ff"/>
+  <text x="401" y="290" text-anchor="middle" font-size="8.5" fill="#1e40af">fdaBoxedWarning</text>
+  <text x="401" y="300" text-anchor="middle" font-size="7.5" fill="#93c5fd">(boxed_warning)</text>
+  <rect x="328" y="303" width="146" height="13" rx="3" fill="#eff6ff"/>
+  <text x="401" y="313" text-anchor="middle" font-size="8.5" fill="#1e40af">fdaPatientCounseling</text>
+  <text x="401" y="323" text-anchor="middle" font-size="7.5" fill="#93c5fd">(patient_counseling_information)</text>
 
-  <!-- ══════════════════════════════════════════════════════════ -->
-  <!-- MEDLINEPLUS LANE                                          -->
-  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- ══════════════════════════════════════ MEDLINEPLUS ══ -->
 
-  <!-- Call #4: MedlinePlus Connect -->
-  <rect x="522" y="116" width="180" height="82" rx="7" fill="#0891b2"/>
-  <text x="612" y="134" text-anchor="middle" font-size="10" font-weight="700" fill="white">Call #4 — Patient Info</text>
-  <text x="612" y="148" text-anchor="middle" font-size="8.5" fill="#a5f3fc">connect.medlineplus.gov/service</text>
-  <text x="612" y="161" text-anchor="middle" font-size="8.5" fill="#a5f3fc">mainSearchCriteria.v.cs (RxNorm OID)</text>
-  <text x="612" y="174" text-anchor="middle" font-size="8.5" fill="#a5f3fc">uses rxcui if found, else drug name</text>
-  <rect x="532" y="180" width="160" height="14" rx="3" fill="#155e75"/>
-  <text x="612" y="191" text-anchor="middle" font-size="8" font-weight="700" fill="#67e8f9">★ PRIMARY source for considerations</text>
+  <!-- Call 4 -->
+  <rect x="508" y="112" width="174" height="78" rx="7" fill="#0891b2"/>
+  <text x="595" y="130" text-anchor="middle" font-size="10" font-weight="700" fill="white">Call #4 — Patient Info</text>
+  <text x="595" y="143" text-anchor="middle" font-size="8.5" fill="#a5f3fc">connect.medlineplus.gov/service</text>
+  <text x="595" y="156" text-anchor="middle" font-size="8.5" fill="#a5f3fc">uses rxcui (RxNorm OID) if found</text>
+  <text x="595" y="169" text-anchor="middle" font-size="8.5" fill="#a5f3fc">else uses drug name</text>
+  <rect x="518" y="177" width="154" height="13" rx="3" fill="#155e75"/>
+  <text x="595" y="187" text-anchor="middle" font-size="8" font-weight="700" fill="#67e8f9">★ PRIMARY for considerations</text>
 
   <!-- Returns MedlinePlus fields -->
-  <rect x="522" y="206" width="180" height="168" rx="6" fill="white" stroke="#67e8f9" stroke-width="1.5"/>
-  <text x="612" y="222" text-anchor="middle" font-size="10" font-weight="700" fill="#0e7490">Returns</text>
-  <rect x="532" y="228" width="160" height="14" rx="3" fill="#ecfeff"/>
-  <text x="612" y="239" text-anchor="middle" font-size="8.5" font-weight="700" fill="#155e75">considerations ← PRIMARY ★</text>
-  <text x="612" y="251" text-anchor="middle" font-size="7.5" fill="#06b6d4">(parsed from summary HTML, up to 10)</text>
-  <rect x="532" y="255" width="160" height="13" rx="3" fill="#ecfeff"/>
-  <text x="612" y="265" text-anchor="middle" font-size="8.5" fill="#155e75">userGuidelines.storage</text>
-  <rect x="532" y="271" width="160" height="13" rx="3" fill="#ecfeff"/>
-  <text x="612" y="281" text-anchor="middle" font-size="8.5" fill="#155e75">userGuidelines.pregnancy</text>
-  <rect x="532" y="287" width="160" height="13" rx="3" fill="#ecfeff"/>
-  <text x="612" y="297" text-anchor="middle" font-size="8.5" fill="#155e75">userGuidelines.interactions</text>
-  <rect x="532" y="303" width="160" height="13" rx="3" fill="#ecfeff"/>
-  <text x="612" y="313" text-anchor="middle" font-size="8.5" fill="#155e75">userGuidelines.importantNotes</text>
-  <rect x="532" y="319" width="160" height="13" rx="3" fill="#ecfeff"/>
-  <text x="612" y="329" text-anchor="middle" font-size="8.5" fill="#155e75">medlineplusUrl</text>
-  <rect x="532" y="335" width="160" height="13" rx="3" fill="#ecfeff"/>
-  <text x="612" y="345" text-anchor="middle" font-size="8.5" fill="#155e75">medlineplusTitle</text>
-  <text x="612" y="365" text-anchor="middle" font-size="7.5" fill="#64748b">fallback: original considerations if empty</text>
+  <rect x="508" y="198" width="174" height="160" rx="6" fill="white" stroke="#67e8f9" stroke-width="1.5"/>
+  <text x="595" y="214" text-anchor="middle" font-size="9.5" font-weight="700" fill="#0e7490">Returns</text>
+  <rect x="518" y="219" width="154" height="13" rx="3" fill="#ecfeff"/>
+  <text x="595" y="229" text-anchor="middle" font-size="8.5" font-weight="700" fill="#155e75">considerations ★ (up to 10)</text>
+  <text x="595" y="241" text-anchor="middle" font-size="7.5" fill="#06b6d4">(parsed from summary HTML)</text>
+  <rect x="518" y="244" width="154" height="13" rx="3" fill="#ecfeff"/>
+  <text x="595" y="254" text-anchor="middle" font-size="8.5" fill="#155e75">userGuidelines.storage</text>
+  <rect x="518" y="260" width="154" height="13" rx="3" fill="#ecfeff"/>
+  <text x="595" y="270" text-anchor="middle" font-size="8.5" fill="#155e75">userGuidelines.pregnancy</text>
+  <rect x="518" y="276" width="154" height="13" rx="3" fill="#ecfeff"/>
+  <text x="595" y="286" text-anchor="middle" font-size="8.5" fill="#155e75">userGuidelines.interactions</text>
+  <rect x="518" y="292" width="154" height="13" rx="3" fill="#ecfeff"/>
+  <text x="595" y="302" text-anchor="middle" font-size="8.5" fill="#155e75">userGuidelines.importantNotes</text>
+  <rect x="518" y="308" width="154" height="13" rx="3" fill="#ecfeff"/>
+  <text x="595" y="318" text-anchor="middle" font-size="8.5" fill="#155e75">medlineplusUrl</text>
+  <rect x="518" y="324" width="154" height="13" rx="3" fill="#ecfeff"/>
+  <text x="595" y="334" text-anchor="middle" font-size="8.5" fill="#155e75">medlineplusTitle</text>
+  <text x="595" y="351" text-anchor="middle" font-size="7.5" fill="#64748b">fallback: original if empty</text>
 
-  <!-- ══════════════════════════════════════════════════════════ -->
-  <!-- OUTPUT LANE                                               -->
-  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- ══════════════════════════════════════ DAILYMED ══ -->
 
-  <rect x="726" y="116" width="302" height="340" rx="7" fill="white" stroke="#fdba74" stroke-width="1.5"/>
-  <text x="877" y="136" text-anchor="middle" font-size="10" font-weight="700" fill="#c2410c">Final Object (per drug)</text>
+  <!-- Call 5: search by name -->
+  <rect x="706" y="112" width="176" height="58" rx="7" fill="#7e22ce"/>
+  <text x="794" y="130" text-anchor="middle" font-size="10" font-weight="700" fill="white">Call #5 — Search Drug</text>
+  <text x="794" y="143" text-anchor="middle" font-size="8.5" fill="#e9d5ff">/services/v2/spls.json</text>
+  <text x="794" y="156" text-anchor="middle" font-size="8.5" fill="#e9d5ff">?drug_name=...&amp;pagesize=1</text>
 
-  <!-- Original fields (preserved via **med) -->
-  <text x="736" y="152" font-size="8" font-weight="700" fill="#64748b">ORIGINAL (preserved)</text>
-  <rect x="736" y="156" width="282" height="13" rx="3" fill="#f1f5f9"/>
-  <text x="877" y="167" text-anchor="middle" font-size="8.5" fill="#475569">id · name · tradeNames · category · description · sideEffects</text>
+  <!-- Returns setid -->
+  <rect x="706" y="178" width="176" height="36" rx="6" fill="white" stroke="#d8b4fe" stroke-width="1.5"/>
+  <text x="794" y="193" text-anchor="middle" font-size="9.5" font-weight="700" fill="#7e22ce">Returns</text>
+  <rect x="716" y="200" width="156" height="13" rx="3" fill="#fdf4ff"/>
+  <text x="794" y="210" text-anchor="middle" font-size="8.5" fill="#6b21a8">dailymedSetId (UUID)</text>
 
-  <!-- RXNorm fields -->
-  <text x="736" y="182" font-size="8" font-weight="700" fill="#15803d">RXNORM</text>
-  <rect x="736" y="186" width="282" height="13" rx="3" fill="#f0fdf4"/>
-  <text x="877" y="197" text-anchor="middle" font-size="8.5" fill="#166534">rxcui</text>
-  <rect x="736" y="202" width="282" height="13" rx="3" fill="#f0fdf4"/>
-  <text x="877" y="213" text-anchor="middle" font-size="8.5" fill="#166534">drugClasses</text>
+  <line x1="794" y1="214" x2="794" y2="230" stroke="#7e22ce" stroke-width="1.5" marker-end="url(#arr-purple)"/>
 
-  <!-- FDA fields -->
-  <text x="736" y="228" font-size="8" font-weight="700" fill="#1d4ed8">FDA OPENFDA</text>
-  <rect x="736" y="232" width="282" height="13" rx="3" fill="#eff6ff"/>
-  <text x="877" y="243" text-anchor="middle" font-size="8.5" fill="#1e40af">fdaIndicationsUsage  (fallback: original description)</text>
-  <rect x="736" y="248" width="282" height="13" rx="3" fill="#eff6ff"/>
-  <text x="877" y="259" text-anchor="middle" font-size="8.5" fill="#1e40af">fdaWarnings</text>
-  <rect x="736" y="264" width="282" height="13" rx="3" fill="#eff6ff"/>
-  <text x="877" y="275" text-anchor="middle" font-size="8.5" fill="#1e40af">fdaDosage</text>
+  <!-- Call 6: sections by setid -->
+  <rect x="706" y="232" width="176" height="58" rx="7" fill="#7e22ce"/>
+  <text x="794" y="250" text-anchor="middle" font-size="10" font-weight="700" fill="white">Call #6 — SPL Sections</text>
+  <text x="794" y="263" text-anchor="middle" font-size="8.5" fill="#e9d5ff">/spls/{setid}/sections.json</text>
+  <text x="794" y="276" text-anchor="middle" font-size="8.5" fill="#e9d5ff">LOINC-coded SPL sections</text>
 
-  <!-- MedlinePlus fields -->
-  <text x="736" y="290" font-size="8" font-weight="700" fill="#0e7490">MEDLINEPLUS CONNECT ★</text>
-  <rect x="736" y="294" width="282" height="13" rx="3" fill="#ecfeff"/>
-  <text x="877" y="305" text-anchor="middle" font-size="8.5" font-weight="700" fill="#155e75">considerations  ← PRIMARY from MedlinePlus</text>
-  <rect x="736" y="310" width="282" height="13" rx="3" fill="#ecfeff"/>
-  <text x="877" y="321" text-anchor="middle" font-size="8.5" fill="#155e75">userGuidelines  {storage, pregnancy, interactions, importantNotes}</text>
-  <rect x="736" y="326" width="282" height="13" rx="3" fill="#ecfeff"/>
-  <text x="877" y="337" text-anchor="middle" font-size="8.5" fill="#155e75">medlineplusUrl · medlineplusTitle</text>
+  <!-- Returns DailyMed fields -->
+  <rect x="706" y="298" width="176" height="160" rx="6" fill="white" stroke="#d8b4fe" stroke-width="1.5"/>
+  <text x="794" y="314" text-anchor="middle" font-size="9.5" font-weight="700" fill="#7e22ce">Returns (by LOINC code)</text>
+  <rect x="716" y="319" width="156" height="13" rx="3" fill="#fdf4ff"/>
+  <text x="794" y="329" text-anchor="middle" font-size="8.5" font-weight="700" fill="#6b21a8">patientTeaching ★ (34076-0)</text>
+  <rect x="716" y="335" width="156" height="13" rx="3" fill="#fdf4ff"/>
+  <text x="794" y="345" text-anchor="middle" font-size="8.5" fill="#6b21a8">dailymedBoxedWarning (34066-1)</text>
+  <rect x="716" y="351" width="156" height="13" rx="3" fill="#fdf4ff"/>
+  <text x="794" y="361" text-anchor="middle" font-size="8.5" fill="#6b21a8">dailymedNursing (34080-2)</text>
+  <rect x="716" y="367" width="156" height="13" rx="3" fill="#fdf4ff"/>
+  <text x="794" y="377" text-anchor="middle" font-size="8.5" fill="#6b21a8">dailymedPregnancy (42228-7)</text>
+  <rect x="716" y="383" width="156" height="13" rx="3" fill="#fdf4ff"/>
+  <text x="794" y="393" text-anchor="middle" font-size="8.5" fill="#6b21a8">dailymedDrugInteractions (34073-7)</text>
+  <rect x="716" y="399" width="156" height="13" rx="3" fill="#fdf4ff"/>
+  <text x="794" y="409" text-anchor="middle" font-size="8.5" fill="#6b21a8">dailymedAdverseReactions (34084-4)</text>
+  <rect x="716" y="415" width="156" height="13" rx="3" fill="#fdf4ff"/>
+  <text x="794" y="425" text-anchor="middle" font-size="8.5" fill="#6b21a8">dailymedUrl</text>
+  <text x="794" y="450" text-anchor="middle" font-size="7.5" fill="#64748b">★ PRIMARY for patientTeaching</text>
 
-  <!-- apiSources -->
-  <text x="736" y="352" font-size="8" font-weight="700" fill="#64748b">API SOURCES (tracking)</text>
-  <rect x="736" y="356" width="282" height="13" rx="3" fill="#fdf4ff"/>
-  <text x="877" y="367" text-anchor="middle" font-size="8.5" fill="#6b21a8">apiSources  {rxnorm, fda, medlineplus}</text>
+  <!-- ══════════════════════════════════════ OUTPUT ══ -->
+  <rect x="906" y="112" width="342" height="380" rx="7" fill="white" stroke="#fdba74" stroke-width="1.5"/>
+  <text x="1077" y="130" text-anchor="middle" font-size="10" font-weight="700" fill="#c2410c">Final Object (per drug)</text>
+
+  <text x="916" y="148" font-size="8" font-weight="700" fill="#64748b">ORIGINAL (preserved via **med)</text>
+  <rect x="916" y="152" width="322" height="13" rx="3" fill="#f1f5f9"/>
+  <text x="1077" y="162" text-anchor="middle" font-size="8.5" fill="#475569">id · name · tradeNames · category · description · sideEffects</text>
+
+  <text x="916" y="178" font-size="8" font-weight="700" fill="#15803d">RXNORM</text>
+  <rect x="916" y="182" width="322" height="13" rx="3" fill="#f0fdf4"/>
+  <text x="1077" y="192" text-anchor="middle" font-size="8.5" fill="#166534">rxcui · drugClasses</text>
+
+  <text x="916" y="208" font-size="8" font-weight="700" fill="#1d4ed8">FDA OPENFDA</text>
+  <rect x="916" y="212" width="322" height="13" rx="3" fill="#eff6ff"/>
+  <text x="1077" y="222" text-anchor="middle" font-size="8.5" fill="#1e40af">fdaIndicationsUsage (fallback: original description)</text>
+  <rect x="916" y="228" width="322" height="13" rx="3" fill="#eff6ff"/>
+  <text x="1077" y="238" text-anchor="middle" font-size="8.5" fill="#1e40af">fdaWarnings · fdaDosage · fdaBoxedWarning · fdaPatientCounseling</text>
+
+  <text x="916" y="254" font-size="8" font-weight="700" fill="#0e7490">MEDLINEPLUS CONNECT ★</text>
+  <rect x="916" y="258" width="322" height="13" rx="3" fill="#ecfeff"/>
+  <text x="1077" y="268" text-anchor="middle" font-size="8.5" font-weight="700" fill="#155e75">considerations ★ · medlineplusUrl · medlineplusTitle</text>
+  <rect x="916" y="274" width="322" height="13" rx="3" fill="#ecfeff"/>
+  <text x="1077" y="284" text-anchor="middle" font-size="8.5" fill="#155e75">userGuidelines {storage · pregnancy · interactions · importantNotes}</text>
+
+  <text x="916" y="300" font-size="8" font-weight="700" fill="#7e22ce">DAILYMED ★</text>
+  <rect x="916" y="304" width="322" height="13" rx="3" fill="#fdf4ff"/>
+  <text x="1077" y="314" text-anchor="middle" font-size="8.5" font-weight="700" fill="#6b21a8">patientTeaching ★ · dailymedBoxedWarning</text>
+  <rect x="916" y="320" width="322" height="13" rx="3" fill="#fdf4ff"/>
+  <text x="1077" y="330" text-anchor="middle" font-size="8.5" fill="#6b21a8">dailymedNursing · dailymedPregnancy · dailymedDrugInteractions</text>
+  <rect x="916" y="336" width="322" height="13" rx="3" fill="#fdf4ff"/>
+  <text x="1077" y="346" text-anchor="middle" font-size="8.5" fill="#6b21a8">dailymedAdverseReactions · dailymedSetId · dailymedUrl</text>
+
+  <text x="916" y="362" font-size="8" font-weight="700" fill="#64748b">API SOURCES (tracking)</text>
+  <rect x="916" y="366" width="322" height="13" rx="3" fill="#fef9c3"/>
+  <text x="1077" y="376" text-anchor="middle" font-size="8.5" fill="#854d0e">apiSources {rxnorm · fda · medlineplus · dailymed}</text>
 
   <!-- Repeat indicator -->
-  <rect x="736" y="390" width="282" height="24" rx="5" fill="#fef9c3" stroke="#fde047" stroke-width="1"/>
-  <text x="877" y="403" text-anchor="middle" font-size="9" font-weight="700" fill="#854d0e">× 540 drugs</text>
-  <text x="877" y="414" text-anchor="middle" font-size="8" fill="#a16207">loop repeated per drug</text>
+  <rect x="916" y="424" width="322" height="24" rx="5" fill="#fef9c3" stroke="#fde047" stroke-width="1"/>
+  <text x="1077" y="437" text-anchor="middle" font-size="9" font-weight="700" fill="#854d0e">× 540 drugs · up to 6 API calls each · ~25–30 min total</text>
+  <text x="1077" y="448" text-anchor="middle" font-size="8" fill="#a16207">--limit N for testing · --resume to continue interrupted runs</text>
 
-  <!-- ══════════════════════════════════════════════════════════ -->
-  <!-- MERGE ZONE                                                -->
-  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- ══════════════════════════════════════ MERGE ZONE ══ -->
+  <rect x="120" y="480" width="778" height="58" rx="8" fill="#0f172a"/>
+  <text x="509" y="500" text-anchor="middle" font-size="11" font-weight="700" fill="white">MERGE — { ...original, rxnorm, fda, medlineplus, dailymed }</text>
+  <text x="509" y="516" text-anchor="middle" font-size="9" fill="#94a3b8">considerations from MedlinePlus takes precedence · patientTeaching from DailyMed · fdaIndicationsUsage falls back to original description</text>
+  <text x="509" y="530" text-anchor="middle" font-size="8.5" fill="#64748b">No field written by two sources · each API owns its output fields exclusively</text>
 
-  <rect x="134" y="420" width="576" height="62" rx="8" fill="#0f172a"/>
-  <text x="422" y="440" text-anchor="middle" font-size="11" font-weight="700" fill="white">MERGE — { ...med, RXNorm fields, FDA fields, MedlinePlus fields }</text>
-  <text x="422" y="456" text-anchor="middle" font-size="9" fill="#94a3b8">Original fields preserved · RXNorm · FDA openFDA · MedlinePlus Connect → single flat object per drug</text>
-  <text x="422" y="470" text-anchor="middle" font-size="8.5" fill="#64748b">considerations from MedlinePlus takes precedence · fdaIndicationsUsage falls back to original description if FDA returns null</text>
+  <!-- Arrows into merge -->
+  <line x1="211" y1="350" x2="211" y2="478" stroke="#16a34a" stroke-width="2" marker-end="url(#arr-green)"/>
+  <line x1="401" y1="330" x2="401" y2="478" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <line x1="595" y1="358" x2="595" y2="478" stroke="#0891b2" stroke-width="2" marker-end="url(#arr-teal)"/>
+  <line x1="794" y1="458" x2="794" y2="478" stroke="#7e22ce" stroke-width="2" marker-end="url(#arr-purple)"/>
 
-  <!-- Arrows from each lane into merge -->
-  <line x1="225" y1="376" x2="225" y2="418" stroke="#16a34a" stroke-width="2" marker-end="url(#arr-green)"/>
-  <line x1="415" y1="308" x2="415" y2="418" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-blue)"/>
-  <line x1="612" y1="374" x2="612" y2="418" stroke="#0891b2" stroke-width="2" marker-end="url(#arr-teal)"/>
+  <!-- Arrow merge → output -->
+  <line x1="898" y1="509" x2="902" y2="509" stroke="#0f172a" stroke-width="2" marker-end="url(#arr-dark)"/>
+  <line x1="1077" y1="509" x2="1077" y2="454" stroke="#0f172a" stroke-width="2"/>
 
-  <!-- Arrow from merge → output -->
-  <line x1="710" y1="451" x2="722" y2="451" stroke="#0f172a" stroke-width="2" marker-end="url(#arr-dark)"/>
-  <line x1="877" y1="456" x2="877" y2="418" stroke="#0f172a" stroke-width="2"/>
+  <!-- ══════════════════════════════════════ FINAL JSON ══ -->
+  <rect x="120" y="552" width="1036" height="46" rx="8" fill="#f97316"/>
+  <text x="638" y="571" text-anchor="middle" font-size="11" font-weight="700" fill="white">medications_enriched.json — Array of 540 enriched objects</text>
+  <text x="638" y="586" text-anchor="middle" font-size="9" fill="#ffedd5">0.4s delay between calls · 4–6 calls per drug · RXNorm → FDA → MedlinePlus → DailyMed</text>
 
-  <!-- ══════════════════════════════════════════════════════════ -->
-  <!-- FINAL JSON OUTPUT                                         -->
-  <!-- ══════════════════════════════════════════════════════════ -->
+  <line x1="509" y1="538" x2="509" y2="550" stroke="#f97316" stroke-width="2" marker-end="url(#arr-orange)"/>
 
-  <rect x="134" y="496" width="880" height="50" rx="8" fill="#f97316"/>
-  <text x="574" y="517" text-anchor="middle" font-size="11" font-weight="700" fill="white">medications_enriched.json — Array of 540 complete objects</text>
-  <text x="574" y="533" text-anchor="middle" font-size="9" fill="#ffedd5">0.4s delay between calls · 3 calls per drug (4 if rxcui found) · ~15–20 min total runtime · --resume flag to continue interrupted runs</text>
+  <!-- ══════════════════════════════════════ LEGEND ══ -->
+  <rect x="16" y="612" width="820" height="52" rx="6" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="26" y="628" font-size="9.5" font-weight="700" fill="#374151">LEGEND</text>
+  <rect x="26"  y="635" width="10" height="10" rx="2" fill="#f0fdf4" stroke="#86efac" stroke-width="1"/>
+  <text x="42"  y="644" font-size="9" fill="#334155">RXNorm</text>
+  <rect x="110" y="635" width="10" height="10" rx="2" fill="#eff6ff" stroke="#93c5fd" stroke-width="1"/>
+  <text x="126" y="644" font-size="9" fill="#334155">FDA openFDA</text>
+  <rect x="230" y="635" width="10" height="10" rx="2" fill="#ecfeff" stroke="#67e8f9" stroke-width="1"/>
+  <text x="246" y="644" font-size="9" fill="#334155">MedlinePlus Connect  ★ = considerations</text>
+  <rect x="460" y="635" width="10" height="10" rx="2" fill="#fdf4ff" stroke="#d8b4fe" stroke-width="1"/>
+  <text x="476" y="644" font-size="9" fill="#334155">DailyMed  ★ = patientTeaching</text>
+  <rect x="620" y="635" width="10" height="10" rx="2" fill="#f1f5f9"/>
+  <text x="636" y="644" font-size="9" fill="#334155">Original (preserved)</text>
+  <text x="26"  y="657" font-size="8.5" fill="#64748b">Each color = exclusive owner · LOINC codes used for DailyMed SPL section mapping · all fields flat-merged into one object per drug</text>
 
-  <!-- Arrow merge → final JSON -->
-  <line x1="422" y1="482" x2="422" y2="494" stroke="#f97316" stroke-width="2" marker-end="url(#arr-orange)"/>
-
-  <!-- ══════════════════════════════════════════════════════════ -->
-  <!-- LEGEND                                                    -->
-  <!-- ══════════════════════════════════════════════════════════ -->
-
-  <rect x="16" y="562" width="680" height="56" rx="6" fill="white" stroke="#e2e8f0" stroke-width="1"/>
-  <text x="26" y="578" font-size="9.5" font-weight="700" fill="#374151">LEGEND</text>
-
-  <rect x="26"  y="585" width="10" height="10" rx="2" fill="#f0fdf4" stroke="#86efac" stroke-width="1"/>
-  <text x="42"  y="595" font-size="9" fill="#334155">RXNorm data</text>
-
-  <rect x="116" y="585" width="10" height="10" rx="2" fill="#eff6ff" stroke="#93c5fd" stroke-width="1"/>
-  <text x="132" y="595" font-size="9" fill="#334155">FDA openFDA data</text>
-
-  <rect x="236" y="585" width="10" height="10" rx="2" fill="#ecfeff" stroke="#67e8f9" stroke-width="1"/>
-  <text x="252" y="595" font-size="9" fill="#334155">MedlinePlus Connect data  ★ = primary source for considerations</text>
-
-  <rect x="516" y="585" width="10" height="10" rx="2" fill="#f1f5f9"/>
-  <text x="532" y="595" font-size="9" fill="#334155">Original field (preserved)</text>
-
-  <rect x="26" y="600" width="10" height="10" rx="2" fill="#fff7ed" stroke="#fdba74" stroke-width="1"/>
-  <text x="42" y="610" font-size="9" fill="#334155">Final output</text>
-  <text x="132" y="610" font-size="8.5" fill="#64748b">Each color = exclusive data owner · No field is written by two sources · MedlinePlus is authoritative for patient-facing considerations</text>
-
-  <!-- ══════════════════════════════════════════════════════════ -->
-  <!-- ARROWHEAD DEFS                                            -->
-  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- ══════════════════════════════════════ ARROWHEADS ══ -->
   <defs>
-    <marker id="arr-dark"   markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-      <path d="M0,0 L0,6 L8,3 z" fill="#334155"/>
-    </marker>
-    <marker id="arr-green"  markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-      <path d="M0,0 L0,6 L8,3 z" fill="#16a34a"/>
-    </marker>
-    <marker id="arr-blue"   markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-      <path d="M0,0 L0,6 L8,3 z" fill="#2563eb"/>
-    </marker>
-    <marker id="arr-teal"   markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-      <path d="M0,0 L0,6 L8,3 z" fill="#0891b2"/>
-    </marker>
-    <marker id="arr-orange" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-      <path d="M0,0 L0,6 L8,3 z" fill="#f97316"/>
-    </marker>
+    <marker id="arr-dark"   markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#334155"/></marker>
+    <marker id="arr-green"  markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#16a34a"/></marker>
+    <marker id="arr-blue"   markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#2563eb"/></marker>
+    <marker id="arr-teal"   markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#0891b2"/></marker>
+    <marker id="arr-purple" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#7e22ce"/></marker>
+    <marker id="arr-orange" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#f97316"/></marker>
   </defs>
 </svg>

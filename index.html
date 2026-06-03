@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MedSearchPro — Medication Reference</title>
-  <meta name="description" content="Professional medication reference and search tool. Find reliable information on an expanding medication database." />
+  <meta name="description" content="Professional medication reference and search tool. Find reliable information on 30+ common medications." />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg width='38' height='32' viewBox='0 0 38 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M19 28 C14 22,2 18,4 8 C8 4,14 6,19 28Z' fill='%232d8a3e'/%3E%3Cpath d='M19 28 C24 22,36 18,34 8 C30 4,24 6,19 28Z' fill='%234caf50'/%3E%3C/svg%3E" />
   <style>
@@ -169,6 +169,23 @@
     .read-aloud-btn { display:inline-flex; align-items:center; gap:6px; padding:8px 18px; background:#0f2d5e; color:#fff; border:none; border-radius:5px; font-size:.8rem; font-weight:700; cursor:pointer; font-family:var(--font); transition:background .15s; }
     .read-aloud-btn:hover { background:#1a3a6b; }
     .read-aloud-btn.stop { background:#991b1b; }
+    /* ── Patient Guide Sections ───────────────────────── */
+    .boxed-warning { background:#fff1f2; border:2px solid #f87171; border-radius:6px; padding:14px 16px; margin-bottom:4px; }
+    .boxed-warning .bw-label { font-size:.58rem; font-weight:900; letter-spacing:2px; text-transform:uppercase; color:#dc2626; margin-bottom:6px; display:flex; align-items:center; gap:6px; }
+    .boxed-warning p { font-size:.83rem; color:#7f1d1d; line-height:1.6; }
+    .patient-teaching { background:#f0fdf4; border-left:4px solid #16a34a; border-radius:4px; padding:14px 16px; }
+    .patient-teaching p { font-size:.84rem; color:#14532d; line-height:1.7; }
+    .ug-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .ug-item { background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:10px 12px; }
+    .ug-item-label { font-size:.58rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:#64748b; margin-bottom:5px; display:flex; align-items:center; gap:5px; }
+    .ug-item p { font-size:.81rem; color:#334155; line-height:1.6; }
+    .source-links { display:flex; flex-wrap:wrap; gap:8px; margin-top:4px; }
+    .source-link { display:inline-flex; align-items:center; gap:5px; padding:5px 12px; border:1px solid #e2e8f0; border-radius:20px; font-size:.75rem; color:#3b82f6; text-decoration:none; background:#fff; transition:background .15s; }
+    .source-link:hover { background:#eff6ff; }
+    .fda-dosage { background:#eff6ff; border-left:4px solid #3b82f6; border-radius:4px; padding:12px 16px; }
+    .fda-dosage p { font-size:.84rem; color:#1e40af; line-height:1.7; }
+    .drug-class-tags { display:flex; flex-wrap:wrap; gap:6px; }
+    .drug-class-tag { background:#f0fdf4; color:#15803d; border:1px solid #86efac; padding:3px 10px; border-radius:20px; font-size:.75rem; font-weight:600; }
 
     /* FOOTER */
     footer { background:#f8fafc; border-top:1px solid var(--gray-200); padding:24px 28px; text-align:center; }
@@ -239,8 +256,8 @@
     <div class="glossary-banner-inner">
       <div><h1>Medication List</h1></div>
       <div class="glossary-banner-stats">
-        <div class="banner-stat"><div class="banner-stat-num" id="bannerCount">Loading</div><div class="banner-stat-label">Medications</div></div>
-        <div class="banner-stat"><div class="banner-stat-num" id="categoryCount">Loading</div><div class="banner-stat-label">Categories</div></div>
+        <div class="banner-stat"><div class="banner-stat-num" id="bannerCount">—</div><div class="banner-stat-label">Medications</div></div>
+        <div class="banner-stat"><div class="banner-stat-num">9</div><div class="banner-stat-label">Categories</div></div>
       </div>
     </div>
   </div>
@@ -271,7 +288,7 @@
       <div class="az-bar" id="azBar" aria-label="Filter by first letter"><span class="az-label">A–Z</span></div>
     </div>
     <div class="results-meta">
-      <div class="results-count" id="resultsHeading" aria-live="polite" role="status">Loading medications...</div>
+      <div class="results-count" id="resultsHeading" aria-live="polite" role="status">Showing all 30 medications</div>
       <label for="sortSelect" style="font-size:.7rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#64748b">Sort&nbsp;
         <select id="sortSelect" class="sort-select"><option value="name">A–Z Name</option><option value="category">Category</option></select>
       </label>
@@ -295,7 +312,7 @@
     <h3>Meet Parshan</h3>
     <p>As a student majoring in physiology, the inspiration for this website occurred when I witnessed my own family members struggling to comprehend their medication instructions. Watching them navigate through confusion and uncertainty motivated me to simplify medication instructions, promoting self-management of prescribed medications.</p>
     <h3>Our Mission</h3>
-    <p>At Med Search Pro, our aim is to ensure that medication information is comprehensible for patients of all backgrounds. Our simple medication search website provides patients with the tool to manage their own health by improving knowledge of medications and promoting health literacy. We designed a user-friendly medication search website featuring an expanding medication database to provide accessible and essential health information, bridging this gap.</p>
+    <p>At Med Search Pro, our aim is to ensure that medication information is comprehensible for patients of all backgrounds. Our simple medication search website provides patients with the tool to manage their own health by improving knowledge of medications and promoting health literacy. We designed a user-friendly medication search website featuring 30+ common medications to provide accessible and essential health information, bridging this gap.</p>
     <h3>Disclaimer</h3>
     <p>The content provided on this website is intended for general informational purposes only. It is not a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified healthcare provider with any questions you may have regarding a medical condition or the use of prescribed medications.</p>
   </div>
@@ -373,49 +390,10 @@ function heroSearch(q) {
 // MEDICATION DATABASE
 // ============================================================
 let MEDICATIONS = [];
-let medicationsLoaded = false;
-
-async function loadMedications() {
-  try {
-    // Root-relative path works correctly on Vercel when medications.json is in the public/root folder.
-    const response = await fetch("medications.json", { cache: "no-store" });
-    if (!response.ok) {
-      throw new Error(`Could not load /medications.json. Status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    if (!Array.isArray(data)) {
-      throw new Error("medications.json must be an array of medication objects.");
-    }
-
-    MEDICATIONS = data;
-    medicationsLoaded = true;
-    initGlossary();
-  } catch (err) {
-    console.error("Failed to load medications.json:", err);
-
-    const heading = document.getElementById("resultsHeading");
-    const banner = document.getElementById("bannerCount");
-    const categoryStat = document.getElementById("categoryCount");
-    const grid = document.getElementById("resultsGrid");
-    const empty = document.getElementById("emptyState");
-
-    if (heading) heading.textContent = "Medication data could not be loaded";
-    if (banner) banner.textContent = "0";
-    if (categoryStat) categoryStat.textContent = "0";
-    if (grid) grid.innerHTML = "";
-    if (empty) {
-      empty.style.display = "block";
-      empty.innerHTML = `
-        <div class="empty-icon" aria-hidden="true">⚠️</div>
-        <h3>Medication data could not be loaded</h3>
-        <p>Please confirm that <strong>medications.json</strong> is deployed in the same public/root folder as this page.</p>
-      `;
-    }
-  }
-}
-
-loadMedications();
+fetch("medications.json")
+  .then(r => r.json())
+  .then(data => { MEDICATIONS = data; initGlossary(); })
+  .catch(err => console.error("Failed to load medications.json:", err));
 
 // ============================================================
 // CATEGORY STYLE MAP
@@ -443,26 +421,9 @@ const speechSynth=window.speechSynthesis;
 // INIT
 // ============================================================
 function initGlossary(){
-  if (!medicationsLoaded) return;
-  updateStaticCounts();
-  setupSearch();
-  setupFilters();
-  setupSort();
-  setupModal();
-  buildAZBar();
-  filterAndRender();
-}
-
-function updateStaticCounts(){
-  const total = MEDICATIONS.length;
-  const categoryCount = new Set(MEDICATIONS.map(m => m.category || "Other")).size;
-  const bannerCount = document.getElementById("bannerCount");
-  const categoryStat = document.getElementById("categoryCount");
-  const heading = document.getElementById("resultsHeading");
-
-  if (bannerCount) bannerCount.textContent = total;
-  if (categoryStat) categoryStat.textContent = categoryCount;
-  if (heading) heading.textContent = `Showing all ${total} medications`;
+  const bc=document.getElementById("bannerCount");
+  if(bc)bc.textContent=MEDICATIONS.length;
+  renderCards(MEDICATIONS);setupSearch();setupFilters();setupSort();setupModal();buildAZBar();
 }
 
 // ============================================================
@@ -470,8 +431,6 @@ function updateStaticCounts(){
 // ============================================================
 function setupSearch(){
   const si=document.getElementById("searchInput");
-  if (!si || si.dataset.bound === "true") return;
-  si.dataset.bound = "true";
   si.addEventListener("input",()=>{currentQuery=si.value.trim().toLowerCase();filterAndRender();});
 }
 
@@ -486,18 +445,18 @@ function filterAndRender(){
     const byName=currentSort==="name";
     results=pool.sort((a,b)=>byName?a.name.localeCompare(b.name):a.category.localeCompare(b.category)||a.name.localeCompare(b.name));
   } else {
-    const t1=pool.filter(d=>(d.name || "").toLowerCase().startsWith(q));
+    const t1=pool.filter(d=>d.name.toLowerCase().startsWith(q));
     if(t1.length>0){
       results=t1.sort((a,b)=>a.name.localeCompare(b.name));
     } else {
       const scored=pool.map(d=>{
-        const n=(d.name || "").toLowerCase(), tr=(d.tradeNames || []).map(t=>String(t).toLowerCase());
+        const n=d.name.toLowerCase(), tr=d.tradeNames.map(t=>t.toLowerCase());
         if(tr.some(t=>t.startsWith(q)))                                          return{d,s:3};
         if(n.includes(q))                                                         return{d,s:2};
         if(tr.some(t=>t.includes(q)))                                             return{d,s:1};
-        if((d.category || "").toLowerCase().includes(q)||(d.description || "").toLowerCase().includes(q)||
-           (d.sideEffects || []).some(s=>String(s).toLowerCase().includes(q))||
-           (d.considerations || []).some(c=>String(c).toLowerCase().includes(q)))                 return{d,s:0};
+        if(d.category.toLowerCase().includes(q)||d.description.toLowerCase().includes(q)||
+           d.sideEffects.some(s=>s.toLowerCase().includes(q))||
+           d.considerations.some(c=>c.toLowerCase().includes(q)))                 return{d,s:0};
         return{d,s:-1};
       }).filter(x=>x.s>=0);
       const byName=currentSort==="name";
@@ -526,11 +485,9 @@ function renderCards(drugs){
   if(empty)empty.style.display="none";
   grid.innerHTML=drugs.map(d=>{
     const cs=catStyle(d.category);
-    const tradeNames = d.tradeNames || [];
-    const sideEffects = d.sideEffects || [];
-    const tradeLine=tradeNames.length?tradeNames.join("  ·  "):'<em style="color:#94a3b8">No trade names listed</em>';
-    const seTags=sideEffects.slice(0,4).map(s=>`<span class="card-se-tag">${s}</span>`).join("")+
-      (sideEffects.length>4?`<span class="card-se-tag" style="background:#f1f5f9;color:#64748b;border-color:#e2e8f0">+${sideEffects.length-4} more</span>`:"");
+    const tradeLine=d.tradeNames.length?d.tradeNames.join("  ·  "):'<em style="color:#94a3b8">No trade names listed</em>';
+    const seTags=d.sideEffects.slice(0,4).map(s=>`<span class="card-se-tag">${s}</span>`).join("")+
+      (d.sideEffects.length>4?`<span class="card-se-tag" style="background:#f1f5f9;color:#64748b;border-color:#e2e8f0">+${d.sideEffects.length-4} more</span>`:"");
     return`<article class="drug-card" role="listitem" tabindex="0" aria-label="${d.name}, ${d.category}" data-id="${d.id}" style="border-left-color:${cs.border}">
       <div class="card-header">
         <div class="card-name-group"><div class="card-name">${d.name}</div><div class="card-trade">${tradeLine}</div></div>
@@ -559,8 +516,7 @@ function renderCards(drugs){
 // ============================================================
 function buildAZBar(){
   const bar=document.getElementById("azBar"); if(!bar)return;
-  bar.innerHTML = '<span class="az-label">A–Z</span>';
-  const available=new Set(MEDICATIONS.map(d=>(d.name || "?")[0].toUpperCase()));
+  const available=new Set(MEDICATIONS.map(d=>d.name[0].toUpperCase()));
   "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").forEach(l=>{
     const btn=document.createElement("button");
     btn.className="az-btn"; btn.textContent=l;
@@ -580,8 +536,6 @@ function buildAZBar(){
 // ============================================================
 function setupFilters(){
   document.querySelectorAll(".filter-chip").forEach(chip=>{
-    if (chip.dataset.bound === "true") return;
-    chip.dataset.bound = "true";
     chip.addEventListener("click",()=>{
       document.querySelectorAll(".filter-chip").forEach(c=>{c.classList.remove("active");c.setAttribute("aria-pressed","false");});
       chip.classList.add("active");chip.setAttribute("aria-pressed","true");
@@ -590,12 +544,7 @@ function setupFilters(){
     chip.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();chip.click();}});
   });
 }
-function setupSort(){
-  const sort = document.getElementById("sortSelect");
-  if (!sort || sort.dataset.bound === "true") return;
-  sort.dataset.bound = "true";
-  sort.addEventListener("change",e=>{currentSort=e.target.value;filterAndRender();});
-}
+function setupSort(){document.getElementById("sortSelect").addEventListener("change",e=>{currentSort=e.target.value;filterAndRender();});}
 
 // (image URLs are embedded directly in each medication object)
 
@@ -603,20 +552,9 @@ function setupSort(){
 // MODAL
 // ============================================================
 function setupModal(){
-  const closeBtn = document.getElementById("modalClose");
-  const overlay = document.getElementById("modalOverlay");
-  if (closeBtn && closeBtn.dataset.bound !== "true") {
-    closeBtn.dataset.bound = "true";
-    closeBtn.addEventListener("click",closeModal);
-  }
-  if (overlay && overlay.dataset.bound !== "true") {
-    overlay.dataset.bound = "true";
-    overlay.addEventListener("click",e=>{if(e.target===overlay)closeModal();});
-  }
-  if (!window._modalEscapeBound) {
-    window._modalEscapeBound = true;
-    document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();});
-  }
+  document.getElementById("modalClose").addEventListener("click",closeModal);
+  document.getElementById("modalOverlay").addEventListener("click",e=>{if(e.target===document.getElementById("modalOverlay"))closeModal();});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();});
 }
 
 function openModal(id){
@@ -648,21 +586,52 @@ function openModal(id){
     noneEl.style.display = "block";
   }
 
-  const tradeNames = d.tradeNames || [];
-  const sideEffects = d.sideEffects || [];
-  const considerations = d.considerations || [];
-  const considHTML=considerations.map((c,i)=>`
+  const s=v=>v||"";
+  const considHTML=(d.considerations||[]).map((c,i)=>`
     <div class="consideration-item">
       <span class="consideration-num">${String(i+1).padStart(2,"0")}</span>
       <p>${c}</p>
     </div>`).join("");
-  const tradeHTML=tradeNames.length?`<div class="modal-section"><div class="modal-section-label">Trade Names</div><div class="tag-list">${tradeNames.map(t=>`<span class="tag trade">${t}</span>`).join("")}</div></div>`:"";
+  const tradeHTML=d.tradeNames.length?`<div class="modal-section"><div class="modal-section-label">Trade Names</div><div class="tag-list">${d.tradeNames.map(t=>`<span class="tag trade">${t}</span>`).join("")}</div></div>`:"";
+  const drugClassHTML=d.drugClasses&&d.drugClasses.length?`<div class="modal-section"><div class="modal-section-label">Drug Class (ATC · RXNorm)</div><div class="drug-class-tags">${d.drugClasses.map(c=>`<span class="drug-class-tag">${c}</span>`).join("")}</div>${d.rxcui?`<div style="font-size:.72rem;color:#94a3b8;margin-top:6px">RxCUI: ${d.rxcui}</div>`:""}</div>`:"";
+  const boxedHTML=(d.fdaBoxedWarning||d.dailymedBoxedWarning)?`<div class="modal-section"><div class="boxed-warning"><div class="bw-label">⚠ Black Box Warning</div><p>${s(d.fdaBoxedWarning||d.dailymedBoxedWarning)}</p></div></div>`:"";
+  const dosageHTML=d.fdaDosage?`<div class="modal-section"><div class="modal-section-label">Dosage &amp; Administration (FDA)</div><div class="fda-dosage"><p>${s(d.fdaDosage)}</p></div></div>`:"";
+  const warningsHTML=d.fdaWarnings?`<div class="modal-section"><div class="modal-section-label">Warnings (FDA)</div><p style="font-size:.84rem;color:#334155;line-height:1.65">${s(d.fdaWarnings)}</p></div>`:"";
+  const teachingHTML=d.patientTeaching?`<div class="modal-section"><div class="modal-section-label">Patient &amp; Family Teaching (DailyMed)</div><div class="patient-teaching"><p>${s(d.patientTeaching)}</p></div></div>`:"";
+  const ug=d.userGuidelines||{};
+  const ugItems=[
+    ug.storage      ?`<div class="ug-item"><div class="ug-item-label">🗄 Storage</div><p>${ug.storage}</p></div>`:"",
+    ug.pregnancy    ?`<div class="ug-item"><div class="ug-item-label">🤰 Pregnancy &amp; Nursing</div><p>${ug.pregnancy}</p></div>`:"",
+    ug.interactions ?`<div class="ug-item"><div class="ug-item-label">💊 Interactions</div><p>${ug.interactions}</p></div>`:"",
+    ug.importantNotes?`<div class="ug-item"><div class="ug-item-label">⚠ Important Notes</div><p>${ug.importantNotes}</p></div>`:""
+  ].filter(Boolean).join("");
+  const ugHTML=ugItems?`<div class="modal-section"><div class="modal-section-label">User Guidelines (MedlinePlus)</div><div class="ug-grid">${ugItems}</div></div>`:"";
+  const nursingHTML=d.dailymedNursing?`<div class="modal-section"><div class="modal-section-label">Nursing Mothers (DailyMed)</div><p style="font-size:.84rem;color:#334155;line-height:1.65">${s(d.dailymedNursing)}</p></div>`:"";
+  const pregnancyHTML=d.dailymedPregnancy?`<div class="modal-section"><div class="modal-section-label">Pregnancy (DailyMed)</div><p style="font-size:.84rem;color:#334155;line-height:1.65">${s(d.dailymedPregnancy)}</p></div>`:"";
+  const interactionsHTML=d.dailymedDrugInteractions?`<div class="modal-section"><div class="modal-section-label">Drug Interactions (DailyMed)</div><p style="font-size:.84rem;color:#334155;line-height:1.65">${s(d.dailymedDrugInteractions)}</p></div>`:"";
+  const sourceLinks=[
+    d.medlineplusUrl?`<a class="source-link" href="${d.medlineplusUrl}" target="_blank" rel="noopener">📖 MedlinePlus</a>`:"",
+    d.dailymedUrl   ?`<a class="source-link" href="${d.dailymedUrl}"    target="_blank" rel="noopener">🏥 DailyMed</a>`:"",
+    (d.apiSources&&d.apiSources.fda)?`<a class="source-link" href="${d.apiSources.fda}" target="_blank" rel="noopener">🔬 FDA openFDA</a>`:"",
+    (d.apiSources&&d.apiSources.rxnorm)?`<a class="source-link" href="${d.apiSources.rxnorm}" target="_blank" rel="noopener">🔗 RXNorm</a>`:""
+  ].filter(Boolean).join("");
+  const sourcesHTML=sourceLinks?`<div class="modal-section"><div class="modal-section-label">Sources</div><div class="source-links">${sourceLinks}</div></div>`:"";
 
   document.getElementById("modalBody").innerHTML=`
-    <div class="modal-section"><div class="modal-section-label">Description</div><p>${d.description}</p></div>
+    ${boxedHTML}
+    <div class="modal-section"><div class="modal-section-label">Description</div><p>${s(d.fdaIndicationsUsage||d.description)}</p></div>
     ${tradeHTML}
-    <div class="modal-section"><div class="modal-section-label">Adverse Effects</div><div class="tag-list">${sideEffects.map(s=>`<span class="tag warning">${s}</span>`).join("")}</div></div>
-    <div class="modal-section"><div class="modal-section-label">Clinical Considerations</div><div class="consideration-list">${considHTML}</div></div>
+    ${drugClassHTML}
+    <div class="modal-section"><div class="modal-section-label">Adverse Effects</div><div class="tag-list">${d.sideEffects.map(se=>`<span class="tag warning">${se}</span>`).join("")}</div></div>
+    ${dosageHTML}
+    ${warningsHTML}
+    ${considHTML?`<div class="modal-section"><div class="modal-section-label">Clinical Considerations (MedlinePlus)</div><div class="consideration-list">${considHTML}</div></div>`:""}
+    ${teachingHTML}
+    ${ugHTML}
+    ${nursingHTML}
+    ${pregnancyHTML}
+    ${interactionsHTML}
+    ${sourcesHTML}
     <div class="modal-section" style="border-top:1px solid #f1f5f9;padding-top:20px">
       <button class="read-aloud-btn" id="readAloudBtn" aria-label="Read this medication information aloud">🔊&nbsp; Read Aloud</button>
       <button class="read-aloud-btn stop" id="stopSpeechBtn" style="display:none;margin-left:10px" aria-label="Stop reading aloud">⏹&nbsp; Stop</button>
@@ -693,14 +662,12 @@ function closeModal(){
 // ============================================================
 function readAloud(d){
   if(!speechSynth)return;speechSynth.cancel();
-  const tradeNames = d.tradeNames || [];
-  const sideEffects = d.sideEffects || [];
-  const considerations = d.considerations || [];
-  const trades=tradeNames.length?`Also known as: ${tradeNames.join(", ")}.`:"";
+  const trades=d.tradeNames.length?`Also known as: ${d.tradeNames.join(", ")}.`:"";
   const text=[`${d.name}. ${trades}`,`Category: ${d.category}.`,d.description,
-    `Common side effects: ${sideEffects.join(", ")}.`,
-    `Considerations: ${considerations.join(" ")}`,
-    "Always consult your healthcare provider before taking any medication."].join(" ");
+    `Common side effects: ${d.sideEffects.join(", ")}.`,
+    `Considerations: ${(d.considerations||[]).join(" ")}`,
+    d.patientTeaching?`Patient teaching: ${d.patientTeaching}`:"",
+    "Always consult your healthcare provider before taking any medication."].filter(Boolean).join(" ");
   const utt=new SpeechSynthesisUtterance(text);
   utt.rate=0.88;utt.pitch=1;utt.lang="en-US";
   const s=document.getElementById("stopSpeechBtn"),r=document.getElementById("readAloudBtn");
