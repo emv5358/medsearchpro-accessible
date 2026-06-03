@@ -72,3 +72,8 @@ Task:
    "groundingNote": "This item was cleaned only from the existing source text in this JSON. No new medical facts were added."
 
 Return the full cleaned JSON array.
+
+#-------------------------------------------
+# Medication list troubleshooting
+#--------------------------------------------
+To see the medication list online "medication.json" should be available on "public" folder
