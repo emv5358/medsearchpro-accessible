@@ -31,9 +31,7 @@
     .nav-links a { display:block; padding:8px 18px; color:rgba(255,255,255,.88); text-decoration:none; font-size:.95rem; font-weight:500; border-radius:6px; transition:background .15s; }
     .nav-links a:hover, .nav-links a.active { background:rgba(255,255,255,.15); color:#fff; }
     .nav-links a:focus-visible { outline:3px solid var(--amber-500); outline-offset:2px; }
-    .nav-login { background:rgba(255,255,255,.18)!important; border:1.5px solid rgba(255,255,255,.45)!important; border-radius:8px!important; font-weight:700!important; color:#fff!important; padding:7px 22px!important; }
-    .nav-login:hover { background:rgba(255,255,255,.3)!important; }
-
+    
     /* PAGES */
     .page { display:none; }
     .page.active { display:block; }
@@ -218,7 +216,6 @@
       <li><a href="#" id="navHome"     onclick="return showPage('home')"     class="active" aria-current="page">Home</a></li>
       <li><a href="#" id="navGlossary" onclick="return showPage('glossary')"                               >Medication List</a></li>
       <li><a href="#" id="navAbout"    onclick="return showPage('about')"                                  >About Us</a></li>
-      <li><a href="#" class="nav-login">Log in</a></li>
     </ul>
   </div>
 </nav>
@@ -308,9 +305,7 @@
     <h2>About Us</h2>
     <p>Hi there, we're <strong>Hasti</strong> and <strong>Parshan</strong> — two passionate individuals driven by a common goal.</p>
     <h3>Meet Hasti</h3>
-    <p>As a student nurse working closely with patients, I identified a knowledge gap in managing medications during the transition from inpatient to outpatient care. Patients often faced challenges with medication instructions due to limited resources or overwhelming medical jargon. This led to adverse health outcomes due to unclear adherence. Witnessing these challenges firsthand motivated me to create a resource that bridges this gap and empowers patients to better understand and manage their medications.</p>
-    <h3>Meet Parshan</h3>
-    <p>As a student majoring in physiology, the inspiration for this website occurred when I witnessed my own family members struggling to comprehend their medication instructions. Watching them navigate through confusion and uncertainty motivated me to simplify medication instructions, promoting self-management of prescribed medications.</p>
+    <p>As a registered nurse working closely with patients, I identified a knowledge gap in managing medications during the transition from inpatient to outpatient care. Patients often faced challenges with medication instructions due to limited resources or overwhelming medical jargon. This led to adverse health outcomes due to unclear adherence. Witnessing these challenges firsthand motivated me to create a resource that bridges this gap and empowers patients to better understand and manage their medications.</p>
     <h3>Our Mission</h3>
     <p>At Med Search Pro, our aim is to ensure that medication information is comprehensible for patients of all backgrounds. Our simple medication search website provides patients with the tool to manage their own health by improving knowledge of medications and promoting health literacy. We designed a user-friendly medication search website featuring 30+ common medications to provide accessible and essential health information, bridging this gap.</p>
     <h3>Disclaimer</h3>
@@ -345,6 +340,10 @@
 
 <!-- FOOTER -->
 <footer role="contentinfo">
+  <p class="footer-text">
+    © 2026 MedSearchPro. All rights reserved.
+  </p>
+
   <p class="footer-text">The content provided on this website is intended for general informational purposes only. It is not a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified healthcare provider with any questions you may have regarding a medical condition or the use of prescribed medications.</p>
 </footer>
 
