@@ -442,10 +442,10 @@
   },
   {
     "id": 12,
-    "name": "Amoxicillin And Clavulanate Potassium",
+    "name": "Amoxicillin And Clavulanate",
     "tradeNames": [
       "APO-AMOXI CLAV",
-      "Augmentin (brand name; check current product availability)"
+      "Augmentin"
     ],
     "category": "Antibiotic (treats bacterial infections)",
     "description": "This medicine contains two ingredients that work together to treat certain bacterial infections. It is used for some ear, sinus, chest, skin and urinary tract infections. It does not treat colds or flu caused by viruses.",
@@ -485,7 +485,7 @@
       "dailymed": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=263a2902-f85c-46b6-8d5b-8c99f5c4b706"
     },
     "icon": "🫁",
-    "imageUrl": "img/amoxicillin_and_clavulanate_potassium.jpg",
+    "imageUrl": "img/amoxicillin_and_clavulanate.jpg",
     "fdaBoxedWarning": null,
     "fdaPatientCounseling": null,
     "patientTeaching": null,
@@ -1397,8 +1397,7 @@
     "id": 43,
     "name": "Acyclovir",
     "tradeNames": [
-      "Zovirax",
-      "Generic acyclovir"
+      "Zovirax"
     ],
     "category": "Antiviral medicine",
     "description": "Acyclovir treats infections caused by herpes viruses. It may be used for cold sores, genital herpes, shingles or chickenpox in appropriate patients. It helps manage an outbreak but does not remove the virus from the body.",
@@ -2116,10 +2115,9 @@
   },
   {
     "id": 53,
-    "name": "Amlodipine Besylate",
+    "name": "Amlodipine",
     "tradeNames": [
-      "Norvasc",
-      "Generic amlodipine"
+      "Norvasc"
     ],
     "category": "Blood pressure medicine , Helps prevent chest pain (angina)",
     "description": "Amlodipine helps blood vessels relax so the heart can pump blood more easily. It is used to treat high blood pressure and certain kinds of chest pain. It does not work as an immediate treatment for a sudden chest pain emergency.",
@@ -2159,7 +2157,7 @@
       "dailymed": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=6efc0ef6-0424-44fc-a9ea-eb30c3b83239"
     },
     "icon": "❤️",
-    "imageUrl": "img/amlodipine_besylate.jpg",
+    "imageUrl": "img/amlodipine.jpg",
     "fdaBoxedWarning": null,
     "fdaPatientCounseling": null,
     "patientTeaching": null,
