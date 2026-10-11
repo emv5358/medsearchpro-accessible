@@ -600,11 +600,11 @@ function openModal(id){
       <p>${c}</p>
     </div>`).join("");
   const tradeHTML=d.tradeNames.length?`<div class="modal-section"><div class="modal-section-label">Trade Names</div><div class="tag-list">${d.tradeNames.map(t=>`<span class="tag trade">${t}</span>`).join("")}</div></div>`:"";
-  const drugClassHTML=d.drugClasses&&d.drugClasses.length?`<div class="modal-section"><div class="modal-section-label">Drug Class (ATC · RXNorm)</div><div class="drug-class-tags">${d.drugClasses.map(c=>`<span class="drug-class-tag">${c}</span>`).join("")}</div>${d.rxcui?`<div style="font-size:.72rem;color:#94a3b8;margin-top:6px">RxCUI: ${d.rxcui}</div>`:""}</div>`:"";
+  const drugClassHTML=d.drugClasses&&d.drugClasses.length?`<div class="modal-section"><div class="modal-section-label">Drug Class </div><div class="drug-class-tags">${d.drugClasses.map(c=>`<span class="drug-class-tag">${c}</span>`).join("")}</div>${d.rxcui?`<div style="font-size:.72rem;color:#94a3b8;margin-top:6px"></div>`:""}</div>`:"";
   const boxedHTML=(d.fdaBoxedWarning||d.dailymedBoxedWarning)?`<div class="modal-section"><div class="boxed-warning"><div class="bw-label">⚠ Black Box Warning</div><p>${s(d.fdaBoxedWarning||d.dailymedBoxedWarning)}</p></div></div>`:"";
-  const dosageHTML=d.fdaDosage?`<div class="modal-section"><div class="modal-section-label">Dosage &amp; Administration (FDA)</div><div class="fda-dosage"><p>${s(d.fdaDosage)}</p></div></div>`:"";
+  const dosageHTML=d.fdaDosage?`<div class="modal-section"><div class="modal-section-label">Dosage &amp; Administration</div><div class="fda-dosage"><p>${s(d.fdaDosage)}</p></div></div>`:"";
   const warningBullets=(d.fdaWarnings||"").split(/[.;]\s+/).map(w=>w.trim()).filter(w=>w.length>0);
-  const warningsHTML=warningBullets.length?`<div class="modal-section"><div class="modal-section-label">Warnings (FDA)</div><ul style="padding-left:20px;margin:0">${warningBullets.map(w=>`<li style="margin-bottom:8px;font-size:.84rem;color:#334155;line-height:1.65">${w}</li>`).join("")}</ul></div>`:"";
+  const warningsHTML=warningBullets.length?`<div class="modal-section"><div class="modal-section-label">Warnings</div><ul style="padding-left:20px;margin:0">${warningBullets.map(w=>`<li style="margin-bottom:8px;font-size:.84rem;color:#334155;line-height:1.65">${w}</li>`).join("")}</ul></div>`:"";
   const teachingHTML=d.patientTeaching?`<div class="modal-section"><div class="modal-section-label">Patient &amp; Family Teaching (DailyMed)</div><div class="patient-teaching"><p>${s(d.patientTeaching)}</p></div></div>`:"";
   const ug=d.userGuidelines||{};
   const ugItems=[
@@ -613,7 +613,7 @@ function openModal(id){
     ug.interactions ?`<div class="ug-item"><div class="ug-item-label">💊 Interactions</div><p>${ug.interactions}</p></div>`:"",
     ug.importantNotes?`<div class="ug-item"><div class="ug-item-label">⚠ Important Notes</div><p>${ug.importantNotes}</p></div>`:""
   ].filter(Boolean).join("");
-  const ugHTML=ugItems?`<div class="modal-section"><div class="modal-section-label">User Guidelines (MedlinePlus)</div><div class="ug-grid">${ugItems}</div></div>`:"";
+  const ugHTML=ugItems?`<div class="modal-section"><div class="modal-section-label">User Guidelines </div><div class="ug-grid">${ugItems}</div></div>`:"";
   const nursingHTML=d.dailymedNursing?`<div class="modal-section"><div class="modal-section-label">Nursing Mothers (DailyMed)</div><p style="font-size:.84rem;color:#334155;line-height:1.65">${s(d.dailymedNursing)}</p></div>`:"";
   const pregnancyHTML=d.dailymedPregnancy?`<div class="modal-section"><div class="modal-section-label">Pregnancy (DailyMed)</div><p style="font-size:.84rem;color:#334155;line-height:1.65">${s(d.dailymedPregnancy)}</p></div>`:"";
   const interactionsHTML=d.dailymedDrugInteractions?`<div class="modal-section"><div class="modal-section-label">Drug Interactions (DailyMed)</div><p style="font-size:.84rem;color:#334155;line-height:1.65">${s(d.dailymedDrugInteractions)}</p></div>`:"";
@@ -633,13 +633,12 @@ function openModal(id){
     <div class="modal-section"><div class="modal-section-label">Adverse Effects</div><div class="tag-list">${d.sideEffects.map(se=>`<span class="tag warning">${se}</span>`).join("")}</div></div>
     ${dosageHTML}
     ${warningsHTML}
-    ${considHTML?`<div class="modal-section"><div class="modal-section-label">Clinical Considerations (MedlinePlus)</div><div class="consideration-list">${considHTML}</div></div>`:""}
+    ${considHTML?`<div class="modal-section"><div class="modal-section-label">Clinical Considerations </div><div class="consideration-list">${considHTML}</div></div>`:""}
     ${teachingHTML}
     ${ugHTML}
     ${nursingHTML}
     ${pregnancyHTML}
     ${interactionsHTML}
-    ${sourcesHTML}
     <div class="modal-section" style="border-top:1px solid #f1f5f9;padding-top:20px">
       <button class="read-aloud-btn" id="readAloudBtn" aria-label="Read this medication information aloud">🔊&nbsp; Read Aloud</button>
       <button class="read-aloud-btn stop" id="stopSpeechBtn" style="display:none;margin-left:10px" aria-label="Stop reading aloud">⏹&nbsp; Stop</button>
