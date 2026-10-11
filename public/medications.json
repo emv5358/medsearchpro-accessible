@@ -3,35 +3,31 @@
     "id": 1,
     "name": "Acetaminophen",
     "tradeNames": [
-      "Pain Reliever Extra Strength",
-      "Little Fevers",
-      "Bactimicina",
-      "Pamprin Max Formula",
-      "Pamprin Multi-Symptom",
-      "Pamprin Cramp Formula"
+      "Tylenol",
+      "APO-Acetaminophen",
+      "Pediatrix (children's liquid)"
+     
     ],
-    "category": "Analgesic",
-    "description": "temporarily relieves minor aches and pains due to: headache the common cold backache minor pain of arthritis toothache muscular aches premenstrual and menstrual cramps temporarily reduces fever",
+    "category": "Pain Reliever , Fever Reducer",
+    "description": "Acetaminophen is used to reduce fever and relieve mild to moderate pain, including headaches, toothaches, muscle aches, back pain, and menstrual cramps. It can also help relieve pain caused by colds and the flu. Unlike some other pain relievers, such as Ibuprofen, acetaminophen does not reduce swelling or inflammation.",
     "sideEffects": [
-      "Skin rash",
-      "Liver problems",
-      "Serious allergic reaction",
-      "Swelling",
-      "Skin blisters",
-      "Fever"
+      "Nausea",
+      "Skin Rash"
     ],
     "considerations": [
-      "Acetaminophen is used to relieve mild to moderate pain and to reduce fever.",
-      "Acetaminophen is in a class of medications called analgesics (pain relievers) and antipyretics (fever reducers).",
-      "It works by changing the way the body senses pain and by cooling the body."
+      "Liver safety: Taking too much acetaminophen can cause serious liver damage, even if you initially feel well. Seek immediate medical advice or contact a poison centre if an overdose is suspected.",
+      "Other medications: Do not combine it with other medicines containing acetaminophen, including many cold and flu products.",
+      "Alcohol and existing conditions: Ask your doctor before use if you have liver or kidney disease or regularly drink three or more alcoholic drinks daily.",
+      "Medication interactions: Consult your doctor or pharmacist before taking acetaminophen if you use warfarin, a blood-thinning medication.",
+      "Pregnancy and breastfeeding: Consult a healthcare professional and use the lowest effective dose for the shortest necessary time."
     ],
     "rxcui": "161",
     "drugClasses": [
-      "Anilides",
-      "Opioids in combination with non-opioid analgesics"
+      "Pain Reliever",
+      "Fever Reducer"
     ],
-    "fdaIndicationsUsage": "temporarily relieves minor aches and pains due to: headache the common cold backache minor pain of arthritis toothache muscular aches premenstrual and menstrual cramps temporarily reduces fever",
-    "fdaWarnings": "Liver warning: This product contains acetaminophen. Severe liver damage may occur if you take more than 4,000 mg of acetaminophen in 24 hours with other drugs containing acetaminophen 3 or more alcoholic drinks every day while using this product Allergy alert: Acetaminophen may cause severe skin reactions. Symptoms may include: skin reddening blisters rash If a skin reaction occurs, stop use and seek medical help right away. Do not use if you are allergic to acetaminophen or any of the inactive ingredients in this product with any other drug containing acetaminophen (prescription or nonprescription). If you are not sure whether a drug contains acetaminophen, ask a doctor or pharmacist. Ask a doctor before use if you have liver disease. Ask a doctor or pharmacist before use if you are taking the blood thinning drug warfarin. Stop use and ask a doctor if new symptoms occur pain gets worse or lasts more than 10 days fever gets worse or lasts more than 3 days redness or swelling is present These could be signs of a serious condition. If pregnant or breast-feeding, ask a health professional before use. Keep out of reach of children. In case of overdose, get medical help or contact a Poison Control Center right away. Prompt medical attention is critical for adults as well as for children even if you do not notice any signs or symptoms.",
+    "fdaIndicationsUsage": "Acetaminophen is used to reduce fever and relieve mild to moderate pain, including headaches, toothaches, muscle aches, back pain, and menstrual cramps. It can also help relieve pain caused by colds and the flu. Unlike some other pain relievers, such as Ibuprofen, acetaminophen does not reduce swelling or inflammation.",
+    "fdaWarnings": "Side effects are uncommon when acetaminophen is taken at the recommended dose. Most commonly reported (still uncommon): Nausea, Skin reactions. Severe skin reactions (rare but serious): Skin redness, blistering, or peeling. Serious allergic reactions: Swelling of the face or throat or difficulty breathing. Liver damage: Particularly when too much acetaminophen is taken. Warning signs may include vomiting, stomach pain, unusual tiredness, dark urine, or yellowing of the skin or eyes.",
     "fdaDosage": "do not take more than directed adults and children 12 years and over take 2 gelcaps every 6 hours while symptoms last do not take more than 6 gelcaps in 24 hours, unless directed by a doctor do not take for more than 10 days unless directed by a doctor children under 12 years: ask a doctor",
     "userGuidelines": {
       "storage": null,
@@ -407,183 +403,6 @@
     ],
     "fdaBoxedWarningBullets": [],
     "fdaPatientCounselingBullets": [],
-    "groundingNote": "This item was cleaned only from the existing source text in this JSON. No new medical facts were added."
-  },
-  {
-    "id": 4,
-    "name": "Naproxen",
-    "tradeNames": [
-      "Naproxen",
-      "Vimovo",
-      "Aleve PM",
-      "Anaprox",
-      "Naprosyn",
-      "Aleve"
-    ],
-    "category": "Analgesic",
-    "description": "Naproxen tablets and naproxen sodium tablets are indicated for: the relief of the signs and symptoms of:; rheumatoid arthritis; osteoarthritis; ankylosing spondylitis; Polyarticular Juvenile Idiopathic Arthritis Naproxen tablets and naproxen sodium tablets are also indicated for: the relief of signs and symptoms of:; tendonitis; bursitis; acute gout the management of:; pain; primary dysmenorrhea Naproxen tablets and naproxen sodium tablets are non-steroidal an...",
-    "sideEffects": [
-      "Bleeding",
-      "Kidney problems",
-      "Heart problems",
-      "Nausea",
-      "Diarrhea",
-      "Upset stomach",
-      "Skin rash",
-      "Swelling",
-      "Tiredness",
-      "Itching",
-      "Yellow skin or eyes",
-      "Liver problems"
-    ],
-    "considerations": [
-      "Prescription naproxen is used to relieve pain, tenderness, swelling, and stiffness caused by osteoarthritis (arthritis caused by a breakdown of the lining of the joints), rheumatoid arthritis (arthritis caused by swelling of the lining of the joints), juvenile arthritis (a form of joint disease in children), and ankylosing spondylitis (arthritis that mainly affects the spine).",
-      "Prescription naproxen tablets, extended-release tablets, and suspension are also used to relieve shoulder pain caused by bursitis (inflammation of a fluid-filled sac in the shoulder joint), tendinitis (inflammation of the tissue that connects muscle to bone), gouty arthritis (attacks of joint pain caused by a build-up of certain substances in the joints), and pain from other causes, including menstrual pain (pain that happens before or during a menstrual period).",
-      "Nonprescription naproxen is used to reduce fever and to relieve mild pain from headaches, muscle aches, arthritis, menstrual periods, the common cold, toothaches, and backaches.",
-      "Naproxen is in a class of medications called NSAIDs.",
-      "It works by stopping the body's production of a substance that causes pain, fever, and inflammation."
-    ],
-    "rxcui": "7258",
-    "drugClasses": [
-      "Propionic acid derivatives",
-      "Antiinflammatory products for vaginal administration",
-      "Antiinflammatory preparations, non-steroids for topical use"
-    ],
-    "fdaIndicationsUsage": "Naproxen tablets and naproxen sodium tablets are indicated for: the relief of the signs and symptoms of:; rheumatoid arthritis; osteoarthritis; ankylosing spondylitis; Polyarticular Juvenile Idiopathic Arthritis Naproxen tablets and naproxen sodium tablets are also indicated for: the relief of signs and symptoms of:; tendonitis; bursitis; acute gout the management of:; pain; primary dysmenorrhea Naproxen tablets and naproxen sodium tablets are non-steroidal anti-inflammatory drugs indicated for: the relief of the signs and symptoms of:; rheumatoid arthritis; osteoarthritis; ankylosing spondylitis; polyarticular juvenile idiopathic arthritis Naproxen tablets and naproxen sodium tablets are also indicated for: the relief of signs and symptoms of:; tendonitis; bursitis; acute gout the management of:; pain; primary dysmenorrhea",
-    "fdaWarnings": "Hepatotoxicity: Inform patients of warning signs and symptoms of hepatotoxicity. Discontinue if abnormal liver tests persist or worsen or if clinical signs and symptoms of liver disease develop. Hypertension: Patients taking some antihypertensive medications may have impaired response to these therapies when taking NSAIDs. Monitor blood pressure. Heart Failure and Edema: Avoid use of naproxen tablets and naproxen sodium tablets in patients with severe heart failure unless benefits are expected to outweigh risk of worsening heart failure. Renal Toxicity: Monitor renal function in patients with renal or hepatic impairment, heart failure, dehydration, or hypovolemia. Avoid use of naproxen tablets and naproxen sodium tablets in patients with advanced renal disease unless benefits are expected to outweigh risk of worsening renal function. Anaphylactic Reactions: Seek emergency help if an anaphylactic reaction occurs. Exacerbation of Asthma Related to Aspirin Sensitivity: Naproxen tablets and naproxen sodium tablets are contraindicated in patients with aspirin-sensitive asthma. Monitor patients with preexisting asthma (without aspirin sensitivity). Serious Skin Reactions: Discontinue naproxen tablets and naproxen sodium tablets at first appearance of skin rash or other signs of hypersensitivity. Drug Reaction with Eosinophilia and Systemic Symptoms (DRESS): Discontinue and evaluate clinically. Fetal Toxicity: Limit use of NSAIDs, including naproxen tablets and naproxen sodium tablets, between about 20 to 30 weeks in pregnancy due to the risk of oligohydramnios/fetal dysfunction. Avoid use of NSAIDs in women at about 30 weeks gestation and later in pregnancy due to the risks of oligohydramnios/fetal renal dysfunction and premature closure of the fetal ductus arteriosus. Hematologic Toxicity: Monitor hemoglobin or hematocrit in patients with any signs or symptoms of anemia. Cardiovascular Thrombotic Events Clinical trials of several COX-2 selective and nonselective NSAIDs of up to three years duration have shown an increased risk of serious cardiovascular (CV) thrombotic events, including myocardial infarction (MI) and stroke, which can be fatal. Based on available data, it is unclear that the risk for CV thrombotic events is similar for all NSAIDs. The relative increase in serious CV thrombotic events over baseline conferred by NSAID use appears to be similar in those with and without known CV disease or risk factors for CV disease. However, patients with known CV disease or risk factors had a higher absolute incidence of excess serious CV thrombotic events, due to their increased baseline rate. Some observational studies found that this increased risk of serious CV thrombotic events began as early as the first weeks of treatment. The increase in CV thrombotic risk has been observed most consistently at higher doses. To mi",
-    "fdaDosage": "2 DOSAGE AND ADMINISTRATION Use the lowest effective dosage for shortest duration consistent with individual patient treatment goals. Rheumatoid Arthritis, Osteoarthritis, and Ankylosing Spondylitis Naproxen tablets 250 mg (one-half tablet) 500 mg twice daily Naproxen sodium tablets 275 mg (one-half tablet) 550 mg twice daily The dose may be adjusted up or down depending on the clinical response of the patient. In patients who tolerate lower doses well, the dose may be increased to naproxen 1500 mg/ day for up to 6 months. Polyarticular Juvenile Idiopathic Arthritis Naproxen tablets may not allow for the flexible dose titration needed in pediatric patients with polyarticular juvenile idiopathic arthritis. A liquid formulation may be more appropriate. Recommended total daily dose of naproxen is approximately 10 mg/kg given in 2 divided doses. Dosing with naproxen tablets is not appropriate for children weighing less than 50 kilograms. Management of Pain, Primary Dysmenorrhea, and Acute Tendonitis and Bursitis Recommended starting dose 550 mg of naproxen sodium as naproxen sodium tablets followed by 550 mg every 12 hours or 275 mg every 6 to 8 hours as required. The initial total daily dose should not exceed 1375 mg of naproxen sodium. Thereafter, the total daily dose should not exceed 1100 mg of naproxen sodium. Naproxen sodium tablets are recommended for the management of acute painful conditions when prompt onset of pain relief is desired. Acute Gout Recommended starting dose 750 mg of naproxen tablets followed by 250 mg every 8 hours until the attack has subsided. Naproxen sodium tablets may also be used at a starting dose of 825 mg followed by 275 mg every 8 hours. General Dosing Instructions Carefully consider the potential benefits and risks of naproxen tablets and naproxen sodium tablets and other treatment options before deciding to use naproxen tablets and naproxen sodium tablets. Use the lowest effective dose for the shortest duration consistent with individual patient treatment goals. After observing the response to initial therapy with naproxen tablets or naproxen sodium tablets, the dose and frequency should be adjusted to suit an individual patient’s needs. Naproxen-containing products such as naproxen and naproxen sodium tablets, and other naproxen products should not be used concomitantly since they all circulate in the plasma as the naproxen anion. Rheumatoid Arthritis, Osteoarthritis and Ankylosing Spondylitis The recommended dosages of naproxen tablets and naproxen sodium tablets are shown in Table 1. Table 1: Recommended dosages for naproxen tablets and naproxen sodium tablets Naproxen tablets 250 mg (one half tablet) 500 mg twice daily Naproxen sodium tablets 275 mg (one half tablet) 550 mg (naproxen 500 mg with 50 mg sodium) twice daily During long-term administration, the dose of naproxen may be adjusted up or down depending on the clinical response of the patient. A low",
-    "userGuidelines": {
-      "storage": null,
-      "pregnancy": null,
-      "interactions": null,
-      "importantNotes": null
-    },
-    "medlineplusUrl": "https://medlineplus.gov/druginfo/meds/a681029.html?utm_source=mplusconnect&utm_medium=service",
-    "medlineplusTitle": "Naproxen",
-    "apiSources": {
-      "rxnorm": "https://rxnav.nlm.nih.gov/REST/approximateTerm.json?term=Naproxen",
-      "fda": "https://api.fda.gov/drug/label.json?search=openfda.generic_name:Naproxen",
-      "medlineplus": "https://medlineplus.gov/druginfo/meds/a681029.html?utm_source=mplusconnect&utm_medium=service",
-      "dailymed": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=49f1f415-8017-0974-e063-6294a90a8918"
-    },
-    "icon": "💊",
-    "imageUrl": "img/naproxen.jpg",
-    "fdaBoxedWarning": "WARNING: RISK OF SERIOUS CARDIOVASCULAR AND GASTROINTESTINAL EVENTS Cardiovascular Thrombotic Events; Nonsteroidal anti-inflammatory drugs (NSAIDs) cause an increased risk of serious cardiovascular thrombotic events, including myocardial infarction and stroke, which can be fatal. This risk may occur early in treatment and may increase with duration of use.; Naproxen tablets and naproxen sodium tablets are contraindicated in the setting of coronary artery bypass graft (CABG) surgery. Gastrointestinal Bleeding, Ulceration, and Perforation; NSAIDs cause an increased risk of serious gastrointestinal (GI) adverse events including bleeding, ulceration, and perforation of the stomach or intestines, which can be fatal. These events can occur at any time during use and without warning symptoms. Elderly patients and patients with a prior history of peptic ulcer disease and/or GI bleeding are at greater risk for serious GI events. WARNING: RISK OF SERIOUS CARDIOVASCULAR AND GASTROINTESTINAL EVENTS See full prescribing information for complete boxed warning.; Nonsteroidal anti-inflammatory drugs (NSAIDs) cause an increased risk of serious cardiovascular thrombotic events, including myocardial infarction and stroke, which can be fatal. This risk may occur early in treatment and may increase with duration of use.; Naproxen tablets and naproxen sodium tablets are contraindicated in the setting of coronary artery bypass graft (CABG) surgery.; NSAIDs cause an increased risk of serious gastrointestinal (GI) adverse events including bleeding, ulceration, and perforation of the stomach or intestines, which can be fatal. These events can occur at any time during use and without warning symptoms. Elderly patients and patients with a prior history of peptic ulcer disease and/or GI bleeding are at greater risk for serious GI events.",
-    "fdaPatientCounseling": "17 PATIENT COUNSELING INFORMATION Advise the patient to read the FDA-approved patient labeling (Medication Guide) that accompanies each prescription dispensed. Inform patients, families, or their caregivers of the following information before initiating therapy with naproxen tablets or naproxen sodium tablets and periodically during the course of ongoing therapy. Cardiovascular Thrombotic Events Advise patients to be alert for the symptoms of cardiovascular thrombotic events, including chest pain, shortness of breath, weakness, or slurring of speech, and to report any of these symptoms to their health care provider immediately. Gastrointestinal Bleeding, Ulceration, and Perforation Advise patients to report symptoms of ulcerations and bleeding, including epigastric pain, dyspepsia, melena, and hematemesis to their health care provider. In the setting of concomitant use of low-dose aspirin for cardiac prophylaxis, inform patients of the increased risk for and the signs and symptoms of GI bleeding. Hepatotoxicity Inform patients of the warning signs and symptoms of hepatotoxicity (e.g., nausea, fatigue, lethargy, pruritus, diarrhea, jaundice, right upper quadrant tenderness, and “flu-like” symptoms). If these occur, instruct patients to stop naproxen tablets or naproxen sodium tablets and seek immediate medical therapy. Heart Failure and Edema Advise patients to be alert for the symptoms of congestive heart failure including shortness of breath, unexplained weight gain, or edema and to contact their healthcare provider if such symptoms occur. Anaphylactic Reactions Inform patients of the signs of an anaphylactic reaction (e.g., difficulty breathing, swelling of the face or throat). Instruct patients to seek immediate emergency help if these occur. Serious Skin Reactions, including DRESS Advise patients to stop taking naproxen tablets or naproxen sodium tablets immediately if they develop any type of rash or fever and to contact their healthcare provider as soon as possible. Female Fertility Advise females of reproductive potential who desire pregnancy that NSAIDs, including naproxen tablets or naproxen sodium tablets, may be associated with a reversible delay in ovulation (see Use in Specific Populations. Fetal Toxicity Inform pregnant women to avoid use of naproxen tablets or naproxen sodium tablets and other NSAIDs starting at 30 weeks gestation because of the risk of the premature closing of the fetal ductus arteriosus. If treatment with naproxen tablets or naproxen sodium tablets is needed for a pregnant woman between about 20 to 30 weeks gestation, advise her that she may need to be monitored for oligohydramnios, if treatment continues for longer than 48 hours [",
-    "patientTeaching": null,
-    "dailymedBoxedWarning": null,
-    "dailymedPregnancy": null,
-    "dailymedNursing": null,
-    "dailymedDrugInteractions": null,
-    "dailymedAdverseReactions": null,
-    "dailymedSetId": "49f1f415-8017-0974-e063-6294a90a8918",
-    "dailymedUrl": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=49f1f415-8017-0974-e063-6294a90a8918",
-    "fdaWarningsBullets": [
-      {
-        "text": "May cause serious liver problems.",
-        "severity": "life-threatening",
-        "color": "red"
-      },
-      {
-        "text": "May cause a serious allergic reaction. Get emergency help if breathing trouble, swelling, or shock occurs.",
-        "severity": "life-threatening",
-        "color": "red"
-      },
-      {
-        "text": "May cause a serious skin reaction. Stop use and get medical advice if rash, blisters, or skin peeling occurs.",
-        "severity": "life-threatening",
-        "color": "red"
-      },
-      {
-        "text": "May increase the risk of heart attack, stroke, heart failure, or death.",
-        "severity": "life-threatening",
-        "color": "red"
-      },
-      {
-        "text": "May cause kidney problems, especially in people with kidney disease, dehydration, heart failure, or liver disease.",
-        "severity": "life-threatening",
-        "color": "red"
-      },
-      {
-        "text": "May worsen breathing problems or asthma in sensitive people.",
-        "severity": "life-threatening",
-        "color": "red"
-      },
-      {
-        "text": "Ask a doctor or pharmacist before use if you take blood thinners, aspirin, steroids, or other NSAIDs.",
-        "severity": "standard",
-        "color": "normal"
-      },
-      {
-        "text": "Ask a health professional before use during pregnancy or breastfeeding.",
-        "severity": "standard",
-        "color": "normal"
-      },
-      {
-        "text": "Ask a doctor before use if you have high blood pressure.",
-        "severity": "standard",
-        "color": "normal"
-      }
-    ],
-    "fdaBoxedWarningBullets": [
-      {
-        "text": "May cause serious stomach bleeding. Get medical help for black stools, bloody stools, vomiting blood, or stomach pain that does not go away.",
-        "severity": "life-threatening",
-        "color": "red"
-      },
-      {
-        "text": "May increase the risk of heart attack, stroke, heart failure, or death.",
-        "severity": "life-threatening",
-        "color": "red"
-      },
-      {
-        "text": "Do not use right before or after heart bypass surgery unless directed by a doctor.",
-        "severity": "standard",
-        "color": "normal"
-      }
-    ],
-    "fdaPatientCounselingBullets": [
-      {
-        "text": "May cause serious liver problems.",
-        "severity": "life-threatening",
-        "color": "red"
-      },
-      {
-        "text": "May cause a serious allergic reaction. Get emergency help if breathing trouble, swelling, or shock occurs.",
-        "severity": "life-threatening",
-        "color": "red"
-      },
-      {
-        "text": "May cause a serious skin reaction. Stop use and get medical advice if rash, blisters, or skin peeling occurs.",
-        "severity": "life-threatening",
-        "color": "red"
-      },
-      {
-        "text": "May cause serious stomach bleeding. Get medical help for black stools, bloody stools, vomiting blood, or stomach pain that does not go away.",
-        "severity": "life-threatening",
-        "color": "red"
-      },
-      {
-        "text": "May increase the risk of heart attack, stroke, heart failure, or death.",
-        "severity": "life-threatening",
-        "color": "red"
-      },
-      {
-        "text": "May worsen breathing problems or asthma in sensitive people.",
-        "severity": "life-threatening",
-        "color": "red"
-      },
-      {
-        "text": "Ask a doctor or pharmacist before use if you take blood thinners, aspirin, steroids, or other NSAIDs.",
-        "severity": "standard",
-        "color": "normal"
-      },
-      {
-        "text": "Ask a health professional before use during pregnancy or breastfeeding.",
-        "severity": "standard",
-        "color": "normal"
-      }
-    ],
     "groundingNote": "This item was cleaned only from the existing source text in this JSON. No new medical facts were added."
   },
   {
