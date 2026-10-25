@@ -3110,7 +3110,7 @@
     "name": "Furosemide",
     "tradeNames": [
       "Lasix",
-      "Generic furosemide"
+      "Furosemide"
     ],
     "category": "Water pill (diuretic) , Helps remove extra fluid and lower blood pressure",
     "description": "Furosemide is a water pill that helps your body pass extra water and salt through urine. It is often used to reduce swelling caused by certain heart, liver or kidney conditions. It may also be used for high blood pressure.",
@@ -3215,7 +3215,7 @@
   },
   {
     "id": 73,
-    "name": "Lisinopril And Hydrochlorothiazide Tablets",
+    "name": "Lisinopril",
     "tradeNames": [
       "Zestoretic",
       "Lisinopril"
@@ -3427,10 +3427,10 @@
   },
   {
     "id": 77,
-    "name": "Atorvastatin Calcium",
+    "name": "Atorvastatin",
     "tradeNames": [
       "Lipitor",
-      "Generic atorvastatin"
+      "Atorvastatin"
     ],
     "category": "Cholesterol-lowering medicine (statin)",
     "description": "Atorvastatin lowers LDL (“bad”) cholesterol in the blood. It can reduce the risk of heart attack or stroke in people who need cholesterol treatment. It works best together with healthy habits and regular follow-up.",
@@ -3523,10 +3523,10 @@
   },
   {
     "id": 78,
-    "name": "Rosuvastatin Calcium",
+    "name": "Rosuvastatin",
     "tradeNames": [
       "Crestor",
-      "Generic rosuvastatin"
+      "Rosuvastatin"
     ],
     "category": "Cholesterol-lowering medicine (statin)",
     "description": "Rosuvastatin lowers LDL (“bad”) cholesterol. For people at risk, lowering cholesterol can help prevent heart attacks and strokes. It is generally taken over the long term when prescribed.",
@@ -3622,7 +3622,7 @@
     "name": "Simvastatin",
     "tradeNames": [
       "Zocor",
-      "Generic simvastatin"
+      "Simvastatin"
     ],
     "category": "Cholesterol-lowering medicine (statin)",
     "description": "Simvastatin helps lower LDL (“bad”) cholesterol. It may reduce the risk of heart attack and stroke in people who need it. It is usually taken regularly for long-term benefit.",
