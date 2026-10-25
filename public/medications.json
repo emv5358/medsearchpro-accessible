@@ -329,13 +329,13 @@
   },
   {
     "id": 5,
-    "name": "Diclofenac Sodium",
+    "name": "Diclofenac Cream",
     "tradeNames": [
-      "Voltaren (oral tablets; availability varies)",
-      "Generic diclofenac sodium"
+      "Voltaren (topical cream)",
+      "Diclofenac Sodium"
     ],
-    "category": "Prescription pain reliever , Anti-inflammatory medicine",
-    "description": "Diclofenac sodium is a prescription medicine that eases pain and swelling. Oral tablets may be used for certain types of arthritis and other painful conditions. Topical diclofenac products are not interchangeable with oral tablets.",
+    "category": "Pain reliever , Anti-inflammatory medicine",
+    "description": "Diclofenac is a prescription medicine that decreases pain and swelling. Oral tablets may be used for certain types of arthritis and other painful conditions. Topical diclofenac products are not interchangeable with oral tablets.",
     "sideEffects": [
       "Stomach upset",
       "Heartburn",
@@ -352,10 +352,10 @@
     ],
     "rxcui": "203214",
     "drugClasses": [
-      "Prescription pain reliever",
+      "Pain reliever",
       "Anti-inflammatory medicine"
     ],
-    "fdaIndicationsUsage": "Diclofenac sodium is a prescription medicine that eases pain and swelling. Oral tablets may be used for certain types of arthritis and other painful conditions. Topical diclofenac products are not interchangeable with oral tablets.",
+    "fdaIndicationsUsage": "Diclofenac sodium is a prescription medicine that decreases pain and swelling. Oral tablets may be used for certain types of arthritis and other painful conditions. Topical diclofenac products are not interchangeable with oral tablets.",
     "fdaWarnings": "Rare but serious reactions: Stomach or intestinal bleeding. Heart attack or stroke. Kidney or liver injury. Severe allergic or skin reaction. Important precautions: Can cause serious stomach bleeding or ulcers; seek urgent care for black stools or vomiting blood. It may raise the risk of heart attack or stroke, particularly at higher doses or with longer treatment. Discuss kidney disease, liver disease, high blood pressure or heart failure before use. Do not combine with ibuprofen, naproxen or similar pain relievers without advice. Avoid during pregnancy unless a healthcare professional has directed you to use it. Use the lowest prescribed dose for the shortest suitable period.",
     "fdaDosage": "Available strengths / formulation: Oral delayed-release tablets may include 25 mg and 50 mg. Topical Voltaren products are different formulations and are not covered by this oral dosing. Usual adult dosing: Oral tablets are prescribed for specific conditions; dose and frequency depend on the tablet formulation and condition. Use the prescribed instructions, not topical gel directions. Maximum daily dose: No single daily maximum is appropriate for every patient, indication and formulation. Follow the Canadian product-specific label and your prescriber.",
     "userGuidelines": {
@@ -774,7 +774,7 @@
   },
   {
     "id": 20,
-    "name": "Moxifloxacin Hydrochloride",
+    "name": "Moxifloxacin",
     "tradeNames": [
       "Avelox",
       "Generic moxifloxacin"
@@ -994,10 +994,10 @@
   },
   {
     "id": 22,
-    "name": "Clindamycin Phosphate",
+    "name": "Clindamycin",
     "tradeNames": [
       "Dalacin T",
-      "Generic topical clindamycin phosphate"
+      "Clindamycin phosphate"
     ],
     "category": "Prescription antibiotic for the skin (acne treatment)",
     "description": "Clindamycin phosphate is an antibiotic applied to the skin to help treat acne. It reduces bacteria involved in pimples and inflammation. Results may take several weeks.",
@@ -1201,9 +1201,9 @@
   },
   {
     "id": 31,
-    "name": "Vancomycin Hydrochloride",
+    "name": "Vancomycin",
     "tradeNames": [
-      "Vancomycin for injection (manufacturer-labelled generics)"
+      "Vancomycin"
     ],
     "category": "Hospital antibiotic (intravenous infusion)",
     "description": "Vancomycin is an antibiotic used to treat certain serious bacterial infections. This profile refers to the medicine given through a vein in a hospital or clinical setting. It is not a medication to take at home without supervised treatment.",
