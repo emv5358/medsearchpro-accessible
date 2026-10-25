@@ -1495,10 +1495,10 @@
   },
   {
     "id": 44,
-    "name": "Valacyclovir Hydrochloride",
+    "name": "Valacyclovir",
     "tradeNames": [
       "Valtrex",
-      "Generic valacyclovir"
+      "Valacyclovir"
     ],
     "category": "Antiviral medicine",
     "description": "Valacyclovir treats infections caused by herpes viruses. It can help with cold sores, genital herpes and shingles, and may prevent repeat outbreaks in certain people. It controls the infection but does not cure the underlying virus.",
@@ -1602,7 +1602,7 @@
   },
   {
     "id": 47,
-    "name": "Lisinopril And Hydrochlorothiazide Tablets",
+    "name": "Lisinopril",
     "tradeNames": [
       "Zestoretic (historical brand name; verify current Canadian marketing)",
       "Generic lisinopril/hydrochlorothiazide"
@@ -1716,7 +1716,7 @@
       "Generic ramipril"
     ],
     "category": "Blood pressure medicine , Heart-protecting medicine",
-    "description": "Ramipril relaxes blood vessels so blood can flow more easily. It is used to lower blood pressure and may help protect the heart in selected patients. It may also be used in certain people with heart failure.",
+    "description": "Ramipril relaxes blood vessels so blood can flow more easily. It is used to lower blood pressure and may help protect the heart. It may also be used in certain people with heart failure.",
     "sideEffects": [
       "Dry cough",
       "Dizziness",
@@ -1818,9 +1818,9 @@
   },
   {
     "id": 50,
-    "name": "Captopril And Hydrochlorothiazide",
+    "name": "Captopril",
     "tradeNames": [],
-    "category": "Blood pressure medicine , Water pill combination",
+    "category": "Blood pressure medicine",
     "description": "This combination contains captopril, which relaxes blood vessels, and hydrochlorothiazide, which increases the removal of salt and water. Both can lower blood pressure. The availability and exact strength of this combination in Canada need confirmation before publication.",
     "sideEffects": [
       "Dizziness",
@@ -1916,9 +1916,9 @@
   },
   {
     "id": 51,
-    "name": "Perindopril Erbumine",
+    "name": "Perindopril",
     "tradeNames": [
-      "Coversyl (perindopril product; verify exact salt)"
+      "Coversyl"
     ],
     "category": "Blood pressure medicine , Heart-protecting medicine",
     "description": "Perindopril relaxes blood vessels to help reduce blood pressure. Some patients take it for certain heart conditions. The exact salt form matters when comparing tablet strengths.",
@@ -2017,103 +2017,6 @@
     "groundingNote": "Patient-facing content adapted from Canada-focused reference(s) in accompanying source audit. Requires product-specific Canadian monograph and pharmacist review before publication. Brand reference relates to perindopril generally; exact erbumine vs arginine salt and DIN not verified."
   },
   {
-    "id": 52,
-    "name": "Trandolapril",
-    "tradeNames": [
-      "Mavik (brand name in Canadian drug references)",
-      "Generic trandolapril"
-    ],
-    "category": "Blood pressure medicine , Heart-protecting medicine",
-    "description": "Trandolapril helps relax blood vessels and lower blood pressure. It can also be used for certain heart conditions when prescribed. Your clinician chooses the dose based on your health and response.",
-    "sideEffects": [
-      "Dry cough",
-      "Dizziness",
-      "Tiredness",
-      "Headache"
-    ],
-    "considerations": [
-      "Do not use while pregnant.",
-      "Get emergency help for swelling of the face, lips or throat.",
-      "Kidney function and potassium may require monitoring.",
-      "Report a continuing dry cough or pronounced dizziness.",
-      "Tell your clinician about diuretics, potassium products and anti-inflammatory pain medicines."
-    ],
-    "rxcui": "38454",
-    "drugClasses": [
-      "Blood pressure medicine",
-      "Heart-protecting medicine"
-    ],
-    "fdaIndicationsUsage": "Trandolapril helps relax blood vessels and lower blood pressure. It can also be used for certain heart conditions when prescribed. Your clinician chooses the dose based on your health and response.",
-    "fdaWarnings": "Rare but serious reactions: Severe allergic-type facial swelling. Kidney problems, high potassium or very low blood pressure. Important precautions: Do not use while pregnant. Get emergency help for swelling of the face, lips or throat. Kidney function and potassium may require monitoring. Report a continuing dry cough or pronounced dizziness. Tell your clinician about diuretics, potassium products and anti-inflammatory pain medicines.",
-    "fdaDosage": "Available strengths / formulation: Oral capsules/tablets may contain 1 mg, 2 mg or 4 mg; availability depends on product. Usual adult dosing: Usually prescribed once daily; some patients have a different schedule or dose. Maximum daily dose: No single daily maximum is appropriate for every patient, indication and formulation. Follow the Canadian product-specific label and your prescriber.",
-    "userGuidelines": {
-      "storage": null,
-      "pregnancy": null,
-      "interactions": "Trandolapril is used alone or in combination with other medications to treat high blood pressure. These changes include eating a diet that is low in fat and salt, maintaining a healthy weight, exercising at least 30 minutes most days, not smoking, and using alcohol in moderation.",
-      "importantNotes": null
-    },
-    "medlineplusUrl": "https://medlineplus.gov/druginfo/meds/a697010.html?utm_source=mplusconnect&utm_medium=service",
-    "medlineplusTitle": "Trandolapril",
-    "apiSources": {
-      "rxnorm": "https://rxnav.nlm.nih.gov/REST/approximateTerm.json?term=Trandolapril",
-      "fda": "https://api.fda.gov/drug/label.json?search=openfda.generic_name:Trandolapril",
-      "medlineplus": "https://medlineplus.gov/druginfo/meds/a697010.html?utm_source=mplusconnect&utm_medium=service",
-      "dailymed": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=39bad727-af4c-4d20-933b-7f287e88099a"
-    },
-    "icon": "❤️",
-    "imageUrl": "img/trandolapril.jpg",
-    "fdaBoxedWarning": null,
-    "fdaPatientCounseling": null,
-    "patientTeaching": null,
-    "dailymedBoxedWarning": null,
-    "dailymedPregnancy": null,
-    "dailymedNursing": null,
-    "dailymedDrugInteractions": null,
-    "dailymedAdverseReactions": null,
-    "dailymedSetId": "39bad727-af4c-4d20-933b-7f287e88099a",
-    "dailymedUrl": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=39bad727-af4c-4d20-933b-7f287e88099a",
-    "fdaWarningsBullets": [
-      {
-        "text": "Serious warning: Severe allergic-type facial swelling.",
-        "severity": "life-threatening",
-        "color": "red"
-      },
-      {
-        "text": "Serious warning: Kidney problems, high potassium or very low blood pressure.",
-        "severity": "life-threatening",
-        "color": "red"
-      },
-      {
-        "text": "Do not use while pregnant.",
-        "severity": "standard",
-        "color": "normal"
-      },
-      {
-        "text": "Get emergency help for swelling of the face, lips or throat.",
-        "severity": "standard",
-        "color": "normal"
-      },
-      {
-        "text": "Kidney function and potassium may require monitoring.",
-        "severity": "standard",
-        "color": "normal"
-      },
-      {
-        "text": "Report a continuing dry cough or pronounced dizziness.",
-        "severity": "standard",
-        "color": "normal"
-      },
-      {
-        "text": "Tell your clinician about diuretics, potassium products and anti-inflammatory pain medicines.",
-        "severity": "standard",
-        "color": "normal"
-      }
-    ],
-    "fdaBoxedWarningBullets": [],
-    "fdaPatientCounselingBullets": [],
-    "groundingNote": "Patient-facing content adapted from Canada-focused reference(s) in accompanying source audit. Requires product-specific Canadian monograph and pharmacist review before publication. "
-  },
-  {
     "id": 53,
     "name": "Amlodipine",
     "tradeNames": [
@@ -2210,114 +2113,11 @@
     "groundingNote": "Patient-facing content adapted from Canada-focused reference(s) in accompanying source audit. Requires product-specific Canadian monograph and pharmacist review before publication. "
   },
   {
-    "id": 54,
-    "name": "Nifedipine",
-    "tradeNames": [
-      "Adalat",
-      "Generic nifedipine"
-    ],
-    "category": "Blood pressure medicine , Helps prevent chest pain",
-    "description": "Nifedipine relaxes blood vessels to lower blood pressure. It may also be used to help prevent certain types of chest pain. Long-acting tablets and short-acting capsules work differently throughout the day.",
-    "sideEffects": [
-      "Headache",
-      "Flushing",
-      "Ankle swelling",
-      "Dizziness"
-    ],
-    "considerations": [
-      "Confirm whether your product is immediate-release or extended-release.",
-      "Do not crush or chew extended-release tablets.",
-      "Dizziness and ankle swelling may occur.",
-      "Tell your prescriber about severe low blood pressure or heart problems.",
-      "Ask about grapefruit and other interacting medicines.",
-      "Seek urgent care for severe or worsening chest pain."
-    ],
-    "rxcui": "7417",
-    "drugClasses": [
-      "Blood pressure medicine",
-      "Helps prevent chest pain"
-    ],
-    "fdaIndicationsUsage": "Nifedipine relaxes blood vessels to lower blood pressure. It may also be used to help prevent certain types of chest pain. Long-acting tablets and short-acting capsules work differently throughout the day.",
-    "fdaWarnings": "Rare but serious reactions: Very low blood pressure or fainting. Severe or worsening chest pain. Important precautions: Confirm whether your product is immediate-release or extended-release. Do not crush or chew extended-release tablets. Dizziness and ankle swelling may occur. Tell your prescriber about severe low blood pressure or heart problems. Ask about grapefruit and other interacting medicines. Seek urgent care for severe or worsening chest pain.",
-    "fdaDosage": "Available strengths / formulation: Immediate-release capsules and extended-release tablets have DIFFERENT dosing schedules and must not be substituted casually. Usual adult dosing: Extended-release tablets are commonly taken once daily; immediate-release capsules may require more frequent dosing. Follow the exact formulation and do not crush extended-release tablets. Maximum daily dose: No single daily maximum is appropriate for every patient, indication and formulation. Follow the Canadian product-specific label and your prescriber.",
-    "userGuidelines": {
-      "storage": null,
-      "pregnancy": null,
-      "interactions": "These changes include eating a diet that is low in fat and salt, maintaining a healthy weight, exercising at least 30 minutes most days, not smoking, and using alcohol in moderation.",
-      "importantNotes": null
-    },
-    "medlineplusUrl": "https://medlineplus.gov/druginfo/meds/a684028.html?utm_source=mplusconnect&utm_medium=service",
-    "medlineplusTitle": "Nifedipine",
-    "apiSources": {
-      "rxnorm": "https://rxnav.nlm.nih.gov/REST/approximateTerm.json?term=Nifedipine",
-      "fda": "https://api.fda.gov/drug/label.json?search=openfda.generic_name:Nifedipine",
-      "medlineplus": "https://medlineplus.gov/druginfo/meds/a684028.html?utm_source=mplusconnect&utm_medium=service",
-      "dailymed": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=518d39af-0be1-acbc-e063-6294a90a4ada"
-    },
-    "icon": "💊",
-    "imageUrl": "img/nifedipine.jpg",
-    "fdaBoxedWarning": null,
-    "fdaPatientCounseling": null,
-    "patientTeaching": null,
-    "dailymedBoxedWarning": null,
-    "dailymedPregnancy": null,
-    "dailymedNursing": null,
-    "dailymedDrugInteractions": null,
-    "dailymedAdverseReactions": null,
-    "dailymedSetId": "518d39af-0be1-acbc-e063-6294a90a4ada",
-    "dailymedUrl": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=518d39af-0be1-acbc-e063-6294a90a4ada",
-    "fdaWarningsBullets": [
-      {
-        "text": "Serious warning: Very low blood pressure or fainting.",
-        "severity": "life-threatening",
-        "color": "red"
-      },
-      {
-        "text": "Serious warning: Severe or worsening chest pain.",
-        "severity": "standard",
-        "color": "normal"
-      },
-      {
-        "text": "Confirm whether your product is immediate-release or extended-release.",
-        "severity": "standard",
-        "color": "normal"
-      },
-      {
-        "text": "Do not crush or chew extended-release tablets.",
-        "severity": "standard",
-        "color": "normal"
-      },
-      {
-        "text": "Dizziness and ankle swelling may occur.",
-        "severity": "standard",
-        "color": "normal"
-      },
-      {
-        "text": "Tell your prescriber about severe low blood pressure or heart problems.",
-        "severity": "standard",
-        "color": "normal"
-      },
-      {
-        "text": "Ask about grapefruit and other interacting medicines.",
-        "severity": "standard",
-        "color": "normal"
-      },
-      {
-        "text": "Seek urgent care for severe or worsening chest pain.",
-        "severity": "standard",
-        "color": "normal"
-      }
-    ],
-    "fdaBoxedWarningBullets": [],
-    "fdaPatientCounselingBullets": [],
-    "groundingNote": "Patient-facing content adapted from Canada-focused reference(s) in accompanying source audit. Requires product-specific Canadian monograph and pharmacist review before publication. "
-  },
-  {
     "id": 55,
-    "name": "Diltiazem Hydrochloride",
+    "name": "Diltiazem",
     "tradeNames": [
       "Cardizem",
-      "Tiazac (extended-release product)"
+      "Tiazac"
     ],
     "category": "Blood pressure medicine , Helps control some heart rhythms and chest pain",
     "description": "Diltiazem helps relax blood vessels and can slow some fast heart rhythms. It is prescribed for certain blood pressure, chest pain and heart rhythm conditions. The dose depends on the form of diltiazem.",
@@ -2410,109 +2210,11 @@
     "groundingNote": "Patient-facing content adapted from Canada-focused reference(s) in accompanying source audit. Requires product-specific Canadian monograph and pharmacist review before publication. "
   },
   {
-    "id": 56,
-    "name": "Verapamil Hydrochloride",
-    "tradeNames": [
-      "Isoptin",
-      "Generic verapamil"
-    ],
-    "category": "Blood pressure medicine , Heart rhythm medicine , Helps prevent chest pain",
-    "description": "Verapamil relaxes blood vessels and slows certain electrical signals in the heart. It is used for selected heart rhythm problems, high blood pressure and chest pain. The correct dose depends on whether the product acts quickly or over many hours.",
-    "sideEffects": [
-      "Constipation",
-      "Dizziness",
-      "Nausea",
-      "Headache"
-    ],
-    "considerations": [
-      "May slow the pulse too much; report fainting or marked weakness.",
-      "Do not crush long-acting tablets or capsules unless the specific product permits it.",
-      "Constipation is a common problem; ask about safe ways to manage it.",
-      "Ask your pharmacist about interactions with other heart medicines and grapefruit.",
-      "Tell your prescriber if you have heart failure or low blood pressure."
-    ],
-    "rxcui": "203138",
-    "drugClasses": [
-      "Blood pressure medicine",
-      "Heart rhythm medicine",
-      "Helps prevent chest pain"
-    ],
-    "fdaIndicationsUsage": "Verapamil relaxes blood vessels and slows certain electrical signals in the heart. It is used for selected heart rhythm problems, high blood pressure and chest pain. The correct dose depends on whether the product acts quickly or over many hours.",
-    "fdaWarnings": "Rare but serious reactions: Very slow heartbeat or heart block. Very low blood pressure or worsening heart failure. Important precautions: May slow the pulse too much; report fainting or marked weakness. Do not crush long-acting tablets or capsules unless the specific product permits it. Constipation is a common problem; ask about safe ways to manage it. Ask your pharmacist about interactions with other heart medicines and grapefruit. Tell your prescriber if you have heart failure or low blood pressure.",
-    "fdaDosage": "Available strengths / formulation: Immediate-release and extended-release tablets/capsules are available in different strengths. Usual adult dosing: Immediate-release products are often taken several times per day; extended-release products usually once or twice daily. Do not interchange the schedules. Maximum daily dose: No single daily maximum is appropriate for every patient, indication and formulation. Follow the Canadian product-specific label and your prescriber.",
-    "userGuidelines": {
-      "storage": null,
-      "pregnancy": null,
-      "interactions": null,
-      "importantNotes": null
-    },
-    "medlineplusUrl": "https://medlineplus.gov/druginfo/meds/a601128.html?utm_source=mplusconnect&utm_medium=service",
-    "medlineplusTitle": "Trandolapril and Verapamil",
-    "apiSources": {
-      "rxnorm": "https://rxnav.nlm.nih.gov/REST/approximateTerm.json?term=Verapamil%20Hydrochloride",
-      "fda": "https://api.fda.gov/drug/label.json?search=openfda.generic_name:Verapamil%20Hydrochloride",
-      "medlineplus": "https://medlineplus.gov/druginfo/meds/a601128.html?utm_source=mplusconnect&utm_medium=service",
-      "dailymed": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=1c993365-1b62-4524-e781-d307f28f63bc"
-    },
-    "icon": "💊",
-    "imageUrl": "img/verapamil_hydrochloride.jpg",
-    "fdaBoxedWarning": null,
-    "fdaPatientCounseling": null,
-    "patientTeaching": null,
-    "dailymedBoxedWarning": null,
-    "dailymedPregnancy": null,
-    "dailymedNursing": null,
-    "dailymedDrugInteractions": null,
-    "dailymedAdverseReactions": null,
-    "dailymedSetId": "1c993365-1b62-4524-e781-d307f28f63bc",
-    "dailymedUrl": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=1c993365-1b62-4524-e781-d307f28f63bc",
-    "fdaWarningsBullets": [
-      {
-        "text": "Serious warning: Very slow heartbeat or heart block.",
-        "severity": "life-threatening",
-        "color": "red"
-      },
-      {
-        "text": "Serious warning: Very low blood pressure or worsening heart failure.",
-        "severity": "life-threatening",
-        "color": "red"
-      },
-      {
-        "text": "May slow the pulse too much; report fainting or marked weakness.",
-        "severity": "standard",
-        "color": "normal"
-      },
-      {
-        "text": "Do not crush long-acting tablets or capsules unless the specific product permits it.",
-        "severity": "standard",
-        "color": "normal"
-      },
-      {
-        "text": "Constipation is a common problem; ask about safe ways to manage it.",
-        "severity": "standard",
-        "color": "normal"
-      },
-      {
-        "text": "Ask your pharmacist about interactions with other heart medicines and grapefruit.",
-        "severity": "standard",
-        "color": "normal"
-      },
-      {
-        "text": "Tell your prescriber if you have heart failure or low blood pressure.",
-        "severity": "standard",
-        "color": "normal"
-      }
-    ],
-    "fdaBoxedWarningBullets": [],
-    "fdaPatientCounselingBullets": [],
-    "groundingNote": "Patient-facing content adapted from Canada-focused reference(s) in accompanying source audit. Requires product-specific Canadian monograph and pharmacist review before publication. "
-  },
-  {
     "id": 58,
-    "name": "Metoprolol Tartrate",
+    "name": "Metoprolol",
     "tradeNames": [
       "Lopresor",
-      "Betaloc (verify exact formulation)"
+      "Betaloc"
     ],
     "category": "Blood pressure and heart medicine , Slows the heart rate",
     "description": "Metoprolol tartrate slows the heartbeat and makes the heart work less hard. It is used for some blood pressure and heart conditions. It is different from the long-acting form called metoprolol succinate.",
@@ -2609,7 +2311,7 @@
     "name": "Atenolol",
     "tradeNames": [
       "Tenormin",
-      "Generic atenolol"
+      "Atenolol"
     ],
     "category": "Blood pressure and heart medicine , Slows the heart rate",
     "description": "Atenolol slows the heartbeat and helps reduce the heart’s workload. It is used for high blood pressure and certain heart conditions. It can also help control a fast heartbeat in selected patients.",
@@ -2706,7 +2408,7 @@
     "name": "Carvedilol",
     "tradeNames": [
       "Dilatrend",
-      "Generic carvedilol"
+      "Carvedilol"
     ],
     "category": "Blood pressure and heart failure medicine , Slows the heart rate",
     "description": "Carvedilol helps lower blood pressure and reduces the strain on the heart. It is used for some people with heart failure or other heart conditions. The dose is usually adjusted gradually while blood pressure and pulse are checked.",
@@ -2800,10 +2502,10 @@
   },
   {
     "id": 61,
-    "name": "Bisoprolol Fumarate",
+    "name": "Bisoprolol",
     "tradeNames": [
       "Monocor",
-      "Generic bisoprolol"
+      "Bisoprolol"
     ],
     "category": "Blood pressure and heart medicine , Slows the heart rate",
     "description": "Bisoprolol slows the heartbeat and lowers the strain on the heart. It is used for high blood pressure and certain heart problems. Taking it regularly helps control symptoms and blood pressure.",
@@ -2897,10 +2599,10 @@
   },
   {
     "id": 62,
-    "name": "Propranolol Hydrochloride",
+    "name": "Propranolol",
     "tradeNames": [
       "Inderal",
-      "Generic propranolol"
+      "Propranolol"
     ],
     "category": "Blood pressure and heart medicine , Slows the heart rate , Used for migraine prevention in some patients",
     "description": "Propranolol slows the heartbeat and reduces some effects of stress hormones on the heart. It is used for certain heart conditions, tremor and sometimes migraine prevention. The dose depends on the reason it was prescribed.",
@@ -2995,10 +2697,10 @@
   },
   {
     "id": 63,
-    "name": "Labetalol Hydrochloride",
+    "name": "Labetalol",
     "tradeNames": [
       "Trandate",
-      "Generic labetalol"
+      "Labetalol"
     ],
     "category": "Blood pressure medicine , Slows the heart rate",
     "description": "Labetalol lowers blood pressure by relaxing blood vessels and slowing the heartbeat. It is used for high blood pressure, including in some pregnant patients under specialist guidance. The dose is chosen based on your blood pressure and health.",
@@ -3097,10 +2799,10 @@
   },
   {
     "id": 65,
-    "name": "Losartan Potassium",
+    "name": "Losartan",
     "tradeNames": [
       "Cozaar",
-      "Generic losartan"
+      "Losartan"
     ],
     "category": "Blood pressure medicine , Kidney-protecting medicine in some patients",
     "description": "Losartan relaxes blood vessels so blood pressure goes down. It is prescribed for high blood pressure and may protect the kidneys in selected patients with diabetes. The dose depends on your condition and kidney function.",
@@ -3198,7 +2900,7 @@
   },
   {
     "id": 66,
-    "name": "Sacubitril And Valsartan",
+    "name": "Valsartan",
     "tradeNames": [
       "Entresto"
     ],
@@ -3304,10 +3006,10 @@
   },
   {
     "id": 69,
-    "name": "Candesartan Cilexetil",
+    "name": "Candesartan",
     "tradeNames": [
       "Atacand",
-      "Generic candesartan"
+      "Candesartan"
     ],
     "category": "Blood pressure medicine , Heart failure medicine",
     "description": "Candesartan relaxes blood vessels to lower blood pressure. It is also used in some people with heart failure. Regular treatment helps manage these conditions over time.",
@@ -3515,11 +3217,11 @@
     "id": 73,
     "name": "Lisinopril And Hydrochlorothiazide Tablets",
     "tradeNames": [
-      "Zestoretic (historical brand name; verify current Canadian marketing)",
-      "Generic lisinopril/hydrochlorothiazide"
+      "Zestoretic",
+      "Lisinopril"
     ],
-    "category": "Blood pressure medicine , Water pill combination",
-    "description": "This tablet combines a medicine that relaxes blood vessels with a water pill that helps your body remove extra salt and water. Together they lower blood pressure. It is used when both ingredients are appropriate for the patient.",
+    "category": "Blood pressure medicine",
+    "description": "This medicine relaxes blood vessels to lower blood pressure, heart failure, and increase survival rate after heart attacks",
     "sideEffects": [
       "Dizziness or lightheadedness",
       "Dry cough",
